@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="body-full-height">
+<head>
+    <!-- META SECTION -->
+    <title>FUELLS - Order Management</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
+    <!-- CSS INCLUDE -->
+    <link rel="stylesheet" type="text/css" id="theme" href="~/css/theme-default.css" />
+    <!-- EOF CSS INCLUDE -->
+</head>
+<body>
+
+    <div class="login-container">
+
+        <div class="login-box animated fadeInDown">
+            <div class="login-logo"></div>
+            <div class="login-body">
+                <div class="login-title"><strong>Welcome</strong>, Please login</div>
+                <form action="#" class="form-horizontal" method="get">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input id="txtUser" type="text" class="form-control" placeholder="Username" value="admin" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input id="txtPwd" type="password" class="form-control" placeholder="Password" value="P@ssw0rd" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <a href="#" class="btn btn-link btn-block">Forgot your password?</a>
+                        </div>
+                        <div class="col-md-6">
+                            <button id="btnLogin" class="btn btn-info btn-block">Log In</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="login-footer">
+                <div class="pull-left">
+                    &copy; 2017 FUELLS
+                </div>
+                <div class="pull-right">
+                    <a href="http://www.comlab.in" target="_blank">Powerd by ComLab</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- START SCRIPTS -->
+    <!-- START PLUGINS -->
+
+    <script type="text/javascript" src="~/js/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/plugins/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap/bootstrap.min.js"></script>
+
+    <script type='text/javascript' src='~/js/plugins/icheck/icheck.min.js'></script>
+    <script type="text/javascript" src="~/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+
+    <script type='text/javascript' src='~/js/plugins/noty/jquery.noty.js'></script>
+    <script type='text/javascript' src='~/js/plugins/noty/layouts/topCenter.js'></script>
+    <script type='text/javascript' src='~/js/plugins/noty/layouts/topLeft.js'></script>
+    <script type='text/javascript' src='~/js/plugins/noty/layouts/topRight.js'></script>
+
+    <script type='text/javascript' src='~/js/plugins/noty/themes/default.js'></script>
+
+    <!-- END PLUGINS -->
+    <!-- END TEMPLATE -->
+    <!-- START TEMPLATE -->
+    <script type="text/javascript" src="~/js/settings.js"></script>
+    <script type="text/javascript" src="~/js/plugins.js"></script>
+    <script type="text/javascript" src="~/js/actions.js"></script>
+    <!-- END TEMPLATE -->
+
+    <script type="text/javascript" src="~/js/app.js"></script>
+
+    <script type="text/javascript">
+            $(function() {
+
+                //var libUser = fuLib.user;
+
+                $("#btnLogin").on('click', (event) => {
+                    var sUser = $("#txtUser").val();
+                    var sPwd = $("#txtPwd").val();
+
+                    //alert(sUser.length);
+                    if (sUser.length === 0) {
+                        noty({ text:'User is blank', layout:'topRight', type:'warning' });
+                        return;
+                    }
+
+                    if (sPwd.length === 0) {
+                        noty({ text:'Password is blank', layout:'topRight', type:'warning' });
+                        return;
+                    }
+
+                    //do login
+                    fuLib.user.login(sUser, sPwd).success(function(result, status, xhr) {
+
+                        //store jwt token in localStorage
+                        window.localStorage.setItem("fuelUser", result.token);
+                        window.location.replace("/");
+
+                    }).error(function(xhr, status, error) {
+                        //login failed
+                        handleError(xhr, status, error);
+
+                        window.localStorage.removeItem("fuelUser");
+
+                    });
+
+
+                });
+            });
+
+            function handleError(xhr, status, error) {
+                try {
+                    var err = eval("(" + $(xhr.responseText).text() + ")");
+
+                    noty({ text:err.message, layout:'topRight', type:'error' });
+
+                }
+                catch(err) {
+
+                    noty({ text:error, layout:'topRight', type:'error' });
+
+                }
+            }
+    </script>
+    <!-- END SCRIPTS -->
+
+</body>
+</html>

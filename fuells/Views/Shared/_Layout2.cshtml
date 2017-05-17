@@ -11,6 +11,9 @@
     <!-- END META SECTION -->
     <!-- CSS INCLUDE -->
     <link rel="stylesheet" type="text/css" id="theme" href="~/css/theme-default.css" />
+
+    <link rel="stylesheet" type="text/css" id="theme" href="~/css/app.css" />
+
     <!-- EOF CSS INCLUDE -->
 </head>
 <body>
@@ -20,22 +23,22 @@
         <!-- START PAGE SIDEBAR -->
         <div class="page-sidebar">
             <!-- START X-NAVIGATION -->
-            <ul class="x-navigation">
+            <ul class="x-navigation" id="ulNav">
                 <li class="xn-logo">
                     <a href="index.html">FUELLS</a>
                     <a href="#" class="x-navigation-control"></a>
                 </li>
                 <li class="xn-profile">
                     <a href="#" class="profile-mini">
-                        <img src="~/assets/images/users/amil.jpg" alt="John Doe" />
+                        <img id="profileImg1" src="~/assets/images/users/amil.jpg" alt="John Doe" />
                     </a>
                     <div class="profile">
                         <div class="profile-image">
-                            <img src="~/assets/images/users/amil.jpg" alt="John Doe" />
+                            <img id="profileImg2" src="~/assets/images/users/amil.jpg" alt="John Doe" />
                         </div>
                         <div class="profile-data">
-                            <div class="profile-data-name">Mohammed Amil</div>
-                            <div class="profile-data-title">Administrator</div>
+                            <div id="profileName" class="profile-data-name">Mohammed Amil</div>
+                            <div id="profileRole" class="profile-data-title">Administrator</div>
                         </div>
                         <div class="profile-controls">
                             <a href="pages-profile.html" class="profile-control-left"><span class="fa fa-info"></span></a>
@@ -44,40 +47,6 @@
                     </div>
                 </li>
                 <li class="xn-title">Navigation</li>
-                <li>
-                    <a href="/index"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
-                </li>
-
-                <li class="xn-openable active">
-                    <a href="#"><span class="fa fa-tasks"></span> <span class="xn-text">Products</span></a>
-                    <ul>
-                        <li class="active"><a href="/home/po"><span class="fa fa-file-text-o"></span> Purchase Orders</a></li>
-                        <li><a href="/home/buyer"><span class="fa fa-user"></span> Buyers</a></li>
-                        <li><a href="/home/mds"><span class="fa fa-th-large"></span> MDS</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/home/jc"><span class="fa fa-check-square-o"></span> <span class="xn-text">Job Card</span></a>
-                </li>
-                <li>
-                    <a href="/home/style"><span class="fa fa-heart"></span> <span class="xn-text">Style</span></a>
-                </li>
-                <li class="xn-openable">
-                    <a href="#"><span class="fa fa-puzzle-piece"></span> <span class="xn-text">Leather</span></a>
-                    <ul>
-                        <li><a href="/home/lo"><span class="fa fa-file-text-o"></span> Leather Orders</a></li>
-                        <li><a href="/home/supplier"><span class="fa fa-user"></span> Supplier</a></li>
-                    </ul>
-                </li>
-
-                <li class="xn-openable">
-                    <a href="#"><span class="fa fa-building"></span> <span class="xn-text">Company</span></a>
-                    <ul>
-                        <li><a href="/home/company"><span class="fa fa-building"></span> Company Details</a></li>
-                        <li><a href="/home/lov"><span class="fa fa-caret-square-o-down"></span> LOVs</a></li>
-                        <li><a href="/home/user"><span class="fa fa-user"></span> Users</a></li>
-                    </ul>
-                </li>
             </ul>
             <!-- END X-NAVIGATION -->
         </div>
@@ -260,6 +229,122 @@
     <script type="text/javascript" src="~/js/plugins.js"></script>
     <script type="text/javascript" src="~/js/actions.js"></script>
     <!-- END TEMPLATE -->
+
+    <script type="text/javascript" src="~/js/app.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+
+            if (fuLib.user.jwtToken == null) {
+                window.location.replace("/home/login");
+                return;
+            }
+
+            var crPage = $("#hidSelMenu").val();
+
+            fuLib.navigation.load(crPage);
+
+            
+            if (crPage == 'liPageUser') {
+                //IN USERS page
+                //
+
+                $("#divAccess").hide();
+
+
+               
+
+                $("#tblUser").DataTable({
+                    "ajax": {
+                        "url": apiUrl + "user/getall",
+                        "dataSrc": "",
+                        "headers": {
+                            "Authorization": "Bearer " + token
+                        }
+                    },
+                    "columns": [
+                        {
+                            "data": "person.photo",
+                            "orderSequence": [],
+                            "render": function (data, type, row) {
+                                if (data == undefined) {
+                                    return ('<img class="imgSmall" src="../assets/images/users/no-image.jpg"/>');
+                                }
+                                else {
+                                    return ('<img class="imgSmall" id="profileImg1" src="../assets/images/users/' + data + '"/>');
+                                }
+                            }
+                        },
+                        {
+                            "data": "flag",
+                            "orderSequence": [],
+                            "render": function (data, type, row) {
+                                if (data == 0) {
+                                    return '<i style="color:silver;" class="fa fa-flag-o"></i>';
+                                }
+                                else if (data == 1) {
+                                    return '<i style="color:red;" class="fa fa-flag"></i> ';
+                                }
+                                else if (data == 2) {
+                                    return '<i style="color:blue;" class="fa fa-flag"></i> ';
+                                }
+                                else if (data == 3) {
+                                    return '<i style="color:green;" class="fa fa-flag"></i> ';
+                                }
+                                else {
+                                    return '<i style="color:silver;" class="fa fa-flag-o"></i>';
+                                }
+                            }
+                        },
+                        { "data": "name" },
+                        { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                        { "data": "person.email", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                        { "data": "person.phone", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                        {
+                            "data": "isAdmin",
+                            "orderSequence": [],
+                            "render": function (data, type, row) {
+                                if (isAdmin) {
+                                    return '<button type="button" onclick="showAccess(\'' + row._id + '\');" class="btn btn-info btn-xs">Change</button>';
+                                }
+                                else {
+                                    return '';
+                                }
+                            }
+                        }
+                    ]
+                });
+
+                $("#btnAccessSave, #btnAccessCancel").click(function () {
+                    $("#divAccess").hide(500);
+                    $("#divList").show(500);
+                });
+
+
+
+            }
+        });
+
+        function showAccess(userId) {
+            $("#divAccess").show(500);
+            $("#divList").hide(500);
+        }
+
+        function handleError(xhr, status, error) {
+            try {
+                var err = eval("(" + $(xhr.responseText).text() + ")");
+
+                noty({ text:err.message, layout:'topRight', type:'error' });
+
+            }
+            catch(err) {
+
+                noty({ text:error, layout:'topRight', type:'error' });
+
+            }
+        }
+    </script>
+
     <!-- END SCRIPTS -->
 
 </body>

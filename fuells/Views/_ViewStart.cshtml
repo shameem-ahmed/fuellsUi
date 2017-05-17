@@ -1,3 +1,7 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+    if (Request.Path.Contains("login") == false)
+    {
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
 }

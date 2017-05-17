@@ -14,7 +14,7 @@ var isAdmin = false;
 
 var fuLib = {
     navigation: {
-        load: function() {
+        load: function(crPage) {
             //alert('in load navigation');
 
             return (
@@ -29,13 +29,13 @@ var fuLib = {
                         $("#profileRole").text(user.isAdmin ? "Administrator" : "Not Admin");
 
                         if (user.person === null) {
-                            $("#profileImg1").attr("src", "assets/images/users/no-image.jpg");
-                            $("#profileImg2").attr("src", "assets/images/users/no-image.jpg");
+                            $("#profileImg1").attr("src", "../assets/images/users/no-image.jpg");
+                            $("#profileImg2").attr("src", "../assets/images/users/no-image.jpg");
                         }
                         else {
 
-                            $("#profileImg1").attr("src", "assets/images/users/" + user.person.photo);
-                            $("#profileImg2").attr("src", "assets/images/users/" + user.person.photo);
+                            $("#profileImg1").attr("src", "../assets/images/users/" + user.person.photo);
+                            $("#profileImg2").attr("src", "../assets/images/users/" + user.person.photo);
 
                             $("#profileName").text(user.person.name);
 
@@ -43,8 +43,8 @@ var fuLib = {
 
                         fuLib.user.getAccess().success(function(access, status, xhr) {
 
-                            console.log("access:");
-                            console.log(access);
+                            //console.log("access:");
+                            //console.log(access);
 
                             access = access.sort(function(a, b){
                                 return a.pageIndex - b.pageIndex;
@@ -52,11 +52,14 @@ var fuLib = {
 
                             $(access).each(function(index) {
 
-                                $("#ulNav").append('<li><a href="' + this.pageFile + '"><span class="' + this.pageIcon + '"></span><span class="xn-text">' + this.pageTitle + '</span></a></li>');
+                                $("#ulNav").append('<li id="' + this.pageId + '"><a href="' + this.pageFile + '"><span class="' + this.pageIcon + '"></span><span class="xn-text">' + this.pageTitle + '</span></a></li>');
 
                             });
 
-
+                            if (crPage) {
+                                //$("[id^=liPage]").removeClass("active");
+                                $('#' + crPage).addClass("active");
+                            }
 
                         }).error(function(xhr, status, error) {
                             //user.getAccess failed
