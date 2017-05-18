@@ -231,6 +231,8 @@
     <!-- END TEMPLATE -->
 
     <script type="text/javascript" src="~/js/app.js"></script>
+    <script type="text/javascript" src="~/js/user.js"></script>
+
 
     <script type="text/javascript">
         $(function() {
@@ -244,91 +246,9 @@
 
             fuLib.navigation.load(crPage);
 
-            
-            if (crPage == 'liPageUser') {
-                //IN USERS page
-                //
+            doUser(crPage);
 
-                $("#divAccess").hide();
-
-
-               
-
-                $("#tblUser").DataTable({
-                    "ajax": {
-                        "url": apiUrl + "user/getall",
-                        "dataSrc": "",
-                        "headers": {
-                            "Authorization": "Bearer " + token
-                        }
-                    },
-                    "columns": [
-                        {
-                            "data": "person.photo",
-                            "orderSequence": [],
-                            "render": function (data, type, row) {
-                                if (data == undefined) {
-                                    return ('<img class="imgSmall" src="../assets/images/users/no-image.jpg"/>');
-                                }
-                                else {
-                                    return ('<img class="imgSmall" id="profileImg1" src="../assets/images/users/' + data + '"/>');
-                                }
-                            }
-                        },
-                        {
-                            "data": "flag",
-                            "orderSequence": [],
-                            "render": function (data, type, row) {
-                                if (data == 0) {
-                                    return '<i style="color:silver;" class="fa fa-flag-o"></i>';
-                                }
-                                else if (data == 1) {
-                                    return '<i style="color:red;" class="fa fa-flag"></i> ';
-                                }
-                                else if (data == 2) {
-                                    return '<i style="color:blue;" class="fa fa-flag"></i> ';
-                                }
-                                else if (data == 3) {
-                                    return '<i style="color:green;" class="fa fa-flag"></i> ';
-                                }
-                                else {
-                                    return '<i style="color:silver;" class="fa fa-flag-o"></i>';
-                                }
-                            }
-                        },
-                        { "data": "name" },
-                        { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                        { "data": "person.email", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                        { "data": "person.phone", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                        {
-                            "data": "isAdmin",
-                            "orderSequence": [],
-                            "render": function (data, type, row) {
-                                if (isAdmin) {
-                                    return '<button type="button" onclick="showAccess(\'' + row._id + '\');" class="btn btn-info btn-xs">Change</button>';
-                                }
-                                else {
-                                    return '';
-                                }
-                            }
-                        }
-                    ]
-                });
-
-                $("#btnAccessSave, #btnAccessCancel").click(function () {
-                    $("#divAccess").hide(500);
-                    $("#divList").show(500);
-                });
-
-
-
-            }
         });
-
-        function showAccess(userId) {
-            $("#divAccess").show(500);
-            $("#divList").hide(500);
-        }
 
         function handleError(xhr, status, error) {
             try {
@@ -344,6 +264,8 @@
             }
         }
     </script>
+
+
 
     <!-- END SCRIPTS -->
 

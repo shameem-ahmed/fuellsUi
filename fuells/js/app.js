@@ -42,10 +42,6 @@ var fuLib = {
                         }
 
                         fuLib.user.getAccess().success(function(access, status, xhr) {
-
-                            //console.log("access:");
-                            //console.log(access);
-
                             access = access.sort(function(a, b){
                                 return a.pageIndex - b.pageIndex;
                             });
@@ -136,6 +132,36 @@ var fuLib = {
                     type: "POST",
                     contentType: "application/json",
                     dataType: "json"
+                })
+            );
+        }
+    },
+
+    access: {
+
+        getAccess: function (userId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "access/getaccess/" + userId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        updateMulti: function (aAccess) {
+            return (
+                $.ajax({
+                    url: apiUrl + "access/updatemulti",
+                    data: JSON.stringify({ accessCode: aAccess }),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
                 })
             );
         }

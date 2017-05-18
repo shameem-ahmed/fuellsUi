@@ -990,6 +990,7 @@
     <Content Include="img\themes\default.jpg" />
     <Content Include="img\themes\light.jpg" />
     <Content Include="js\actions.js" />
+    <Content Include="js\user.js" />
     <Content Include="js\app.js" />
     <Content Include="js\demo_charts_morris.js" />
     <Content Include="js\demo_charts_nvd3.js" />
