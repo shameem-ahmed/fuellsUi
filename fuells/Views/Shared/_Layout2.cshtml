@@ -221,7 +221,23 @@
     <script type='text/javascript' src='~/js/plugins/icheck/icheck.min.js'></script>
     <script type="text/javascript" src="~/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
 
+    <script type='text/javascript' src='~/js/plugins/noty/jquery.noty.js'></script>
+    <script type='text/javascript' src='~/js/plugins/noty/layouts/topCenter.js'></script>
+    <script type='text/javascript' src='~/js/plugins/noty/layouts/topLeft.js'></script>
+    <script type='text/javascript' src='~/js/plugins/noty/layouts/topRight.js'></script>
+
+    <script type='text/javascript' src='~/js/plugins/noty/themes/default.js'></script>
+
     <script type="text/javascript" src="~/js/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" src="~/js/plugins/bootstrap/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap/bootstrap-timepicker.min.js"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap/bootstrap-file-input.js"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap/bootstrap-select.js"></script>
+    <script type="text/javascript" src="~/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+
+
     <!-- END PAGE PLUGINS -->
     <!-- START TEMPLATE -->
     <script type="text/javascript" src="~/js/settings.js"></script>
@@ -232,7 +248,6 @@
 
     <script type="text/javascript" src="~/js/app.js"></script>
     <script type="text/javascript" src="~/js/user.js"></script>
-
 
     <script type="text/javascript">
         $(function() {
@@ -248,10 +263,16 @@
 
             doUser(crPage);
 
+
         });
 
-        function handleError(xhr, status, error) {
+        function handleError(action, xhr, status, error) {
             try {
+
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+
                 var err = eval("(" + $(xhr.responseText).text() + ")");
 
                 noty({ text:err.message, layout:'topRight', type:'error' });
@@ -259,8 +280,17 @@
             }
             catch(err) {
 
-                noty({ text:error, layout:'topRight', type:'error' });
+                noty({ text:action + ' failed.', layout:'topRight', type:'error' });
+            }
+        }
 
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+
+            for (i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds) {
+                    break;
+                }
             }
         }
     </script>

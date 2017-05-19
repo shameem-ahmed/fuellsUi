@@ -59,14 +59,14 @@ var fuLib = {
 
                         }).error(function(xhr, status, error) {
                             //user.getAccess failed
-                            handleError(xhr, status, error);
+                            handleError('user.getAccess', xhr, status, error);
                         });
 
                     }
 
                 }).error(function(xhr, status, error) {
                     //user.getLogin failed
-                    handleError(xhr, status, error);
+                    handleError('user.getLogin', xhr, status, error);
                 })
             );
         }

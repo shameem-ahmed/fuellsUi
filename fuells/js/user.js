@@ -2,8 +2,12 @@ function doUser(crPage) {
     if (crPage == 'liPageUser') {
 
         $("#divAccess").hide();
+        $("#divUpdate").hide();
+
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
         $("#tblUser").DataTable({
+            "autoWidth": false,
             "ajax": {
                 "url": apiUrl + "user/getall",
                 "dataSrc": "",
@@ -57,7 +61,7 @@ function doUser(crPage) {
                             //if login user is admin
                             if (data == false) {
                                 //if the row user is NOT admin
-                                return '<button type="button" onclick="showAccess(\'' + row._id + '\');" class="btn btn-info btn-xs">Change</button>';
+                                return '<button type="button" onclick="showAccess(\'' + row._id + '\');" class="btn btn-info btn-xs pull-right">Change</button>';
                             }
                             else {
                                 return '';
@@ -70,6 +74,17 @@ function doUser(crPage) {
                 }
             ]
         });
+
+        $("#btnUserNew").click(function () {
+            $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+            $("#divUpdate").show(500);
+        });
+
+        $("#btnUserUpdateSave").click(function () {
+            $("#divUpdate").hide(500);
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+        });
+
 
         $("#btnAccessSave").click(function () {
 
@@ -103,12 +118,12 @@ function doUser(crPage) {
 
                 console.log(data);
 
-                noty({ text: data, layout: 'topRight', type: 'error' });
+                noty({ text: data.message, layout: 'topRight', type: 'success' });
 
 
             }).error(function (xhr, status, error) {
                 //access.updateMulti failed
-                handleError(xhr, status, error);
+                handleError('access.updateMulti', xhr, status, error);
             });
 
             $("#divAccess").hide(500);
@@ -116,18 +131,12 @@ function doUser(crPage) {
         });
 
         $("#btnAccessCancel").click(function () {
-
-
             $("#divAccess").hide(500);
             $("#divList").show(500);
         });
 
         $("#btnAccessReset").click(function () {
-
             showAccess($("#hidSelUser").val());
-
-            //$("#divAccess").hide(500);
-            //$("#divList").show(500);
         });
     }
 }
@@ -198,12 +207,12 @@ function showAccess(userId) {
 
         }).error(function (xhr, status, error) {
             //access.getAccess failed
-            handleError(xhr, status, error);
+            handleError('access.getAccess', xhr, status, error);
         });
 
     }).error(function (xhr, status, error) {
         //user.getSingle failed
-        handleError(xhr, status, error);
+        handleError('user.getSingle', xhr, status, error);
     });
 
     $("#divAccess").show(500);
@@ -222,3 +231,4 @@ function selectAllOptions(index) {
 
     toggleRow = !toggleRow;
 }
+

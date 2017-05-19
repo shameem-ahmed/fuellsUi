@@ -108,8 +108,8 @@
                         window.location.replace("/");
 
                     }).error(function(xhr, status, error) {
-                        //login failed
-                        handleError(xhr, status, error);
+                        //user.login failed
+                        handleError('user.login', xhr, status, error);
 
                         window.localStorage.removeItem("fuelUser");
 

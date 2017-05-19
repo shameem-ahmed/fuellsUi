@@ -5,13 +5,12 @@
 <input type="hidden" id="hidSelMenu" value="liPageUser" />
 
 <div class="row" id="divList">
-    <div class="col-md-12">
-
+    <div class="col-md-8" id="divTable">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <button type="button" class="btn btn-primary">New User</button>
-                <button type="button" class="btn btn-info">Edit</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-primary" id="btnUserNew">New User</button>
+                <button type="button" class="btn btn-info" id="btnUserEdit">Edit</button>
+                <button type="button" class="btn btn-danger" id="btnUserDelete">Delete</button>
                 <ul class="panel-controls">
                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                     <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
@@ -30,9 +29,234 @@
                             <th>Access</th>
                         </tr>
                     </thead>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
+    </div>
+    <div class="col-md-4" id="divUpdate">
+        <div class="block">
+            <form class="form-horizontal" role="form">
+
+                <div class="panel panel-default tabs">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#tab-first" role="tab" data-toggle="tab">User</a></li>
+                        <li><a href="#tab-second" role="tab" data-toggle="tab">Person</a></li>
+                        <li><a href="#tab-third" role="tab" data-toggle="tab">Address</a></li>
+                    </ul>
+                    <div class="panel-body tab-content">
+                        <div class="tab-pane active" id="tab-first">
+                            <!-- User TAB -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Login name</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Login Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Password</label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" placeholder="Password" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Confirm Password</label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" placeholder="Confirm Password" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Is Administrator?</label>
+                                <div class="col-md-9">
+                                    <label class="check"><input type="checkbox" class="icheckbox" /> No</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="tab-second">
+                            <!-- Person TAB -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Full name</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Full Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Email</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" class="form-control" placeholder="Email Address" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Phone</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" class="form-control" placeholder="Phone" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Facebook</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                                        <input type="text" class="form-control" placeholder="Facebook" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Skype</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                                        <input type="text" class="form-control" placeholder="Skype" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Twitter</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                                        <input type="text" class="form-control" placeholder="Twitter" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Govt. Code</label>
+                                <div class="col-md-4">
+                                    <select class="form-control select">
+                                        <option>License #</option>
+                                        <option>Passport</option>
+                                        <option>PAN</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
+                                        <input type="text" class="form-control" placeholder="Govt Code" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Photo</label>
+                                <div class="col-md-9">
+                                    <img id="acsUserImage" src="../assets/images/users/shameem.jpg" style="width:100px; height:100px;" />
+                                    <input type="file" class="fileinput" name="filename1" id="filename1" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Start date</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="text" id="dp-3" class="form-control datepicker" value="06-06-2014" data-date="06-06-2014" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Anniversary date</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control datepicker" value="07-07-2014" id="dp-4" data-date="07-07-2014" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
+                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Gender</label>
+                                <div class="col-md-9">
+                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" checked="checked" /> Male</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" /> Female</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Maritial status</label>
+                                <div class="col-md-9">
+                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" /> Married</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" checked="checked" /> Not Married</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" /> Widow</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="tab-third">
+                            <!-- Address TAB -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Address 1</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Address 1" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Address 2</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Address 2" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Country</label>
+                                <div class="col-md-9">
+                                    <select class="form-control select">
+                                        <option>India</option>
+                                        <option>America</option>
+                                        <option>Caneda</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">State</label>
+                                <div class="col-md-9">
+                                    <select class="form-control select">
+                                        <option>Tamilnadu</option>
+                                        <option>Karnataka</option>
+                                        <option>Andhra</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">City</label>
+                                <div class="col-md-9">
+                                    <select class="form-control select">
+                                        <option>Chennai</option>
+                                        <option>Madurai</option>
+                                        <option>Salem</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Area</label>
+                                <div class="col-md-9">
+                                    <select class="form-control select">
+                                        <option>T Nagar</option>
+                                        <option>Egmore</option>
+                                        <option>Purasaiwakam</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button id="btnUserUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                    </div>
+                </div>    
+
+
+
+
+
+
+
+
+
+              
+            </form>
+        </div>  
     </div>
 </div>
 
