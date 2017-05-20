@@ -261,7 +261,13 @@
 
             fuLib.navigation.load(crPage);
 
-            doUser(crPage);
+
+            if (crPage == 'liPageUser') {
+                doUser();
+            }
+
+
+
 
 
         });

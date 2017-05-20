@@ -16,17 +16,16 @@
                     <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                 </ul>
             </div>
+
             <div class="panel-body">
                 <table class="table DataTable" id="tblUser">
                     <thead>
                         <tr>
                             <th></th>
-                            <th></th>
                             <th>Login</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>Access</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -40,26 +39,26 @@
 
                 <div class="panel panel-default tabs">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#tab-first" role="tab" data-toggle="tab">User</a></li>
-                        <li><a href="#tab-second" role="tab" data-toggle="tab">Person</a></li>
-                        <li><a href="#tab-third" role="tab" data-toggle="tab">Address</a></li>
+                        <li id="tabUser" class="active"><a href="#tab-first" role="tab" data-toggle="tab">User</a></li>
+                        <li id="tabPerson"><a href="#tab-second" role="tab" data-toggle="tab">Person</a></li>
+                        <li id="tabAddress"><a href="#tab-third" role="tab" data-toggle="tab">Address</a></li>
                     </ul>
                     <div class="panel-body tab-content">
                         <div class="tab-pane active" id="tab-first">
                             <!-- User TAB -->
-                            <div class="form-group">
+                            <div class="form-group has-error">
                                 <label class="col-md-3 control-label">Login name</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" placeholder="Login Name" />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-error">
                                 <label class="col-md-3 control-label">Password</label>
                                 <div class="col-md-9">
                                     <input type="password" class="form-control" placeholder="Password" />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-error">
                                 <label class="col-md-3 control-label">Confirm Password</label>
                                 <div class="col-md-9">
                                     <input type="password" class="form-control" placeholder="Confirm Password" />
@@ -75,7 +74,7 @@
                         </div>
                         <div class="tab-pane" id="tab-second">
                             <!-- Person TAB -->
-                            <div class="form-group">
+                            <div class="form-group has-error">
                                 <label class="col-md-3 control-label">Full name</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" placeholder="Full Name" />
@@ -90,7 +89,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-error">
                                 <label class="col-md-3 control-label">Phone</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
@@ -154,7 +153,7 @@
                                 <label class="col-md-3 control-label">Start date</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <input type="text" id="dp-3" class="form-control datepicker" value="06-06-2014" data-date="06-06-2014" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
+                                        <input type="text" id="dp-3" class="form-control datepicker" value="06-06-2014" data-date="06-06-2014" data-date-format="dd-mm-yyyy" />
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
@@ -187,7 +186,7 @@
                         </div>
                         <div class="tab-pane" id="tab-third">
                             <!-- Address TAB -->
-                            <div class="form-group">
+                            <div class="form-group has-error">
                                 <label class="col-md-3 control-label">Address 1</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" placeholder="Address 1" />
@@ -245,16 +244,6 @@
                         <button id="btnUserUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                     </div>
                 </div>    
-
-
-
-
-
-
-
-
-
-              
             </form>
         </div>  
     </div>

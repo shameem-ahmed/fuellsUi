@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Request</h2>
+
+
+<div class="row" ng-app="rpa1" ng-cloak ng-controller="requestController" ng-init="init();">
+
+    <div class="col-md-8">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Time</th>
+                    <th>Type</th>
+                    <th>Search</th>
+                    <th>Country</th>
+                    <th>Filter</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="req in listRequests">
+                    <td>{{ req.title }}</td>
+                    <td>{{ req.time }}</td>
+                    <td>{{ req.type }}</td>
+                    <td>{{ req.search1 }}<br />{{ req.search2 }}<br />{{ req.search3 }}</td>
+                    <td>{{ req.country }}</td>
+                    <td>{{ req.filter }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-4">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Create Request</h3>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="txtTitle">Title</label>
+                        <input type="text" class="form-control" id="txtTitle" ng-model="newRequest.title" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="selTime">Time</label>
+
+                        <select class="form-control" id="selTime" ng-model="newRequest.time">
+                            <option value="0">12 am</option>
+                            <option value="1">1 am</option>
+                            <option value="2">2 am</option>
+                            <option value="3">3 am</option>
+                            <option value="4">4 am</option>
+                            <option value="5">5 am</option>
+                            <option value="6">6 am</option>
+                            <option value="7">7 am</option>
+                            <option value="8">8 am</option>
+                            <option value="9">9 am</option>
+                            <option value="10">10 am</option>
+                            <option value="11">11 am</option>
+                            <option value="12">12 pm</option>
+                            <option value="13">1 pm</option>
+                            <option value="14">2 pm</option>
+                            <option value="15">3 pm</option>
+                            <option value="16">4 pm</option>
+                            <option value="17">5 pm</option>
+                            <option value="18">6 pm</option>
+                            <option value="19">7 pm</option>
+                            <option value="20">8 pm</option>
+                            <option value="21">9 pm</option>
+                            <option value="22">10 pm</option>
+                            <option value="23">11 pm</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selType">Type</label>
+
+                        <select class="form-control" id="selType" ng-model="newRequest.type">
+                            <option value="0">Workday (Mon-Fri)</option>
+                            <option value="1">Weekend (Sat-Sun)</option>
+                            <option value="2">Weekday (Mon-Sun)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtSearch1">Search 1</label>
+                        <input type="text" class="form-control" id="txtSearch1" placeholder="Search 1" ng-model="newRequest.search1">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtSearch2">Search 2</label>
+                        <input type="text" class="form-control" id="txtSearch2" placeholder="Search 2" ng-model="newRequest.search2">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtSearch3">Search 3</label>
+                        <input type="text" class="form-control" id="txtSearch3" placeholder="Search 3" ng-model="newRequest.search3">
+                    </div>
+                    <div class="form-group">
+                        <label for="selCountry">Country</label>
+
+                        <select class="form-control" id="selCountry" ng-model="newRequest.country">
+                            <option value="0">America</option>
+                            <option value="1">Canada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtFilter">Filter</label>
+                        <input type="text" class="form-control" id="txtFilter" placeholder="Filter" ng-model="newRequest.filter">
+                    </div>
+   
+                    <button type="submit" class="btn btn-primary" ng-click="createRequest()">Save</button>
+                </form>
+            </div>
+            <div class="panel-footer">
+                Please create new request.
+            </div>
+        </div>
+    </div>
+</div>
+

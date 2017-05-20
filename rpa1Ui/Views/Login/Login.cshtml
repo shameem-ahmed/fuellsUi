@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Login</h2>
+
+<div class="row" ng-app="rpa1" ng-cloak ng-controller="loginController">
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Register</h3>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="txtEmail">Email address</label>
+                        <input type="email" class="form-control" id="txtEmail" placeholder="Email" ng-model="register.email">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtName">Full Name</label>
+                        <input type="text" class="form-control" id="txtName" placeholder="Full Name" ng-model="register.name">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPassword1">Password</label>
+                        <input type="password" class="form-control" id="txtPassword1" placeholder="Password" ng-model="register.password">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPassword2">Confirm Password</label>
+                        <input type="password" class="form-control" id="txtPassword2" placeholder="Confirm Password" ng-model="register.confirmPassword">
+                    </div>
+
+                    <button type="submit" class="btn btn-info" ng-click="doRegister()">Register</button>
+                </form>
+            </div>
+            <div class="panel-footer">
+                Please register using your email id.
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Login</h3>
+            </div>
+            <div class="panel-body">
+
+                <form>
+                    <div class="form-group">
+                        <label for="txtLoginEmail">Email address</label>
+                        <input type="email" class="form-control" id="txtLoginEmail" placeholder="Email" ng-model="login.email">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtLoginPwd">Password</label>
+                        <input type="password" class="form-control" id="txtLoginPwd" placeholder="Password" ng-model="login.password">
+                    </div>
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="login.isRemember"> Remember me
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-click="doLogin()">Login</button>
+                </form>
+
+            </div>
+            <div class="panel-footer">
+                Please login using your email id.
+            </div>
+        </div>
+    </div>
+</div>
+

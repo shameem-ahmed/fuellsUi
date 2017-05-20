@@ -1,146 +1,177 @@
+//CALLED FROM _LAYOUT2
 function doUser(crPage) {
-    if (crPage == 'liPageUser') {
 
-        $("#divAccess").hide();
-        $("#divUpdate").hide();
+    var crTab = 0;
+   
+    $("#divAccess").hide();
+    $("#divUpdate").hide();
 
-        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+    $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
-        $("#tblUser").DataTable({
-            "autoWidth": false,
-            "ajax": {
-                "url": apiUrl + "user/getall",
-                "dataSrc": "",
-                "headers": {
-                    "Authorization": "Bearer " + token
-                }
-            },
-            "columns": [
-                {
-                    "data": "person.photo",
-                    "orderSequence": [],
-                    "render": function (data, type, row) {
-                        if (data == undefined) {
-                            return ('<img class="imgSmall" src="../assets/images/users/no-image.jpg"/>');
+    $("#tblUser").DataTable({
+        "autoWidth": false,
+        "ajax": {
+            "url": apiUrl + "user/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            {
+                "data": "person.photo",
+                "orderSequence": [],
+                "render": function (data, type, row) {
+
+                    var sDisable = '';
+
+                    if (isAdmin) {
+                        //if login user is admin
+                        if (row.isAdmin == false) {
+                            //if the row user is NOT admin
+                            sDisable = '';
                         }
                         else {
-                            return ('<img class="imgSmall" id="profileImg1" src="../assets/images/users/' + data + '"/>');
+                            sDisable = ' disabled ';
+
                         }
-                    }
-                },
-                {
-                    "data": "flag",
-                    "orderSequence": [],
-                    "render": function (data, type, row) {
-                        if (data == 0) {
-                            return '<i style="color:silver;" class="fa fa-flag-o"></i>';
-                        }
-                        else if (data == 1) {
-                            return '<i style="color:red;" class="fa fa-flag"></i> ';
-                        }
-                        else if (data == 2) {
-                            return '<i style="color:blue;" class="fa fa-flag"></i> ';
-                        }
-                        else if (data == 3) {
-                            return '<i style="color:green;" class="fa fa-flag"></i> ';
-                        }
-                        else {
-                            return '<i style="color:silver;" class="fa fa-flag-o"></i>';
-                        }
-                    }
-                },
-                { "data": "name" },
-                { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "person.email", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "person.phone", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                {
-                    "data": "isAdmin",
-                    "orderSequence": [],
-                    "render": function (data, type, row) {
-                        if (isAdmin) {
-                            //if login user is admin
-                            if (data == false) {
-                                //if the row user is NOT admin
-                                return '<button type="button" onclick="showAccess(\'' + row._id + '\');" class="btn btn-info btn-xs pull-right">Change</button>';
-                            }
-                            else {
-                                return '';
-                            }
-                        }
-                        else {
-                            return '';
-                        }
-                    }
-                }
-            ]
-        });
-
-        $("#btnUserNew").click(function () {
-            $("#divTable").removeClass("col-md-12").addClass("col-md-8");
-            $("#divUpdate").show(500);
-        });
-
-        $("#btnUserUpdateSave").click(function () {
-            $("#divUpdate").hide(500);
-            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
-        });
-
-
-        $("#btnAccessSave").click(function () {
-
-            var rows = $("tr", $("#tbodyAccess"));
-
-            var aAccess = [];
-
-            $(rows).each(function () {
-
-                var acsCode = $(this).find("input[type=hidden]").eq(1).val();
-
-                var acsAccess = "";
-
-                $(this).find("input[type=checkbox]").each(function () {
-
-                    if ($(this).prop("checked") == true) {
-                        acsAccess = acsAccess + '1';
                     }
                     else {
-                        acsAccess = acsAccess + '0';
+                        sDisable = ' disabled ';
                     }
-                });
 
-                aAccess.push({ id: acsCode, accessCode: acsAccess  });
+                    var sFlag = '<i style="color:silver;" class="fa fa-flag-o"></i>';
 
+                    if (row.flag == 0) {
+                        sFlag = '<i style="color:silver;" class="fa fa-flag-o"></i>';
+                    }
+                    else if (row.flag == 1) {
+                        sFlag = '<i style="color:red;" class="fa fa-flag"></i>';
+                    }
+                    else if (row.flag == 2) {
+                        sFlag = '<i style="color:blue;" class="fa fa-flag"></i>';
+                    }
+                    else if (row.flag == 3) {
+                        sFlag = '<i style="color:green;" class="fa fa-flag"></i>';
+                    }
+
+                    sFlag = '<button ' + sDisable + ' class="btn btn-default">' + sFlag + '</button> &nbsp;';
+
+
+                    var sRender = '<label class="switch switch-small"><input type="radio" ' + sDisable + ' name="switch-radio1" value="1" /><span></span></label> &nbsp;';
+
+                    sRender += '<button class="btn btn-warning" ' + sDisable + ' onclick="showAccess(\'' + row._id + '\');"><i class="glyphicon glyphicon-lock"></i></button> &nbsp;' + sFlag;
+                    
+                    if (data == undefined) {
+                        sRender += '<img class="imgSmall" src="../assets/images/users/no-image.jpg"/></label>';
+                    }
+                    else {
+                        sRender += '<img class="imgSmall" id="profileImg1" src="../assets/images/users/' + data + '"/></label>';
+                    }
+
+                    return (sRender);
+                }
+            },
+            { "data": "name" },
+            { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "person.email", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "person.phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ]
+    });
+
+
+    //BTN NEW USER CLICK EVENT
+    $("#btnUserNew").click(function () {
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divUpdate").show();
+    });
+
+    //NEW USER-SAVE CHANGES CLICK EVENT
+    $("#btnUserUpdateSave").click(function () {
+
+        if (crTab == 0) {
+
+        }
+
+
+        $("#divUpdate").hide();
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+    });
+
+    //BTN ACCESS SAVE CLICK EVENT
+    $("#btnAccessSave").click(function () {
+
+        var rows = $("tr", $("#tbodyAccess"));
+
+        var aAccess = [];
+
+        $(rows).each(function () {
+
+            var acsCode = $(this).find("input[type=hidden]").eq(1).val();
+
+            var acsAccess = "";
+
+            $(this).find("input[type=checkbox]").each(function () {
+
+                if ($(this).prop("checked") == true) {
+                    acsAccess = acsAccess + '1';
+                }
+                else {
+                    acsAccess = acsAccess + '0';
+                }
             });
 
-            console.log(aAccess);
+            aAccess.push({ id: acsCode, accessCode: acsAccess });
 
-            fuLib.access.updateMulti(aAccess).success(function (data, status, xhr) {
-
-                console.log(data);
-
-                noty({ text: data.message, layout: 'topRight', type: 'success' });
-
-
-            }).error(function (xhr, status, error) {
-                //access.updateMulti failed
-                handleError('access.updateMulti', xhr, status, error);
-            });
-
-            $("#divAccess").hide(500);
-            $("#divList").show(500);
         });
 
-        $("#btnAccessCancel").click(function () {
-            $("#divAccess").hide(500);
-            $("#divList").show(500);
+        console.log(aAccess);
+
+        fuLib.access.updateMulti(aAccess).success(function (data, status, xhr) {
+
+            console.log(data);
+
+            noty({ text: data.message, layout: 'topRight', type: 'success' });
+
+
+        }).error(function (xhr, status, error) {
+            //access.updateMulti failed
+            handleError('access.updateMulti', xhr, status, error);
         });
 
-        $("#btnAccessReset").click(function () {
-            showAccess($("#hidSelUser").val());
-        });
-    }
+        $("#divAccess").hide(500);
+        $("#divList").show(500);
+    });
+
+    //BTN ACCESS CANCEL CLICK EVENT
+    $("#btnAccessCancel").click(function () {
+        $("#divAccess").hide(500);
+        $("#divList").show(500);
+    });
+
+    //BTN ACCESS RESET CLICK EVENT
+    $("#btnAccessReset").click(function () {
+        showAccess($("#hidSelUser").val());
+    });
+
+    //USER TAB CLICK EVENT
+    $("#tabUser").click(function () {
+        crTab = 0;
+    });
+
+    //PERSON TAB CLICK EVENT
+    $("#tabPerson").click(function () {
+        crTab = 1;
+    });
+
+    //ADDRESS TAB CLICK EVENT
+    $("#tabAddress").click(function () {
+        crTab = 2;
+    });
+
 }
 
+// CALLED FROM BTN CHANGE IN ACCESS COL IN USER TABLE
 function showAccess(userId) {
 
     $("#hidSelUser").val(userId);
@@ -221,6 +252,7 @@ function showAccess(userId) {
 
 var toggleRow = true;
 
+//HIDDEN FEATURE, WHEN CLICKED ON ROW TITLE IN USER ACCESS
 function selectAllOptions(index) {
 
     var rows = $("tr", $("#tbodyAccess"));
