@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.IO;
 
 namespace rpa1Timer
 {
@@ -107,5 +108,90 @@ namespace rpa1Timer
             await collection.InsertOneAsync(user);
 
         }
+        public void CreateResponse(rpa1Request req)
+        {
+            
+            string filepath = $@"C:\RPAFAISAL\Data\{req.User}\results.csv";
+
+            string[] allLines = File.ReadAllLines(filepath);
+            var query = (from line in allLines
+                         let data = line.Split(',')
+                         select new
+                         {
+                             RunDate = data[0],
+                             title = data[1],
+                             isBuyNow = data[2],
+                             price = data[7],
+                             bidsCount = data[4],
+                             endingTime = data[5],
+                             url = data[6],
+                             datePosted = data[8],
+                             returns = "",
+                             condition = "",
+                             pageNo = "",
+                             rowNo = ""
+                         }).ToList();
+
+            var res = new BsonDocument
+            {
+                { "request", req.Id },
+                { "runDate", DateTime.Now.ToString() },
+                { "resultCount", query.Count() }
+
+            };
+            var collection = _database.GetCollection<BsonDocument>("Response");
+
+            collection.InsertOne(res);
+
+            string resId = res["_id"].ToString();
+
+            var collection2 = _database.GetCollection<BsonDocument>("ResponseDetail");
+
+
+            int i = 0;
+            foreach (var row in query)
+            {
+                if (i > 0)
+                {
+                    var res2 = new BsonDocument
+                    {
+                        { "response", resId },
+                        { "title", row.title },
+                        { "isBuyNow", row.isBuyNow },
+                        { "price", row.price },
+                        { "bidsCount", row.bidsCount},
+                        { "endingTime", row.endingTime },
+                        { "url", row.url },
+                        { "datePosted", row.datePosted },
+                        { "retrns", row.returns },
+                        { "condition", row.condition },
+                        { "pageNo", row.pageNo},
+                        { "rowNo", row.rowNo }
+
+                    };
+
+                    collection2.InsertOne(res2);
+                }
+                i++;
+            }
+        }
+
+        public async void responseInsert(dynamic Data)
+        {
+            var user = new BsonDocument
+            {
+                { "request", "" },
+                { "runDate", DateTime.Now.ToString() },
+                { "resultCount", Data.Count() }
+
+            };
+
+            var collection = _database.GetCollection<BsonDocument>("Response");
+
+            await collection.InsertOneAsync(Data);
+
+        }
+
+
     }
 }
