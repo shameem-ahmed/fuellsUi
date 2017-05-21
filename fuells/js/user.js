@@ -2,6 +2,7 @@
 function doUser(crPage) {
 
     var crTab = 0;
+    var modeUpdate = 'new';
    
     $("#divAccess").hide();
     $("#divUpdate").hide();
@@ -82,20 +83,56 @@ function doUser(crPage) {
 
     //BTN NEW USER CLICK EVENT
     $("#btnUserNew").click(function () {
+        modeUpdate = 'new';
+
         $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
+
+    });
+
+    //BTN EDIT USER CLICK EVENT
+    $("#btnUserEdit").click(function () {
+        modeUpdate = 'edit';
+
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divUpdate").show();
+
     });
 
     //NEW USER-SAVE CHANGES CLICK EVENT
     $("#btnUserUpdateSave").click(function () {
 
-        if (crTab == 0) {
+        if (modeUpdate == 'new') {
+            //debugger
+            if (crTab == 0) {
+                if ($("#txtLogin").val().trim().length === 0) {
+                    noty({ text: "Please type login name", layout: 'topRight', type: 'error', timeout: 2000 });
+                    return false;
+                }
+
+                if ($("#txtPwd1").val().trim().length === 0) {
+                    noty({ text: "Please type password", layout: 'topRight', type: 'error', timeout: 2000 });
+                    return false;
+                }
+                else {
+
+                    console.log($("#txtPwd1").val() == $("#txtPwd2").val());
+
+                    if ($("#txtPwd1").val() != $("#txtPwd2").val()) {
+                        noty({ text: "Password confirmation does not match.", layout: 'topRight', type: 'error', timeout: 2000 });
+                        return false;
+                    }
+                }
+            }
+
+            $("#divUpdate").hide();
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+        }
+        else if (modeUpdate == 'edit') {
 
         }
 
-
-        $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+        
     });
 
     //BTN ACCESS SAVE CLICK EVENT
