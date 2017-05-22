@@ -17,6 +17,7 @@ namespace rpa1Timer
 {
     class Program
     {
+
         static bool bTest = false;
 
         static void Main(string[] args)
