@@ -39,114 +39,66 @@ namespace rpa1Timer
 
             m2.setup();
 
-
-
-          
-
-           // m2.responseInsert(query);
-
             //2. start timer
             bool endless = true;
 
             while (endless)
             {
+
                 //2.1. get all requests
-                Task<List<rpa1Request>> task1 = m2.requestGetAll();
+                List<rpa1Request> lstReqs = m2.requestGetAll();
 
-                bool isWip = true;
-
-                while (isWip)
+                //2.2. loop all requests
+                foreach (rpa1Request req in lstReqs)
                 {
-                    if (task1.IsCompleted)
+                    int min = 0;
+                    string hour = req.Time;
+                    if (bTest)
                     {
-                        List<rpa1Request> lstReqs = task1.Result;
+                        min = DateTime.Now.Minute;
+                        hour = DateTime.Now.Hour.ToString();
+                    }
+                    if (DateTime.Now.Minute == min)
+                    {
 
-                        //2.2. loop all requests
-                        foreach (rpa1Request req in lstReqs)
+                        if (DateTime.Now.Hour.ToString() == hour)
                         {
-                            int min = 0;
-                            string hour = req.Time;
-                            if (bTest)
-                            {
-                                min = DateTime.Now.Minute;
-                                hour = DateTime.Now.Hour.ToString();
-                            }
-                            if (DateTime.Now.Minute == min)
-                            {
+                            //2.2.3 write search items in search.txt
+                            StreamWriter sw = new StreamWriter($"{sFolder}search.txt");
+                            sw.WriteLine(req.Search1);
+                            sw.WriteLine(req.Search2);
+                            sw.WriteLine(req.Search3);
+                            sw.Close();
 
-                                if (DateTime.Now.Hour.ToString() == hour)
-                                {
-                                    //2.2.3 write search items in search.txt
-                                    StreamWriter sw = new StreamWriter($"{sFolder}search.txt");
-                                    sw.WriteLine(req.Search1);
-                                    sw.WriteLine(req.Search2);
-                                    sw.WriteLine(req.Search3);
-                                    sw.Close();
+                            //2.2.4 write filter in filter.txt
+                            sw = new StreamWriter($"{sFolder}filter.txt");
+                            sw.WriteLine(req.Filter);
+                            sw.Close();
 
-                                    //2.2.4 write filter in filter.txt
-                                    sw = new StreamWriter($"{sFolder}filter.txt");
-                                    sw.WriteLine(req.Filter);
-                                    sw.Close();
+                            //2.2.5 write country in country.txt
+                            sw = new StreamWriter($"{sFolder}country.txt");
+                            sw.WriteLine((req.Country == "0") ? "America" : "Canada");
+                            sw.Close();
 
-                                    //2.2.5 write country in country.txt
-                                    sw = new StreamWriter($"{sFolder}country.txt");
-                                    sw.WriteLine((req.Country == "0") ? "America" : "Canada");
-                                    sw.Close();
+                            //2.2.6 write user in user.txt
+                            sw = new StreamWriter($"{sFolder}user.txt");
+                            sw.WriteLine(req.User);
+                            sw.Close();
 
-                                    //2.2.6 write user in user.txt
-                                    sw = new StreamWriter($"{sFolder}user.txt");
-                                    sw.WriteLine(req.User);
-                                    sw.Close();
+                            //2.2.7 launch uiPath robo
+                            var process = Process.Start($"{sUiPathFolder}\\UiRobot.exe", $"/file: {sRoboPath}");
 
+                            process.WaitForExit();
 
-                                    //2.2.7 launch uiPath robo
-                                    var process = Process.Start($"{sUiPathFolder}\\UiRobot.exe", $"/file: {sRoboPath}");
+                            //2.2.8. read csv file and push data in mongodb (response)
+                            m2.CreateResponse(req);
 
-                                    process.WaitForExit();
-
-                                    //2.2.8. read csv file and push data in mongodb (response)
-                                   m2.CreateResponse(req);
-
-
-
-
-                                }
-                            }
                         }
-
-
-                        Console.WriteLine(lstReqs.Count.ToString());
-                        //Console.Read();
-
-                        isWip = false;
                     }
                 }
                 //wait for a minute
                 Thread.Sleep(1000);
-
             }
-
-
-            Task<int> userCount = m2.userGetAll();
-
-
-            while (endless)
-            {
-                if (userCount.IsCompleted)
-                {
-                    Console.WriteLine(userCount.Result.ToString());
-                    Console.ReadLine();
-                    endless = false;
-                }
-            }
-
-            m2.userInsert("shameem@microsoft.com", "Shameem Ahmed", "P@ssw0rd");
-
         }
-
-        
-
-
-
     }
 }
