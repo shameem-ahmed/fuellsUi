@@ -95,12 +95,46 @@ namespace rpa1Timer
                             //2.2.8. read csv file and push data in mongodb (response)
                             m2.CreateResponse(req);
 
+
+
+
+                                }
+                            }
                         }
+
+
+                        Console.WriteLine(lstReqs.Count.ToString());
+                        //Console.Read();
+
+                        isWip = false;
                     }
                 }
                 //wait for a minute
                 Thread.Sleep(1000);
+
             }
+
+
+            Task<int> userCount = m2.userGetAll();
+
+
+            while (endless)
+            {
+                if (userCount.IsCompleted)
+                {
+                    Console.WriteLine(userCount.Result.ToString());
+                    Console.ReadLine();
+                    endless = false;
+                }
+            }
+
+            m2.userInsert("shameem@microsoft.com", "Shameem Ahmed", "P@ssw0rd");
+
         }
+
+        
+
+
+
     }
 }

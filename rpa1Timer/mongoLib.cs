@@ -24,6 +24,12 @@ namespace rpa1Timer
             _database = _client.GetDatabase(mongoDb);
         }
 
+        public MongoClient CreateClient()
+        {
+            _client = new MongoClient(mongoUrl);
+            _database = _client.GetDatabase(mongoDb);
+        }
+
         public List<rpa1Request> requestGetAll()
         {
             List<rpa1Request> lstReqs = new List<rpa1Request>();
