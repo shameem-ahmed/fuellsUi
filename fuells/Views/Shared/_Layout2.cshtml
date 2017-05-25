@@ -261,15 +261,9 @@
 
             fuLib.navigation.load(crPage);
 
-
             if (crPage == 'liPageUser') {
                 doUser();
             }
-
-
-
-
-
         });
 
         function handleError(action, xhr, status, error) {
@@ -281,12 +275,12 @@
 
                 var err = eval("(" + $(xhr.responseText).text() + ")");
 
-                noty({ text:err.message, layout:'topRight', type:'error' });
+                noty({ text: err.message, layout: 'topRight', type: 'error', timeout: 2000 });
 
             }
             catch(err) {
 
-                noty({ text:action + ' failed.', layout:'topRight', type:'error' });
+                noty({ text: action + ' failed.', layout: 'topRight', type: 'error', timeout: 2000 });
             }
         }
 

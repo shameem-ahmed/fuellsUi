@@ -3,12 +3,15 @@ function doUser(crPage) {
 
     var crTab = 0;
     var modeUpdate = 'new';
+    var selId = '';
+    var selAdmin = false;
    
     $("#divAccess").hide();
     $("#divUpdate").hide();
 
     $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
+    //Configures DataTable
     $("#tblUser").DataTable({
         "autoWidth": false,
         "ajax": {
@@ -26,49 +29,35 @@ function doUser(crPage) {
 
                     var sDisable = '';
 
-                    if (isAdmin) {
-                        //if login user is admin
-                        if (row.isAdmin == false) {
-                            //if the row user is NOT admin
-                            sDisable = '';
-                        }
-                        else {
-                            sDisable = ' disabled ';
-
-                        }
-                    }
-                    else {
-                        sDisable = ' disabled ';
-                    }
-
-                    var sFlag = '<i style="color:silver;" class="fa fa-flag-o"></i>';
+                    var sFlag = '<i style="color:silver;" class="fa fa-flag-o pull-right"></i>&nbsp;';
 
                     if (row.flag == 0) {
-                        sFlag = '<i style="color:silver;" class="fa fa-flag-o"></i>';
+                        sFlag = '<i style="color:silver;" class="fa fa-flag-o pull-right"></i>&nbsp;';
                     }
                     else if (row.flag == 1) {
-                        sFlag = '<i style="color:red;" class="fa fa-flag"></i>';
+                        sFlag = '<i style="color:red;" class="fa fa-flag pull-right"></i>&nbsp;';
                     }
                     else if (row.flag == 2) {
-                        sFlag = '<i style="color:blue;" class="fa fa-flag"></i>';
+                        sFlag = '<i style="color:blue;" class="fa fa-flag pull-right"></i>&nbsp;';
                     }
                     else if (row.flag == 3) {
-                        sFlag = '<i style="color:green;" class="fa fa-flag"></i>';
+                        sFlag = '<i style="color:green;" class="fa fa-flag pull-right"></i>&nbsp;';
                     }
 
-                    sFlag = '<button ' + sDisable + ' class="btn btn-default">' + sFlag + '</button> &nbsp;';
+                    //var sRender = '<label class="switch switch-small"><input id="switchUser" type="radio" ' + sDisable + ' name="switch-user" value="1" /><span></span></label> &nbsp;';
+                    var sRender = '';
 
-
-                    var sRender = '<label class="switch switch-small"><input type="radio" ' + sDisable + ' name="switch-radio1" value="1" /><span></span></label> &nbsp;';
-
-                    sRender += '<button class="btn btn-warning" ' + sDisable + ' onclick="showAccess(\'' + row._id + '\');"><i class="glyphicon glyphicon-lock"></i></button> &nbsp;' + sFlag;
                     
                     if (data == undefined) {
-                        sRender += '<img class="imgSmall" src="../assets/images/users/no-image.jpg"/></label>';
+                        sRender += '<img class="imgSmall" src="../assets/images/users/no-image.jpg"/></label>'+ sFlag;
                     }
                     else {
-                        sRender += '<img class="imgSmall" id="profileImg1" src="../assets/images/users/' + data + '"/></label>';
+                        sRender += '<img class="imgSmall" id="profileImg1" src="../assets/images/users/' + data + '"/></label>'+ sFlag;
                     }
+
+                    sRender += '<input type="hidden" value="' + row._id + '" />';
+                    sRender += '<input type="hidden" value="' + row.isAdmin + '" />';
+
 
                     return (sRender);
                 }
@@ -80,8 +69,117 @@ function doUser(crPage) {
         ]
     });
 
+    //fill COUNTRIES
+    fuLib.gloc.getCountries().success(function (data, status, xhr) {
+        fillGeoLoc('#selCountry', data);
 
-    //BTN NEW USER CLICK EVENT
+    }).error(function (xhr, status, error) {
+        //gloc.getCountries failed
+        handleError('gloc.getCountries', xhr, status, error);
+    });
+
+    //fill PERSON GOVT CODES
+    fuLib.lov.getLovPersonGovtCodes().success(function (data, status, xhr) {
+        fillLov('#selGovtCode', data);
+
+    }).error(function (xhr, status, error) {
+        //lov.getLovPersonGovtCodes failed
+        handleError('lov.getLovPersonGovtCodes', xhr, status, error);
+    });
+
+    //ADDRESS COUNTRY dropdown change event
+    $('#selCountry').change(function (e) {
+        var parent = $('#selCountry').val();
+
+        var items = '<option value="0">--select--</option>';
+        $("#selState").html(items);
+        $("#selState").selectpicker('refresh');
+        $("#selCity").html(items);
+        $("#selCity").selectpicker('refresh');
+        $("#selArea").html(items);
+        $("#selArea").selectpicker('refresh');
+
+        if (parent != '0') {
+            fuLib.gloc.getStates(parent).success(function (data, status, xhr) {
+                //fill STATES
+                fillGeoLoc('#selState', data);
+
+            }).error(function (xhr, status, error) {
+                //gloc.getStates failed
+                handleError('gloc.getStates', xhr, status, error);
+            });
+        }
+    });
+
+    //ADDRESS STATE dropdown change event
+    $('#selState').change(function (e) {
+        var parent = $('#selState').val();
+
+        var items = '<option value="0">--select--</option>';
+        $("#selCity").html(items);
+        $("#selCity").selectpicker('refresh');
+        $("#selArea").html(items);
+        $("#selArea").selectpicker('refresh');
+
+        if (parent != '0') {
+            fuLib.gloc.getCities(parent).success(function (data, status, xhr) {
+                //fill CITIES
+                fillGeoLoc('#selCity', data);
+
+            }).error(function (xhr, status, error) {
+                //gloc.getCities failed
+                handleError('gloc.getCities', xhr, status, error);
+            });
+        }
+    });
+
+    //ADDRESS CITY dropdown change event
+    $('#selCity').change(function (e) {
+        var parent = $('#selCity').val();
+
+        var items = '<option value="0">--select--</option>';
+        $("#selArea").html(items);
+        $("#selArea").selectpicker('refresh');
+
+        if (parent != '0') {
+            fuLib.gloc.getAreas(parent).success(function (data, status, xhr) {
+                //fill AREAS
+                fillGeoLoc('#selArea', data);
+
+            }).error(function (xhr, status, error) {
+                //gloc.getAreas failed
+                handleError('gloc.getAreas', xhr, status, error);
+            });
+        }
+    });
+
+    $('#tblUser').on('draw.dt', function () {
+        onresize();
+    });
+
+    //TABLE ROW click event
+    $("#tblUser tbody").on('click', 'tr', function () {
+
+        //console.log($(this));
+
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            var table = $('#tblUser').DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selId = $(this).find('input[type=hidden]').eq(0).val();
+            selAdmin = $(this).find('input[type=hidden]').eq(1).val();
+
+            $("#btnUserAccess").prop('disabled', selAdmin == "true");
+
+
+        }
+    });
+
+    //BTN USER NEW click event
     $("#btnUserNew").click(function () {
         modeUpdate = 'new';
 
@@ -90,7 +188,7 @@ function doUser(crPage) {
 
     });
 
-    //BTN EDIT USER CLICK EVENT
+    //BTN USER EDIT click event
     $("#btnUserEdit").click(function () {
         modeUpdate = 'edit';
 
@@ -99,43 +197,208 @@ function doUser(crPage) {
 
     });
 
-    //NEW USER-SAVE CHANGES CLICK EVENT
+    //BTN USER ACCESS click event
+    $("#btnUserAccess").click(function () {
+
+        showAccess(selId);
+    });
+
+    //NEW USER-SAVE CHANGES click event
     $("#btnUserUpdateSave").click(function () {
 
-        if (modeUpdate == 'new') {
-            //debugger
-            if (crTab == 0) {
-                if ($("#txtLogin").val().trim().length === 0) {
-                    noty({ text: "Please type login name", layout: 'topRight', type: 'error', timeout: 2000 });
-                    return false;
-                }
+        var isEmptyUser = false;
+        var isEmptyPerson = false;
+        var isEmptyAddress = false;
 
-                if ($("#txtPwd1").val().trim().length === 0) {
-                    noty({ text: "Please type password", layout: 'topRight', type: 'error', timeout: 2000 });
+        var oUser = {
+            name: $("#txtLogin").val(),
+            pwd: $("#txtPwd1").val(),
+            person: null,
+            dateExpiry: '31-Dec-2050',
+            isActive: true,
+            flag: 0,
+            isAdmin: $("#chkAdmin").prop('checked'),
+        };
+
+        var oPerson = {
+            name: $("#txtName").val(),
+            email: $("#txtEmail").val(),
+            phone: $("#txtPhone").val(),
+            facebook: $("#txtFacebook").val(),
+            twitter: $("#txtTwitter").val(),
+            skype: $("#txtSkype").val(),
+            address: null,
+            lovGovtNo: $("#selGovtCode").val(),
+            govtNo: $("#txtGovtCode").val(),
+            photo: '',
+            dateBirth: $("#txtDateBirth").val(),
+            dateAnniversary: $("#txtDateAnniversary").val(),
+            maritalStatus: $("input[name=iradioMStatus]:checked", "#frmPerson").val(),
+            gender: $("input[name=iradioGender]:checked", "#frmPerson").val(),
+            isActive: true,
+            flag: 0
+        };
+
+        var oAddress = {
+            address1: $("#txtAddress1").val(),
+            address2: $("#txtAddress2").val(),
+            country: $("#selCountry").val(),
+            state: $("#selState").val(),
+            city: $("#selCity").val(),
+            area: $("#selArea").val(),
+            isActive: true,
+            flag: 0
+        };
+
+        console.log(oUser);
+        console.log(oPerson);
+        console.log(oAddress);
+
+        return false;
+
+        //check if oUser is empty
+        if (oUser.name.trim().length == 0 &&
+            oUser.pwd.trim().length == 0
+            ) {
+            isEmptyUser = true;
+        }
+
+        //check if oPerson is empty
+        if (oPerson.name.trim().length == 0 &&
+            oPerson.email.trim().length == 0 &&
+            oPerson.phone.trim().length == 0 &&
+            oPerson.facebook.trim().length == 0 &&
+            oPerson.twitter.trim().length == 0 &&
+            oPerson.skype.trim().length == 0 &&
+            oPerson.govtNo.trim().length == 0 &&
+            oPerson.dateBirth.trim().length == 0 &&
+            oPerson.dateAnniversary.trim().length == 0
+            ) {
+            isEmptyPerson = true;
+        }
+
+        //check if oAddress is empty
+        if (oAddress.address1.trim().length == 0 &&
+            oAddress.address2.trim().length == 0 &&
+            oAddress.country != '0' &&
+            oAddress.state != '0' &&
+            oAddress.city != '0' &&
+            oAddress.area != '0' 
+            ) {
+            isEmptyAddress = true;
+        }
+
+        if (modeUpdate == 'new') {
+
+            if (isEmptyUser == true) {
+                    noty({ text: "Please type user details", layout: 'topRight', type: 'error', timeout: 2000 });
                     return false;
+            }
+            else {
+                if (isEmptyPerson == true) {
+                    //save USER details
+
+                    fuLib.user.add(oUser).success(function (data, status, xhr) {
+
+                        console.log(data);
+
+                        noty({ text: 'User added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                        var table = $("#tblUser").DataTable();
+                        table.ajax.reload();
+
+                    }).error(function (xhr, status, error) {
+                        //user.add failed
+                        handleError('user.add', xhr, status, error);
+                    });
                 }
                 else {
+                    if (isEmptyAddress == true) {
+                        //save USER-PERSON details
 
-                    console.log($("#txtPwd1").val() == $("#txtPwd2").val());
+                        //add PERSON
+                        fuLib.person.add(oPerson).success(function (data, status, xhr) {
 
-                    if ($("#txtPwd1").val() != $("#txtPwd2").val()) {
-                        noty({ text: "Password confirmation does not match.", layout: 'topRight', type: 'error', timeout: 2000 });
-                        return false;
+                            noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                            oUser.person = data.person._id;
+
+                            //add USER
+                            fuLib.user.add(oUser).success(function (data, status, xhr) {
+
+                                noty({ text: 'User added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                                var table = $("#tblUser").DataTable();
+                                table.ajax.reload();
+
+                            }).error(function (xhr, status, error) {
+                                //user.add failed
+                                handleError('user.add', xhr, status, error);
+                            });
+
+                        }).error(function (xhr, status, error) {
+                            //person.add failed
+                            handleError('person.add', xhr, status, error);
+                        });
+                    }
+                    else {
+                        //save USER-PERSON-ADDRESS details
+
+                        //add ADDRESS
+                        fuLib.address.add(oAddress).success(function (data, status, xhr) {
+
+                            noty({ text: 'Address added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                            oPerson.address = data.address._id;
+
+                            //add PERSON
+                            fuLib.person.add(oPerson).success(function (data, status, xhr) {
+
+                                noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                                oUser.person = data.person._id;
+
+                                //add USER
+                                fuLib.user.add(oUser).success(function (data, status, xhr) {
+
+                                    noty({ text: 'User added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                                    var table = $("#tblUser").DataTable();
+                                    table.ajax.reload();
+
+                                }).error(function (xhr, status, error) {
+                                    //address.add failed
+                                    handleError('address.add', xhr, status, error);
+                                });
+
+                            }).error(function (xhr, status, error) {
+                                //person.add failed
+                                handleError('person.add', xhr, status, error);
+                            });
+
+                        }).error(function (xhr, status, error) {
+                            //user.add failed
+                            handleError('user.add', xhr, status, error);
+                        });
                     }
                 }
             }
 
             $("#divUpdate").hide();
             $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+
+            return false;
+
         }
         else if (modeUpdate == 'edit') {
 
         }
+       
+        return false;
 
-        
     });
 
-    //BTN ACCESS SAVE CLICK EVENT
+    //BTN ACCESS SAVE click event
     $("#btnAccessSave").click(function () {
 
         var rows = $("tr", $("#tbodyAccess"));
@@ -168,7 +431,7 @@ function doUser(crPage) {
 
             console.log(data);
 
-            noty({ text: data.message, layout: 'topRight', type: 'success' });
+            noty({ text: data.message, layout: 'topRight', type: 'success', timeout: 2000 });
 
 
         }).error(function (xhr, status, error) {
@@ -180,35 +443,61 @@ function doUser(crPage) {
         $("#divList").show(500);
     });
 
-    //BTN ACCESS CANCEL CLICK EVENT
+    //BTN ACCESS CANCEL click event
     $("#btnAccessCancel").click(function () {
         $("#divAccess").hide(500);
         $("#divList").show(500);
     });
 
-    //BTN ACCESS RESET CLICK EVENT
+    //BTN ACCESS RESET click event
     $("#btnAccessReset").click(function () {
         showAccess($("#hidSelUser").val());
     });
 
-    //USER TAB CLICK EVENT
+    //USER TAB click event
     $("#tabUser").click(function () {
         crTab = 0;
     });
 
-    //PERSON TAB CLICK EVENT
+    //PERSON TAB click event
     $("#tabPerson").click(function () {
         crTab = 1;
     });
 
-    //ADDRESS TAB CLICK EVENT
+    //ADDRESS TAB click event
     $("#tabAddress").click(function () {
         crTab = 2;
     });
 
 }
 
-// CALLED FROM BTN CHANGE IN ACCESS COL IN USER TABLE
+// FILL GEO LOCATIONS
+function fillGeoLoc(combo, data) {
+
+    var items = '<option value="0">--select--</option>';
+
+    for (var i = 0; i < data.length; i++) {
+        items += '<option value="' + data[i]._id + '">' + data[i].title + '</option>';
+    }
+
+    $(combo).html(items);
+    $(combo).selectpicker('refresh');
+}
+
+// FILL GEO LOCATIONS
+function fillLov(combo, data) {
+
+    var items = '<option value="0">--select--</option>';
+
+    for (var i = 0; i < data.length; i++) {
+        items += '<option value="' + data[i]._id + '">' + data[i].title + '</option>';
+    }
+
+    $(combo).html(items);
+    $(combo).selectpicker('refresh');
+}
+
+// PERMISSION/SECURITY/ACCESS PANEL
 function showAccess(userId) {
 
     $("#hidSelUser").val(userId);

@@ -12,7 +12,6 @@ using MongoDB;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-
 namespace rpa1Timer
 {
     class Program
@@ -30,7 +29,7 @@ namespace rpa1Timer
             string sFolder = ConfigurationManager.AppSettings["sFolder"].ToString();
             string sUiPathFolder = ConfigurationManager.AppSettings["sUiPathFolder"].ToString();
             string sRoboPath = ConfigurationManager.AppSettings["sRoboPath"].ToString();
-         
+
             //1. setup mongodb
             mongo2 m2 = new mongo2();
 
@@ -44,7 +43,6 @@ namespace rpa1Timer
 
             while (endless)
             {
-
                 //2.1. get all requests
                 List<rpa1Request> lstReqs = m2.requestGetAll();
 
@@ -79,7 +77,7 @@ namespace rpa1Timer
 
                             //2.2.5 write country in country.txt
                             sw = new StreamWriter($"{sFolder}country.txt");
-                            sw.WriteLine((req.Country == "0") ? "America" : "Canada");
+                            sw.WriteLine((req.Country == "0") ? "United States" : "Canada");
                             sw.Close();
 
                             //2.2.6 write user in user.txt
@@ -87,54 +85,49 @@ namespace rpa1Timer
                             sw.WriteLine(req.User);
                             sw.Close();
 
-                            //2.2.7 launch uiPath robo
-                            var process = Process.Start($"{sUiPathFolder}\\UiRobot.exe", $"/file: {sRoboPath}");
+                            //2.2.7 clear result.txt
+                            sw = new StreamWriter($"{sFolder}result.txt");
+                            sw.WriteLine("");
+                            sw.Close();
+
+                            //2.2.8. check if UiRobot is running
+                            Process[] pname = Process.GetProcessesByName("UiRobot");
+
+                            if (pname.Length == 0)
+                            {
+                                //2.2.9 set status.txt=idle when UiRobot.exe is not running
+                                sw = new StreamWriter($"{sFolder}status.txt");
+                                sw.WriteLine("idle");
+                                sw.Close();
+                            }
+
+                            //2.2.8 launch uiPath robo
+                            //var process = Process.Start($@"{sUiPathFolder}\UiRobot.exe", $"-file: \"{sRoboPath}\"");
+                            var process = Process.Start(sUiPathFolder + @"\UiRobot.exe", @"/file:" + sRoboPath);
 
                             process.WaitForExit();
 
-                            //2.2.8. read csv file and push data in mongodb (response)
-                            m2.CreateResponse(req);
+                            string sResult = File.ReadAllText($"{sFolder}result.txt");
 
+                            if (sResult.ToLower().Trim() == "success")
+                            {
+                                //2.2.9. read csv file and push data in mongodb (response)
+                                m2.CreateResponse(req);
 
-
-
-                                }
+                                //File.Move(filepath, $@"C:\RPAFAISAL\Data\{req.Id}\results.csv");
+                                File.Delete($@"C:\RPAFAISAL\Data\results.csv");
+                            }
+                            else
+                            {
+                                //2.2.10. handle uiPath fail and errors
+                                sw = new StreamWriter($"{sFolder}status.txt");
+                                sw.WriteLine("idle");
+                                sw.Close();
                             }
                         }
-
-
-                        Console.WriteLine(lstReqs.Count.ToString());
-                        //Console.Read();
-
-                        isWip = false;
                     }
                 }
-                //wait for a minute
-                Thread.Sleep(1000);
-
             }
-
-
-            Task<int> userCount = m2.userGetAll();
-
-
-            while (endless)
-            {
-                if (userCount.IsCompleted)
-                {
-                    Console.WriteLine(userCount.Result.ToString());
-                    Console.ReadLine();
-                    endless = false;
-                }
-            }
-
-            m2.userInsert("shameem@microsoft.com", "Shameem Ahmed", "P@ssw0rd");
-
         }
-
-        
-
-
-
     }
 }

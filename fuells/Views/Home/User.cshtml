@@ -3,7 +3,9 @@
 }
 
 <input type="hidden" id="hidSelMenu" value="liPageUser" />
+<input type="hidden" id="hidSelUser" value="000" />
 
+<!--USER TABLE -->
 <div class="row" id="divList">
     <div class="col-md-8" id="divTable">
         <div class="panel panel-default">
@@ -11,6 +13,8 @@
                 <button type="button" class="btn btn-primary" id="btnUserNew">New User</button>
                 <button type="button" class="btn btn-info" id="btnUserEdit">Edit</button>
                 <button type="button" class="btn btn-danger" id="btnUserDelete">Delete</button>
+                <button type="button" class="btn btn-primary" id="btnUserAccess">Permissions</button>
+
                 <ul class="panel-controls">
                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                     <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
@@ -21,11 +25,11 @@
                 <table class="table DataTable" id="tblUser">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Login</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
+                            <th width="10%"></th>
+                            <th width="15%">Login</th>
+                            <th width="30%">Name</th>
+                            <th width="25%">Email</th>
+                            <th width="20%">Phone</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -33,10 +37,11 @@
             </div>
         </div>
     </div>
+
+    <!--USER UPDATE TABS -->
     <div class="col-md-4" id="divUpdate">
         <div class="block">
-            <form class="form-horizontal" role="form">
-
+            <form class="form-horizontal" action="#" role="form" id="frmPerson">
                 <div class="panel panel-default tabs">
                     <ul class="nav nav-tabs" role="tablist">
                         <li id="tabUser" class="active"><a href="#tab-first" role="tab" data-toggle="tab">User</a></li>
@@ -46,19 +51,19 @@
                     <div class="panel-body tab-content">
                         <div class="tab-pane active" id="tab-first">
                             <!-- User TAB -->
-                            <div class="form-group has-error">
+                            <div class="form-group">
                                 <label class="col-md-3 control-label">Login name</label>
                                 <div class="col-md-9">
                                     <input type="text" id="txtLogin" class="form-control" placeholder="Login Name" />
                                 </div>
                             </div>
-                            <div class="form-group has-error">
+                            <div class="form-group">
                                 <label class="col-md-3 control-label">Password</label>
                                 <div class="col-md-9">
                                     <input type="password" id="txtPwd1" class="form-control" placeholder="Password" />
                                 </div>
                             </div>
-                            <div class="form-group has-error">
+                            <div class="form-group">
                                 <label class="col-md-3 control-label">Confirm Password</label>
                                 <div class="col-md-9">
                                     <input type="password" id="txtPwd2" class="form-control" placeholder="Confirm Password" />
@@ -129,9 +134,6 @@
                                 <label class="col-md-3 control-label">Govt. Code</label>
                                 <div class="col-md-4">
                                     <select id="selGovtCode" class="form-control select">
-                                        <option>License #</option>
-                                        <option>Passport</option>
-                                        <option>PAN</option>
                                     </select>
                                 </div>
                                 <div class="col-md-5">
@@ -144,7 +146,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Photo</label>
                                 <div class="col-md-9">
-                                    <img id="acsUserImage" src="../assets/images/users/shameem.jpg" style="width:100px; height:100px;" />
+                                    <img id="acsUserImage" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
                                     <input id="filePhoto" type="file" class="fileinput" name="filename1" id="filename1" />
                                 </div>
                             </div>
@@ -153,7 +155,7 @@
                                 <label class="col-md-3 control-label">Birth date</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <input type="text" id="txtDateBirth" class="form-control datepicker" value="06-06-2014" data-date="06-06-2014" data-date-format="dd-mm-yyyy" />
+                                        <input type="text" id="txtDateBirth" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" />
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
@@ -162,7 +164,7 @@
                                 <label class="col-md-3 control-label">Anniversary date</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="07-07-2014" data-date="07-07-2014" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
+                                        <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
                                         <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
@@ -170,16 +172,18 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Gender</label>
                                 <div class="col-md-9">
-                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" checked="checked" /> Male</label>
-                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" /> Female</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" checked="checked" value="0" /> Not set</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" value="1"/> Male</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" value="2"/> Female</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Maritial status</label>
                                 <div class="col-md-9">
-                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" /> Married</label>
-                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" checked="checked" /> Not Married</label>
-                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" /> Widow</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" checked="checked" value="0"/> Not set</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="1"/> Married</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="2"/> Not Married</label>
+                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="3"/> Widow</label>
                                 </div>
                             </div>
 
@@ -202,19 +206,13 @@
                                 <label class="col-md-3 control-label">Country</label>
                                 <div class="col-md-9">
                                     <select id="selCountry" class="form-control select">
-                                        <option>India</option>
-                                        <option>America</option>
-                                        <option>Caneda</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">State</label>
                                 <div class="col-md-9">
-                                    <select id="txtState" class="form-control select">
-                                        <option>Tamilnadu</option>
-                                        <option>Karnataka</option>
-                                        <option>Andhra</option>
+                                    <select id="selState" class="form-control select">
                                     </select>
                                 </div>
                             </div>
@@ -222,9 +220,6 @@
                                 <label class="col-md-3 control-label">City</label>
                                 <div class="col-md-9">
                                     <select id="selCity" class="form-control select">
-                                        <option>Chennai</option>
-                                        <option>Madurai</option>
-                                        <option>Salem</option>
                                     </select>
                                 </div>
                             </div>
@@ -232,9 +227,6 @@
                                 <label class="col-md-3 control-label">Area</label>
                                 <div class="col-md-9">
                                     <select id="selArea" class="form-control select">
-                                        <option>T Nagar</option>
-                                        <option>Egmore</option>
-                                        <option>Purasaiwakam</option>
                                     </select>
                                 </div>
                             </div>
@@ -243,14 +235,13 @@
                     <div class="panel-footer">
                         <button id="btnUserUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                     </div>
-                </div>    
+                </div>
             </form>
-        </div>  
+        </div>
     </div>
 </div>
 
-<input type="hidden" id="hidSelUser" value="000" />
-
+<!--USER ACCESS PANEL -->
 <div class="row" id="divAccess">
     <div class="col-md-12">
         <div class="panel panel-default">

@@ -58,68 +58,55 @@ namespace rpa1Timer
 
         }
 
-        public void userInsert(string email, string name, string pwd)
-        {
-            var user = new BsonDocument
-            {
-                { "name", name },
-                { "email", email },
-                { "pwd", pwd },
-                { "isActive", true }
-            };
-
-            var collection = _database.GetCollection<BsonDocument>("users");
-
-            collection.InsertOne(user);
-
-        }
-
         public void CreateResponse(rpa1Request req)
         {
-            
-            string filepath = $@"C:\RPAFAISAL\Data\{req.User}\results.csv";
+            //string filepath = $@"C:\RPAFAISAL\Data\{req.User}\results.csv";
+            string filepath = $@"C:\RPAFAISAL\Data\results.csv";
 
-            string[] allLines = File.ReadAllLines(filepath);
-            var query = (from line in allLines
-                         let data = line.Split(',')
-                         select new
-                         {
-                             RunDate = data[0],
-                             title = data[1],
-                             isBuyNow = data[2],
-                             price = data[7],
-                             bidsCount = data[4],
-                             endingTime = data[5],
-                             url = data[6],
-                             datePosted = data[8],
-                             returns = "",
-                             condition = "",
-                             pageNo = "",
-                             rowNo = ""
-                         }).ToList();
-
-            var res = new BsonDocument
+            if (File.Exists(filepath))
             {
-                { "request", req.Id },
-                { "runDate", DateTime.Now.ToString() },
-                { "resultCount", query.Count() }
+                string[] allLines = File.ReadAllLines(filepath);
+                var query = (from line in allLines
+                             let data = line.Split(',')
+                             select new
+                             {
+                                 RunDate = data[0],
+                                 title = data[1],
+                                 isBuyNow = data[2],
+                                 price = data[7],
+                                 bidsCount = data[4],
+                                 endingTime = data[5],
+                                 url = data[6],
+                                 datePosted = data[8],
+                                 returns = "",
+                                 condition = "",
+                                 pageNo = "",
+                                 rowNo = ""
+                             }).ToList();
 
-            };
-            var collection = _database.GetCollection<BsonDocument>("Response");
-
-            collection.InsertOne(res);
-
-            string resId = res["_id"].ToString();
-
-            var collection2 = _database.GetCollection<BsonDocument>("ResponseDetail");
-
-
-            int i = 0;
-            foreach (var row in query)
-            {
-                if (i > 0)
+                var res = new BsonDocument
                 {
-                    var res2 = new BsonDocument
+                    { "request", req.Id },
+                    { "runDate", DateTime.Now.ToString() },
+                    { "resultCount", query.Count() }
+
+                };
+
+                var collection = _database.GetCollection<BsonDocument>("Response");
+
+                collection.InsertOne(res);
+
+                string resId = res["_id"].ToString();
+
+                var collection2 = _database.GetCollection<BsonDocument>("ResponseDetail");
+
+
+                int i = 0;
+                foreach (var row in query)
+                {
+                    if (i > 0)
+                    {
+                        var res2 = new BsonDocument
                     {
                         { "response", resId },
                         { "title", row.title },
@@ -136,9 +123,10 @@ namespace rpa1Timer
 
                     };
 
-                    collection2.InsertOne(res2);
+                        collection2.InsertOne(res2);
+                    }
+                    i++;
                 }
-                i++;
             }
         }
 
@@ -155,6 +143,22 @@ namespace rpa1Timer
             var collection = _database.GetCollection<BsonDocument>("Response");
 
             collection.InsertOne(Data);
+        }
+
+        public void userInsert(string email, string name, string pwd)
+        {
+            var user = new BsonDocument
+            {
+                { "name", name },
+                { "email", email },
+                { "pwd", pwd },
+                { "isActive", true }
+            };
+
+            var collection = _database.GetCollection<BsonDocument>("users");
+
+            collection.InsertOne(user);
+
         }
     }
 }

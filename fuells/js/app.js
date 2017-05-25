@@ -134,7 +134,106 @@ var fuLib = {
                     dataType: "json"
                 })
             );
-        }
+        },
+
+        add: function (user) {
+            return (
+                $.ajax({
+                    url: apiUrl + "user/add",
+                    data: JSON.stringify(user),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+    },
+
+    person: {
+
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "person/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "person/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (person) {
+            return (
+                $.ajax({
+                    url: apiUrl + "person/add",
+                    data: JSON.stringify(person),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+    },
+
+    address: {
+
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "address/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "address/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (address) {
+            return (
+                $.ajax({
+                    url: apiUrl + "address/add",
+                    data: JSON.stringify(address),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
     },
 
     access: {
@@ -191,8 +290,71 @@ var fuLib = {
                     }
                 })
             );
-        }
+        },
+
+        getLovPersonGovtCodes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/10",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
     },
+
+    gloc: {
+
+        getCountries: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getcountries",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getStates: function (parent) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getstates/" + parent,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getCities: function (parent) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getcities/" + parent,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAreas: function (parent) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getareas/" + parent,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
+    }
 }
 
 
