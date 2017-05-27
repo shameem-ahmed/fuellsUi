@@ -48,6 +48,44 @@ app.factory("rpa1Service", ['$http', function ($http) {
         return $http(req);
     };
 
+    o.getRequest = function (reqId) {
+        var req = {
+            method: 'GET',
+            url: apiUrl + '/user/getreq/' + reqId,
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        }
+
+        return $http(req);
+    };
+
+    o.getResponse = function (reqId) {
+
+        var res = {
+            method: 'GET',
+            url: apiUrl + '/user/getres/' + reqId,
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        }
+
+        return $http(res);
+    };
+
+    o.getResponseDetail = function (resId) {
+
+        var res = {
+            method: 'GET',
+            url: apiUrl + '/user/getresdet/' + resId,
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        }
+
+        return $http(res);
+    };
+
     o.createRequest = function (request) {
 
         var req = {

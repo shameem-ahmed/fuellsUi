@@ -9,8 +9,10 @@ namespace rpa1Ui.Controllers
     public class ResultController : Controller
     {
         // GET: Result
-        public ActionResult Index()
+        public ActionResult Index(string reqId)
         {
+            ViewBag.reqId = reqId;
+
             return View("Result");
         }
     }

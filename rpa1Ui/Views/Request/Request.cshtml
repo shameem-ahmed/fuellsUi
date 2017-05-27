@@ -22,11 +22,11 @@
             </thead>
             <tbody>
                 <tr ng-repeat="req in listRequests">
-                    <td>{{ req.title }}</td>
+                    <td><a href="/result?reqid={{req._id}}">{{ req.title }}</a></td>
                     <td>{{ req.time }}</td>
                     <td>{{ req.type }}</td>
                     <td>{{ req.search1 }}<br />{{ req.search2 }}<br />{{ req.search3 }}</td>
-                    <td>{{ req.country }}</td>
+                    <td>{{ req.countryText }}</td>
                     <td>{{ req.filter }}</td>
                 </tr>
             </tbody>
