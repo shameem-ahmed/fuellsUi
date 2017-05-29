@@ -248,6 +248,7 @@
 
     <script type="text/javascript" src="~/js/app.js"></script>
     <script type="text/javascript" src="~/js/user.js"></script>
+    <script type="text/javascript" src="~/js/supplier.js"></script>
 
     <script type="text/javascript">
         $(function() {
@@ -261,9 +262,15 @@
 
             fuLib.navigation.load(crPage);
 
+            //alert(crPage);
+
             if (crPage == 'liPageUser') {
                 doUser();
             }
+            else if (crPage == 'liPageSupplier') {
+                doSupplier();
+            }
+
         });
 
         function handleError(action, xhr, status, error) {

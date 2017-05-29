@@ -13,6 +13,7 @@ var isAdmin = false;
 //}
 
 var fuLib = {
+
     navigation: {
         load: function(crPage) {
             //alert('in load navigation');
@@ -307,6 +308,18 @@ var fuLib = {
 
     gloc: {
 
+        getLoc: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
         getCountries: function () {
             return (
                 $.ajax({
@@ -355,6 +368,7 @@ var fuLib = {
             );
         }
     }
+
 }
 
 
