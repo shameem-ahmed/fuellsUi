@@ -1,14 +1,14 @@
 ﻿@{
-    ViewBag.Title = "Company";
+    ViewBag.Title = "Customer";
 }
 
-<input type="hidden" id="hidSelMenu" value="liPageCompany" />
-<input type="hidden" id="hidSelCompany" value="000" />
+<input type="hidden" id="hidSelMenu" value="liPageCustomer" />
+<input type="hidden" id="hidSelCustomer" value="000" />
 
 <ul class="breadcrumb">
     <li><a href="#">Home</a></li>
-    <li><a href="#">Company</a></li>
-    <li class="active">Company Info.</li>
+    <li><a href="#">Production</a></li>
+    <li class="active">Customers</li>
 </ul>
 <!-- END BREADCRUMB -->
 <!-- PAGE TITLE -->
@@ -18,19 +18,19 @@
 <!-- END PAGE TITLE -->
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap">
-    <!--PAGE CONTENT - BEGINS -->
+    <!-- PAGE CONTENT - BEGINS -->
     <div class="row">
-        <!-- Company TABLE, GOVT CODES, OFFICE & OFF PERSONS -->
+        <!-- Customer TABLE, GOVT CODES, OFFICE & OFF PERSONS -->
         <div class="col-md-8" id="divTable">
 
             <div class="row">
-                <!-- Company TABLE -->
+                <!-- CUSTOMER TABLE -->
                 <div class="col-md-8">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <button type="button" class="btn btn-primary" id="btnCompNew">New Company</button>
-                            <button type="button" class="btn btn-info" id="btnCompEdit">Edit</button>
-                            <button type="button" class="btn btn-danger" id="btnCompDelete">Delete</button>
+                            <button type="button" class="btn btn-primary" id="btnCustNew">New Customer</button>
+                            <button type="button" class="btn btn-info" id="btnCustEdit">Edit</button>
+                            <button type="button" class="btn btn-danger" id="btnCustDelete">Delete</button>
                             <ul class="panel-controls">
                                 <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                                 <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
@@ -38,10 +38,10 @@
                         </div>
 
                         <div class="panel-body">
-                            <table class="table DataTable" id="tblCompany">
+                            <table class="table DataTable" id="tblCustomer">
                                 <thead>
                                     <tr>
-                                        <th width="20%">Company name</th>
+                                        <th width="20%">Customer name</th>
                                         <th width="15%">Code</th>
                                         <th width="20%">Website</th>
                                         <th width="25%">Email</th>
@@ -144,18 +144,18 @@
 
         </div>
 
-        <!--Company EDIT PANELS -->
+        <!--Customer EDIT PANELS -->
         <div class="col-md-4" id="divUpdate">
 
-            <div class="panel panel-default" id="divEditCompany">
+            <div class="panel panel-default" id="divEditCustomer">
                 <div class="panel-body">
-                    <h4>Company details</h4>
-                    <!-- Company form -->
-                    <form class="form-horizontal" action="#" role="form" id="frmCompany">
+                    <h4>Customer details</h4>
+                    <!-- CUSTOMER form -->
+                    <form class="form-horizontal" action="#" role="form" id="frmCustomer">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Company name</label>
+                            <label class="col-md-3 control-label">Customer name</label>
                             <div class="col-md-9">
-                                <input type="text" id="txtLogin" class="form-control" placeholder="Company Name" />
+                                <input type="text" id="txtLogin" class="form-control" placeholder="Customer Name" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -200,8 +200,8 @@
                     </form>
                 </div>
                 <div class="panel-footer">
-                    <button id="btnCompUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                    <button id="btnCompUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                    <button id="btnCustUpdateCancel" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnCustUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                 </div>
             </div>
 
@@ -225,8 +225,8 @@
                     </form>
                 </div>
                 <div class="panel-footer">
-                    <button id="btnCompUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                    <button id="btnCompUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                    <button id="btnCustUpdateCancel" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnCustUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                 </div>
             </div>
 
@@ -304,8 +304,8 @@
                     </form>
                 </div>
                 <div class="panel-footer">
-                    <button id="btnCompUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                    <button id="btnCompUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                    <button id="btnCustUpdateCancel" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnCustUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                 </div>
             </div>
 
@@ -423,11 +423,11 @@
                     </form>
                 </div>
                 <div class="panel-footer">
-                    <button id="btnCompUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                    <button id="btnCompUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                    <button id="btnCustUpdateCancel" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnCustUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                 </div>
             </div>
         </div>
     </div>
-    <!--PAGE CONTENT - ENDS -->
+    <!-- PAGE CONTENT - ENDS -->
 </div>

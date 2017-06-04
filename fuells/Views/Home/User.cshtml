@@ -1,295 +1,312 @@
 ﻿@{
     ViewBag.Title = "User";
 }
-
 <input type="hidden" id="hidSelMenu" value="liPageUser" />
 <input type="hidden" id="hidSelUser" value="000" />
 
-<!--USER TABLE -->
-<div class="row" id="divList">
-    <div class="col-md-8" id="divTable">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <button type="button" class="btn btn-primary" id="btnUserNew">New User</button>
-                <button type="button" class="btn btn-info" id="btnUserEdit">Edit</button>
-                <button type="button" class="btn btn-danger" id="btnUserDelete">Delete</button>
-                <button type="button" class="btn btn-primary" id="btnUserAccess">Permissions</button>
-
-                <ul class="panel-controls">
-                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                </ul>
-            </div>
-
-            <div class="panel-body">
-                <table class="table DataTable" id="tblUser">
-                    <thead>
-                        <tr>
-                            <th width="10%"></th>
-                            <th width="15%">Login</th>
-                            <th width="30%">Name</th>
-                            <th width="25%">Email</th>
-                            <th width="20%">Phone</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!--USER UPDATE TABS -->
-    <div class="col-md-4" id="divUpdate">
-        <div class="block">
-            <form class="form-horizontal" action="#" role="form" id="frmPerson">
-                <div class="panel panel-default tabs">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li id="tabUser" class="active"><a href="#tab-first" role="tab" data-toggle="tab">User</a></li>
-                        <li id="tabPerson"><a href="#tab-second" role="tab" data-toggle="tab">Person</a></li>
-                        <li id="tabAddress"><a href="#tab-third" role="tab" data-toggle="tab">Address</a></li>
-                    </ul>
-                    <div class="panel-body tab-content">
-                        <div class="tab-pane active" id="tab-first">
-                            <!-- USER tab -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Login name</label>
-                                <div class="col-md-9">
-                                    <input type="text" id="txtLogin" class="form-control" placeholder="Login Name" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Password</label>
-                                <div class="col-md-9">
-                                    <input type="password" id="txtPwd1" class="form-control" placeholder="Password" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Confirm Password</label>
-                                <div class="col-md-9">
-                                    <input type="password" id="txtPwd2" class="form-control" placeholder="Confirm Password" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Is Administrator?</label>
-                                <div class="col-md-9">
-                                    <label class="check"><input id="chkAdmin" type="checkbox" class="icheckbox" /><span id="chkAdminText"> No</span></label>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="tab-pane" id="tab-second">
-                            <!-- PERSON tab -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Full name</label>
-                                <div class="col-md-9">
-                                    <input type="text" class="form-control" id="txtName" placeholder="Full Name" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Email</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Phone</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                        <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Facebook</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-                                        <input type="text" id="txtFacebook" class="form-control" placeholder="Facebook" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Skype</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-skype"></i></span>
-                                        <input type="text" id="txtSkype" class="form-control" placeholder="Skype" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Twitter</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-                                        <input type="text" id="txtTwitter" class="form-control" placeholder="Twitter" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Govt. Code</label>
-                                <div class="col-md-4">
-                                    <select id="selGovtCode" class="form-control select">
-                                    </select>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
-                                        <input id="txtGovtCode" type="text" class="form-control" placeholder="Govt Code" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Photo</label>
-                                <div class="col-md-9">
-                                    <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
-                                    <input id="filePhoto" type="file" class="fileinput" name="filename1" id="filename1" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Birth date</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input type="text" id="txtDateBirth" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" />
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Anniversary date</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
-                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Gender</label>
-                                <div class="col-md-9">
-                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" checked="checked" value="0" /> Not set</label>
-                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" value="1"/> Male</label>
-                                    <label class="check"><input type="radio" class="iradio" name="iradioGender" value="2"/> Female</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Maritial status</label>
-                                <div class="col-md-9">
-                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" checked="checked" value="0"/> Not set</label>
-                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="1"/> Married</label>
-                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="2"/> Not Married</label>
-                                    <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="3"/> Widow</label>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="tab-pane" id="tab-third">
-                            <!-- ADDRESS tab -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Address 1</label>
-                                <div class="col-md-9">
-                                    <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Address 2</label>
-                                <div class="col-md-9">
-                                    <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Country</label>
-                                <div class="col-md-9">
-                                    <select id="selCountry" class="form-control select">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">State</label>
-                                <div class="col-md-9">
-                                    <select id="selState" class="form-control select">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">City</label>
-                                <div class="col-md-9">
-                                    <select id="selCity" class="form-control select">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Area</label>
-                                <div class="col-md-9">
-                                    <select id="selArea" class="form-control select">
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <button id="btnUserUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                        <button id="btnUserUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
-
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+<ul class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Company</a></li>
+    <li class="active">Users</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- PAGE TITLE -->
+<div class="page-title">
+    <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
 </div>
+<!-- END PAGE TITLE -->
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <!--USER TABLE -->
+    <div class="row" id="divList">
+        <div class="col-md-8" id="divTable">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Actions <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a id="btnUserNew" href="#"><i class="fa fa-plus"></i>Add User</a></li>
+                            <li><a id="btnUserEdit" href="#"><i class="fa fa-edit"></i>Edit User</a></li>
+                            <li><a id="btnUserDelete" href="#"><i class="fa fa-trash-o"></i>Delete User</a></li>
+                            <li><a id="btnUserAccess" href="#"><i class="fa fa-lock"></i>Permissions</a></li>
 
-<!--USER ACCESS PANEL -->
-<div class="row" id="divAccess">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <button type="button" id="btnAccessReset" class="btn btn-default panel-controls">Reset</button>
-                <button type="button" id="btnAccessSave" class="btn btn-danger panel-controls">Save</button>
-                <button type="button" id="btnAccessCancel" class="btn btn-link panel-controls">Cancel</button>
+                        </ul>
+                    </div>
 
-                <ul class="panel-controls">
-                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                </ul>
+                    <input type="button" id="btnTest" value="Test">
+
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                    </ul>
+                </div>
+
+                <div class="panel-body">
+                    <table class="table DataTable" id="tblUser">
+                        <thead>
+                            <tr>
+                                <th width="20%">Login</th>
+                                <th width="30%">Name</th>
+                                <th width="30%">Email</th>
+                                <th width="20%">Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <center>
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <img id="acsUserImage" src="../assets/images/users/shameem.jpg" />
-                                    <br /><br />
-                                    <h3 id="acsUserName">Shameem Ahmed A</h3>
-                                    <h4 id="acsUserPhone">9176330322</h4>
-                                    <h5 id="acsUserEmail">shameem.net1@gmail.com</h5>
+        </div>
+
+        <!--USER UPDATE TABS -->
+        <div class="col-md-4" id="divUpdate">
+            <div class="block">
+                <form class="form-horizontal" action="#" role="form" id="frmPerson">
+                    <div class="panel panel-default tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li id="tabUser" class="active"><a href="#tab-first" role="tab" data-toggle="tab">User</a></li>
+                            <li id="tabPerson"><a href="#tab-second" role="tab" data-toggle="tab">Person</a></li>
+                            <li id="tabAddress"><a href="#tab-third" role="tab" data-toggle="tab">Address</a></li>
+                        </ul>
+                        <div class="panel-body tab-content">
+                            <div class="tab-pane active" id="tab-first">
+                                <!-- USER tab -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Login name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="txtLogin" class="form-control" placeholder="Login Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Password</label>
+                                    <div class="col-md-9">
+                                        <input type="password" id="txtPwd1" class="form-control" placeholder="Password" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Confirm Password</label>
+                                    <div class="col-md-9">
+                                        <input type="password" id="txtPwd2" class="form-control" placeholder="Confirm Password" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Is Administrator?</label>
+                                    <div class="col-md-9">
+                                        <label class="check"><input id="chkAdmin" type="checkbox" class="icheckbox" /><span id="chkAdminText"> No</span></label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane" id="tab-second">
+                                <!-- PERSON tab -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Full name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="txtName" placeholder="Full Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Email</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                            <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Phone</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                            <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Facebook</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                                            <input type="text" id="txtFacebook" class="form-control" placeholder="Facebook" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Skype</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                                            <input type="text" id="txtSkype" class="form-control" placeholder="Skype" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Twitter</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                                            <input type="text" id="txtTwitter" class="form-control" placeholder="Twitter" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Govt. Code</label>
+                                    <div class="col-md-4">
+                                        <select id="selGovtCode" class="form-control select"></select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
+                                            <input id="txtGovtCode" type="text" class="form-control" placeholder="Govt Code" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Photo</label>
+                                    <div class="col-md-9">
+                                        <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
+                                        <input id="filePhoto" type="file" class="fileinput" name="filename1" id="filename1" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Birth date</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <input type="text" id="txtDateBirth" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Anniversary date</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
+                                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Gender</label>
+                                    <div class="col-md-9">
+                                        <label class="check"><input type="radio" class="iradio" name="iradioGender" checked="checked" value="0" /> Not set</label>
+                                        <label class="check"><input type="radio" class="iradio" name="iradioGender" value="1" /> Male</label>
+                                        <label class="check"><input type="radio" class="iradio" name="iradioGender" value="2" /> Female</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Maritial status</label>
+                                    <div class="col-md-9">
+                                        <label class="check"><input type="radio" class="iradio" name="iradioMStatus" checked="checked" value="0" /> Not set</label>
+                                        <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="1" /> Married</label>
+                                        <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="2" /> Not Married</label>
+                                        <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="3" /> Widow</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane" id="tab-third">
+                                <!-- ADDRESS tab -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Address 1</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Address 2</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Country</label>
+                                    <div class="col-md-9">
+                                        <select id="selCountry" class="form-control select"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">State</label>
+                                    <div class="col-md-9">
+                                        <select id="selState" class="form-control select"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">City</label>
+                                    <div class="col-md-9">
+                                        <select id="selCity" class="form-control select"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Area</label>
+                                    <div class="col-md-9">
+                                        <select id="selArea" class="form-control select"></select>
+                                    </div>
                                 </div>
                             </div>
-                        </center>
+                        </div>
+                        <div class="panel-footer">
+                            <button id="btnUserUpdateCancel" class="btn btn-link pull-right">Cancel</button>
+                            <button id="btnUserUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <table class="table table-bordered table-striped table-actions">
-                            <thead>
-                                <tr>
-                                    <th>Page</th>
-                                    <th>View</th>
-                                    <th>Print</th>
-                                    <th>Filter</th>
-                                    <th>Add</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                    <th>Compare</th>
-                                    <th>Reset</th>
-                                    <th>Submit</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyAccess"></tbody>
-                        </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--USER ACCESS PANEL -->
+    <div class="row" id="divAccess">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <button type="button" id="btnAccessReset" class="btn btn-default panel-controls">Reset</button>
+                    <button type="button" id="btnAccessSave" class="btn btn-danger panel-controls">Save</button>
+                    <button type="button" id="btnAccessCancel" class="btn btn-link panel-controls">Cancel</button>
+
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <center>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <img id="acsUserImage" src="../assets/images/users/shameem.jpg" />
+                                        <br /><br />
+                                        <h3 id="acsUserName">Shameem Ahmed A</h3>
+                                        <h4 id="acsUserPhone">9176330322</h4>
+                                        <h5 id="acsUserEmail">shameem.net1@gmail.com</h5>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th>Page</th>
+                                        <th>View</th>
+                                        <th>Print</th>
+                                        <th>Filter</th>
+                                        <th>Add</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                        <th>Compare</th>
+                                        <th>Reset</th>
+                                        <th>Submit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyAccess"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

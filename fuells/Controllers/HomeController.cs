@@ -26,9 +26,9 @@ namespace fuells.Controllers
             return View();
         }
 
-        public ActionResult Buyer()
+        public ActionResult Customer()
         {
-            ViewBag.Message = "Buyer";
+            ViewBag.Message = "Customer";
             return View();
         }
 
