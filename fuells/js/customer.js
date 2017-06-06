@@ -1,92 +1,38 @@
-var userToggleRow = true;
-
 //CALLED FROM _LAYOUT2
-function doUser(crPage) {
-
+function doCustomer(crPage) {
+    
     var crTab = 0;
     var modeUpdate = 'new';
     var selId = '';
     var selAdmin = false;
-
+   
     $("#divAccess").hide();
     $("#divUpdate").hide();
 
     $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
-    //Configures DataTable
-    $("#tblUser").on('xhr.dt', function (e, settings, data, xhr) {
-        //DataTable AJAX load complete event
-
-        //data will be null is AJAX error
-        if (data) {
-            $('#tblUser').on('draw.dt', function () {
-                //DataTable draw complete event
-                var table = $("#tblUser").DataTable();
-                //select first row by default
-                table.rows(':eq(0)', { page: 'current' }).select();
-            });
-        }
-    }).DataTable({
+    //Configure DataTable
+    $("#tblCustomer").DataTable({
         "autoWidth": false,
-        "select": {
-            style: 'single'
-        },
-        deferRender: true,
-        rowId: "_id",
         "ajax": {
-            "url": apiUrl + "user/getall",
+            "url": apiUrl + "customer/getall",
             "dataSrc": "",
             "headers": {
                 "Authorization": "Bearer " + token
             }
         },
         "columns": [
-            {
-                "render": function (data, type, row) {
-                    return '<input type="hidden" value="' + row._id + '"/><input type="hidden" value="' + row.isAdmin + '"/>' + row.name;
-                }
-            },
-            { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "person.email", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "person.phone", "defaultContent": "<span class='text-muted'>Not set</span>" },
-        ],
-    });
-
-    //TABLE ROW click event
-    $("#tblUser tbody").on('click', 'tr', function () {
-
-        //console.log($(this));
-
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        }
-        else {
-            var table = $('#tblUser').DataTable();
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-
-            selId = $(this).find('input[type=hidden]').eq(0).val();
-            selAdmin = $(this).find('input[type=hidden]').eq(1).val();
-
-            $("#btnUserAccess").prop('disabled', selAdmin == "true");
-
-
-        }
-    });
-
-    $('#tblUser').on('draw.dt', function () {
-        onresize();
-    });
-
-    $("#btnTest").click(function () {
-
-        var table = $("#tblUser").DataTable();
-        table.rows(':eq(0)', { page: 'current' }).select();
+            { "data": "name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "code", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "urlWeb", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ]
     });
 
     //fill COUNTRIES
     fuLib.gloc.getCountries().success(function (data, status, xhr) {
-        fillCombo('#selCountry', data);
+        fillGeoLoc('#selCountry', data);
 
     }).error(function (xhr, status, error) {
         //gloc.getCountries failed
@@ -95,7 +41,7 @@ function doUser(crPage) {
 
     //fill PERSON GOVT CODES
     fuLib.lov.getLovPersonGovtCodes().success(function (data, status, xhr) {
-        fillCombo('#selGovtCode', data);
+        fillLov('#selGovtCode', data);
 
     }).error(function (xhr, status, error) {
         //lov.getLovPersonGovtCodes failed
@@ -113,7 +59,7 @@ function doUser(crPage) {
         if (parent != '0') {
             fuLib.gloc.getStates(parent).success(function (data, status, xhr) {
                 //fill STATES
-                fillCombo('#selState', data);
+                fillGeoLoc('#selState', data);
 
             }).error(function (xhr, status, error) {
                 //gloc.getStates failed
@@ -132,7 +78,7 @@ function doUser(crPage) {
         if (parent != '0') {
             fuLib.gloc.getCities(parent).success(function (data, status, xhr) {
                 //fill CITIES
-                fillCombo('#selCity', data);
+                fillGeoLoc('#selCity', data);
 
             }).error(function (xhr, status, error) {
                 //gloc.getCities failed
@@ -150,12 +96,38 @@ function doUser(crPage) {
         if (parent != '0') {
             fuLib.gloc.getAreas(parent).success(function (data, status, xhr) {
                 //fill AREAS
-                fillCombo('#selArea', data);
+                fillGeoLoc('#selArea', data);
 
             }).error(function (xhr, status, error) {
                 //gloc.getAreas failed
                 handleError('gloc.getAreas', xhr, status, error);
             });
+        }
+    });
+
+    $('#tblCustomer').on('draw.dt', function () {
+        onresize();
+    });
+
+    //TABLE ROW click event
+    $("#tblCustomer tbody").on('click', 'tr', function () {
+
+        //console.log($(this));
+
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            var table = $('#tblCustomer').DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selId = $(this).find('input[type=hidden]').eq(0).val();
+            selAdmin = $(this).find('input[type=hidden]').eq(1).val();
+
+            $("#btnCustomerAccess").prop('disabled', selAdmin == "true");
+
+
         }
     });
 
@@ -169,13 +141,13 @@ function doUser(crPage) {
         $('#chkAdminText').text("No");
     });
 
-    //BTN USER NEW click event
-    $("#btnUserNew").click(function () {
+    //BTN Customer NEW click event
+    $("#btnCustNew").click(function () {
         modeUpdate = 'new';
 
-        userClearEditPanel();
+        clearEditPanel();
 
-        $("#divEditUser").show();
+        $("#divEditCustomer").show();
         $("#divEditCode").hide();
         $("#divEditOffice").hide();
         $("#divEditPerson").hide();
@@ -185,54 +157,102 @@ function doUser(crPage) {
 
     });
 
-    //BTN USER EDIT click event
-    $("#btnUserEdit").click(function () {
+    //BTN CODE NEW click event
+    $("#btnCodeNew").click(function () {
+        modeUpdate = 'new';
+
+        clearEditPanel();
+
+        $("#divEditCustomer").hide();
+        $("#divEditCode").show();
+        $("#divEditOffice").hide();
+        $("#divEditPerson").hide();
+
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divUpdate").show();
+
+    });
+
+    //BTN OFFICE NEW click event
+    $("#btnOffNew").click(function () {
+        modeUpdate = 'new';
+
+        clearEditPanel();
+
+        $("#divEditCustomer").hide();
+        $("#divEditCode").hide();
+        $("#divEditOffice").show();
+        $("#divEditPerson").hide();
+
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divUpdate").show();
+
+    });
+
+    //BTN PERSON NEW click event
+    $("#btnPersonNew").click(function () {
+        modeUpdate = 'new';
+
+        clearEditPanel();
+
+        $("#divEditCustomer").hide();
+        $("#divEditCode").hide();
+        $("#divEditOffice").hide();
+        $("#divEditPerson").show();
+
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divUpdate").show();
+
+    });
+
+    //BTN Customer EDIT click event
+    $("#btnCustomerEdit").click(function () {
         modeUpdate = 'edit';
 
-        userClearEditPanel();
+        clearEditPanel();
 
-        //load user details
-        fuLib.user.getOne(selId).success(function (user, status, xhr) {
+        //load Customer details
+        fuLib.Customer.getOne(selId).success(function (Customer, status, xhr) {
 
-            console.log(user);
+            console.log(Customer);
 
-            $("#txtLogin").val(user.name);
+            $("#txtLogin").val(Customer.name);
             $("#txtPwd1").val('');
             $("#txtPwd2").val('');
 
-            if (user.isAdmin == true) {
+            if (Customer.isAdmin == true) {
                 $("#chkAdmin").iCheck('check');
             }
             else {
                 $("#chkAdmin").iCheck('uncheck');
             }
 
-            if (user.person != null) {
+            if (Customer.person != null) {
 
-                $("#txtName").val(user.person.name);
-                $("#txtEmail").val(user.person.email);
-                $("#txtPhone").val(user.person.phone);
-                $("#txtFacebook").val(user.person.facebook);
-                $("#txtTwitter").val(user.person.twitter);
-                $("#txtSkype").val(user.person.skype);
+                $("#txtName").val(Customer.person.name);
+                $("#txtEmail").val(Customer.person.email);
+                $("#txtPhone").val(Customer.person.phone);
+                $("#txtFacebook").val(Customer.person.facebook);
+                $("#txtTwitter").val(Customer.person.twitter);
+                $("#txtSkype").val(Customer.person.skype);
 
-                $("#selGovtCode option[value='" + user.person.lovGovtNo + "']").prop("selected", true);
+                $("#selGovtCode option[value='" + Customer.person.lovGovtNo + "']").prop("selected", true);
                 $("#selGovtCode").selectpicker('refresh');
 
 
-                $("#txtGovtCode").val(user.person.govtNo);
+                $("#txtGovtCode").val(Customer.person.govtNo);
                 $("#txtDateBirth").val('');
                 $("#txtDateAnniversary").val('');
                 $("input[name=iradioMStatus]:checked", "#frmPerson").val('0');
                 $("input[name=iradioGender]:checked", "#frmPerson").val('0');
 
-                if (user.person.address != null) {
-                    $("#txtAddress1").val(user.person.address.address1);
-                    $("#txtAddress2").val(user.person.address.address2);
+                if (Customer.person.address != null) {
+                    $("#txtAddress1").val(Customer.person.address.address1);
+                    $("#txtAddress2").val(Customer.person.address.address2);
 
-                    alert(user.person.address.geoLoc);
+                    alert(Customer.person.address.geoLoc);
 
-                    fuLib.gloc.getLoc(user.person.address.geoLoc).success(function (data, status, xhr) {
+                    fuLib.gloc.getLoc(Customer.person.address.geoLoc).success(function (data, status, xhr) {
 
                         if (data.type == 0) {
                             //if loc is country
@@ -243,11 +263,11 @@ function doUser(crPage) {
                                 //debugger
                                 console.log(data2);
 
-                                alert(user.person.address.geoLoc);
+                                alert(Customer.person.address.geoLoc);
 
-                                fillCombo('#selCountry', data2);
+                                fillGeoLoc('#selCountry', data2);
 
-                                $("#selCountry").val(user.person.address.geoLoc);
+                                $("#selCountry").val(Customer.person.address.geoLoc);
                                 $($("#selCountry")).selectpicker('refresh');
 
                             }).error(function (xhr, status, error) {
@@ -261,16 +281,16 @@ function doUser(crPage) {
                             //==================
                             //fill COUNTRIES
                             fuLib.gloc.getCountries().success(function (data3, status, xhr) {
-                                fillCombo('#selCountry', data3);
+                                fillGeoLoc('#selCountry', data3);
 
                                 $("#selCountry").val(data.parent);
                                 $($("#selCountry")).selectpicker('refresh');
 
                                 //fill STATES
                                 fuLib.gloc.getStates(data.parent).success(function (data4, status, xhr) {
-                                    fillCombo('#selState', data4);
+                                    fillGeoLoc('#selState', data4);
 
-                                    $("#selState").val(user.person.address.geoLoc);
+                                    $("#selState").val(Customer.person.address.geoLoc);
                                     $($("#selState")).selectpicker('refresh');
 
                                 }).error(function (xhr, status, error) {
@@ -289,9 +309,9 @@ function doUser(crPage) {
                             //==================
                             //fill CITIES
                             fuLib.gloc.getCities(data.parent).success(function (data5, status, xhr) {
-                                fillCombo('#selCity', data5);
+                                fillGeoLoc('#selCity', data5);
 
-                                $("#selCity").val(user.person.address.geoLoc);
+                                $("#selCity").val(Customer.person.address.geoLoc);
                                 $($("#selCity")).selectpicker('refresh');
 
                                 //find STATE loc
@@ -299,14 +319,14 @@ function doUser(crPage) {
 
                                     //fill STATES
                                     fuLib.gloc.getStates(data6.parent).success(function (data7, status, xhr) {
-                                        fillCombo('#selState', data7);
+                                        fillGeoLoc('#selState', data7);
 
                                         $("#selState").val(data6._id);
                                         $($("#selState")).selectpicker('refresh');
 
                                         //fill COUNTRIES
                                         fuLib.gloc.getCountries().success(function (data2, status, xhr) {
-                                            fillCombo('#selCountry', data2);
+                                            fillGeoLoc('#selCountry', data2);
 
                                             $("#selCountry").val(data6.parent);
                                             $($("#selCountry")).selectpicker('refresh');
@@ -333,9 +353,9 @@ function doUser(crPage) {
                             //==================
                             //fill AREAS
                             fuLib.gloc.getAreas(data.parent).success(function (data8, status, xhr) {
-                                fillCombo('#selArea', data8);
+                                fillGeoLoc('#selArea', data8);
 
-                                $("#selArea").val(user.person.address.geoLoc);
+                                $("#selArea").val(Customer.person.address.geoLoc);
                                 $($("#selArea")).selectpicker('refresh');
 
                                 //find CITY loc
@@ -343,7 +363,7 @@ function doUser(crPage) {
 
                                     //fill CITIES
                                     fuLib.gloc.getCities(data9.parent).success(function (data10, status, xhr) {
-                                        fillCombo('#selCity', data10);
+                                        fillGeoLoc('#selCity', data10);
 
                                         $("#selCity").val(data9._id);
                                         $($("#selCity")).selectpicker('refresh');
@@ -353,14 +373,14 @@ function doUser(crPage) {
 
                                             //fill STATES
                                             fuLib.gloc.getStates(data11.parent).success(function (data12, status, xhr) {
-                                                fillCombo('#selState', data12);
+                                                fillGeoLoc('#selState', data12);
 
                                                 $("#selState").val(data11._id);
                                                 $($("#selState")).selectpicker('refresh');
 
                                                 //fill COUNTRIES
                                                 fuLib.gloc.getCountries().success(function (data13, status, xhr) {
-                                                    fillCombo('#selCountry', data13);
+                                                    fillGeoLoc('#selCountry', data13);
 
                                                     $("#selCountry").val(data11.parent);
                                                     $($("#selCountry")).selectpicker('refresh');
@@ -393,8 +413,8 @@ function doUser(crPage) {
             }
 
         }).error(function (xhr, status, error) {
-            //user.getOne failed
-            handleError('user.getOne', xhr, status, error);
+            //Customer.getOne failed
+            handleError('Customer.getOne', xhr, status, error);
         });
 
         $("#divTable").removeClass("col-md-12").addClass("col-md-8");
@@ -402,19 +422,19 @@ function doUser(crPage) {
 
     });
 
-    //BTN USER ACCESS click event
-    $("#btnUserAccess").click(function () {
-        userShowAccess(selId);
+    //BTN Customer ACCESS click event
+    $("#btnCustomerAccess").click(function () {
+        showAccess(selId);
     });
 
-    //NEW USER-SAVE CHANGES click event
-    $("#btnUserUpdateSave").click(function () {
+    //NEW Customer-SAVE CHANGES click event
+    $("#btnCustomerUpdateSave").click(function () {
 
-        var isEmptyUser = false;
+        var isEmptyCustomer = false;
         var isEmptyPerson = false;
         var isEmptyAddress = false;
 
-        var oUser = {
+        var oCustomer = {
             name: $("#txtLogin").val(),
             pwd: $("#txtPwd1").val(),
             person: null,
@@ -476,17 +496,17 @@ function doUser(crPage) {
             oAddress.geoLoc = $("#selArea").val();
         }
 
-        //console.log(oUser);
+        //console.log(oCustomer);
         //console.log(oPerson);
         //console.log(oAddress);
 
         //return false;
 
-        //check if oUser is empty
-        if (oUser.name.trim().length == 0 &&
-            oUser.pwd.trim().length == 0
+        //check if oCustomer is empty
+        if (oCustomer.name.trim().length == 0 &&
+            oCustomer.pwd.trim().length == 0
             ) {
-            isEmptyUser = true;
+            isEmptyCustomer = true;
         }
 
         //check if oPerson is empty
@@ -509,12 +529,12 @@ function doUser(crPage) {
             (oAddress.country == '0' || oAddress.country == null) &&
             (oAddress.state == '0' || oAddress.state == null) &&
             (oAddress.city == '0' || oAddress.city == null) &&
-            (oAddress.area == '0' || oAddress.area == null)
+            (oAddress.area == '0' || oAddress.area == null) 
             ) {
             isEmptyAddress = true;
         }
 
-        console.log(isEmptyUser);
+        console.log(isEmptyCustomer);
         console.log(isEmptyPerson);
         console.log(isEmptyAddress);
 
@@ -522,31 +542,31 @@ function doUser(crPage) {
 
         if (modeUpdate == 'new') {
 
-            if (isEmptyUser == true) {
-                noty({ text: "Please type user details", layout: 'topRight', type: 'error', timeout: 2000 });
-                return false;
+            if (isEmptyCustomer == true) {
+                    noty({ text: "Please type Customer details", layout: 'topRight', type: 'error', timeout: 2000 });
+                    return false;
             }
             else {
                 if (isEmptyPerson == true) {
-                    //save USER details
+                    //save Customer details
 
-                    fuLib.user.add(oUser).success(function (data, status, xhr) {
+                    fuLib.Customer.add(oCustomer).success(function (data, status, xhr) {
 
                         console.log(data);
 
-                        noty({ text: 'User added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+                        noty({ text: 'Customer added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                        var table = $("#tblUser").DataTable();
+                        var table = $("#tblCustomer").DataTable();
                         table.ajax.reload();
 
                     }).error(function (xhr, status, error) {
-                        //user.add failed
-                        handleError('user.add', xhr, status, error);
+                        //Customer.add failed
+                        handleError('Customer.add', xhr, status, error);
                     });
                 }
                 else {
                     if (isEmptyAddress == true) {
-                        //save USER-PERSON details
+                        //save Customer-PERSON details
 
                         //check if govtNo is blank
                         if (oPerson.govtNo.trim().length == 0) {
@@ -564,19 +584,19 @@ function doUser(crPage) {
 
                             noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                            oUser.person = data.person._id;
+                            oCustomer.person = data.person._id;
 
-                            //add USER
-                            fuLib.user.add(oUser).success(function (data, status, xhr) {
+                            //add Customer
+                            fuLib.Customer.add(oCustomer).success(function (data, status, xhr) {
 
-                                noty({ text: 'User added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+                                noty({ text: 'Customer added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                                var table = $("#tblUser").DataTable();
+                                var table = $("#tblCustomer").DataTable();
                                 table.ajax.reload();
 
                             }).error(function (xhr, status, error) {
-                                //user.add failed
-                                handleError('user.add', xhr, status, error);
+                                //Customer.add failed
+                                handleError('Customer.add', xhr, status, error);
                             });
 
                         }).error(function (xhr, status, error) {
@@ -585,7 +605,7 @@ function doUser(crPage) {
                         });
                     }
                     else {
-                        //save USER-PERSON-ADDRESS details
+                        //save Customer-PERSON-ADDRESS details
 
                         //add ADDRESS
                         fuLib.address.add(oAddress).success(function (data, status, xhr) {
@@ -599,14 +619,14 @@ function doUser(crPage) {
 
                                 noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                                oUser.person = data.person._id;
+                                oCustomer.person = data.person._id;
 
-                                //add USER
-                                fuLib.user.add(oUser).success(function (data, status, xhr) {
+                                //add Customer
+                                fuLib.Customer.add(oCustomer).success(function (data, status, xhr) {
 
-                                    noty({ text: 'User added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+                                    noty({ text: 'Customer added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                                    var table = $("#tblUser").DataTable();
+                                    var table = $("#tblCustomer").DataTable();
                                     table.ajax.reload();
 
                                 }).error(function (xhr, status, error) {
@@ -620,8 +640,8 @@ function doUser(crPage) {
                             });
 
                         }).error(function (xhr, status, error) {
-                            //user.add failed
-                            handleError('user.add', xhr, status, error);
+                            //Customer.add failed
+                            handleError('Customer.add', xhr, status, error);
                         });
                     }
                 }
@@ -636,14 +656,14 @@ function doUser(crPage) {
         else if (modeUpdate == 'edit') {
 
         }
-
+       
         return false;
 
     });
 
-    //NEW USER-Cancel click event
-    $("#btnUserUpdateCancel").click(function () {
-
+    //NEW Customer-Cancel click event
+    $("#btnCustomerUpdateCancel").click(function () {
+     
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
@@ -703,11 +723,11 @@ function doUser(crPage) {
 
     //BTN ACCESS RESET click event
     $("#btnAccessReset").click(function () {
-        userShowAccess($("#hidSelUser").val());
+        showAccess($("#hidSelCustomer").val());
     });
 
-    //USER TAB click event
-    $("#tabUser").click(function () {
+    //Customer TAB click event
+    $("#tabCustomer").click(function () {
         crTab = 0;
     });
 
@@ -720,140 +740,5 @@ function doUser(crPage) {
     $("#tabAddress").click(function () {
         crTab = 2;
     });
-
-}
-
-// PERMISSION/SECURITY/ACCESS PANEL
-function userShowAccess(userId) {
-
-    alert(userId);
-
-    $("#hidSelUser").val(userId);
-
-    fuLib.user.getOne(userId).success(function (data, status, xhr) {
-
-        if (data.person) {
-            $("#acsUserImage").attr("src", "../assets/images/users/" + data.person.photo);
-            $("#acsUserName").text(data.person.name);
-            $("#acsUserPhone").text(data.person.phone);
-            $("#acsUserEmail").text(data.person.email);
-        }
-        else {
-            $("#acsUserImage").attr("src", "../assets/images/users/no-image.jpg");
-            $("#acsUserName").text(data.name);
-            $("#acsUserPhone").html("<span class='text-muted'>No Phone</span>");
-            $("#acsUserEmail").html("<span class='text-muted'>No Email</span>");
-        }
-
-        fuLib.access.getAccess(userId).success(function (data, status, xhr) {
-
-            data = data.sort(function (a, b) {
-                return a.pageIndex - b.pageIndex;
-            });
-
-            $("#tbodyAccess > tr").remove();
-
-            $(data).each(function (i, item) {
-
-                var sRow = '<tr><td><span onclick="selectAllOptions(' + i + ');">{0}</span><input type="hidden" value="' + item.pageCode + '" /><input type="hidden" value="' + item.id + '" /></td>';
-                sRow += '<td><label class="switch switch-small"><input type="checkbox" {1} value="{2}" /><span></span></label></td>';
-                sRow += '<td><label class="switch switch-small"><input type="checkbox" {3} value="{4}" /><span></span></label></td>';
-                sRow += '<td><label class="switch switch-small"><input type="checkbox" {5} value="{6}" /><span></span></label></td>';
-                sRow += '<td><label class="switch switch-small"><input type="checkbox" {7} value="{8}" /><span></span></label></td>';
-                sRow += '<td><label class="switch switch-small"><input type="checkbox" {9} value="{10}" /><span></span></label></td>';
-                sRow += '<td><label class="switch switch-small"><input type="checkbox" {11} value="{12}" /><span></span></label></td>';
-                sRow += '<td><label class="switch switch-small"><input type="checkbox" {13} value="{14}" /><span></span></label></td>';
-                sRow += '<td><label class="switch switch-small"><input type="checkbox" {15} value="{16}" /><span></span></label></td>';
-                sRow += '<td><label class="switch switch-small"><input type="checkbox" {17} value="{18}" /><span></span></label></td></tr>';
-
-                sRow = sRow.replace("{0}", item.pageTitle);
-                sRow = sRow.replace("{1}", (item.isView ? 'checked' : ''));
-                sRow = sRow.replace("{2}", (item.isView ? '1' : '0'));
-                sRow = sRow.replace("{3}", (item.isPrint ? 'checked' : ''));
-                sRow = sRow.replace("{4}", (item.isPrint ? '1' : '0'));
-                sRow = sRow.replace("{5}", (item.isFilter ? 'checked' : ''));
-                sRow = sRow.replace("{6}", (item.isFilter ? '1' : '0'));
-                sRow = sRow.replace("{7}", (item.isAdd ? 'checked' : ''));
-                sRow = sRow.replace("{8}", (item.isAdd ? '1' : '0'));
-                sRow = sRow.replace("{9}", (item.isEdit ? 'checked' : ''));
-                sRow = sRow.replace("{10}", (item.isEdit ? '1' : '0'));
-                sRow = sRow.replace("{11}", (item.isDelete ? 'checked' : ''));
-                sRow = sRow.replace("{12}", (item.isDelete ? '1' : '0'));
-                sRow = sRow.replace("{13}", (item.isCompare ? 'checked' : ''));
-                sRow = sRow.replace("{14}", (item.isCompare ? '1' : '0'));
-                sRow = sRow.replace("{15}", (item.isReset ? 'checked' : ''));
-                sRow = sRow.replace("{16}", (item.isReset ? '1' : '0'));
-                sRow = sRow.replace("{17}", (item.isSubmit ? 'checked' : ''));
-                sRow = sRow.replace("{18}", (item.isSubmit ? '1' : '0'));
-
-                $("#tbodyAccess").append(sRow);
-
-            });
-
-        }).error(function (xhr, status, error) {
-            //access.getAccess failed
-            handleError('access.getAccess', xhr, status, error);
-        });
-
-    }).error(function (xhr, status, error) {
-        //user.getSingle failed
-        handleError('user.getSingle', xhr, status, error);
-    });
-
-    $("#divAccess").show(500);
-    $("#divList").hide(500);
-}
-
-//HIDDEN FEATURE, WHEN CLICKED ON ROW TITLE IN USER ACCESS
-function userSelectAllOptions(index) {
-
-    var rows = $("tr", $("#tbodyAccess"));
-
-    rows.eq(index).find("input[type=checkbox]").each(function () {
-        $(this).prop("checked", userToggleRow);
-    });
-
-    userToggleRow = !userToggleRow;
-}
-
-function userClearEditPanel() {
-
-    $("#txtLogin").val('');
-    $("#txtPwd1").val('');
-    $("#txtPwd2").val('');
-
-    $("#chkAdmin").iCheck('uncheck');
-
-    $("#txtName").val('');
-    $("#txtEmail").val('');
-    $("#txtPhone").val('');
-    $("#txtFacebook").val('');
-    $("#txtTwitter").val('');
-    $("#txtSkype").val('');
-
-    $("#selGovtCode option[value='0']").prop("selected", true);
-    $("#selGovtCode").selectpicker('refresh');
-
-
-    $("#txtGovtCode").val('');
-    $("#txtDateBirth").val('');
-    $("#txtDateAnniversary").val('');
-    $("input[name=iradioMStatus]:checked", "#frmPerson").val('0');
-    $("input[name=iradioGender]:checked", "#frmPerson").val('0');
-
-    $("#txtAddress1").val('');
-    $("#txtAddress2").val('');
-
-    $("#selCountry").val('0');
-    $($("#selCountry")).selectpicker('refresh');
-
-    $("#selState").val('0');
-    $($("#selState")).selectpicker('refresh');
-
-    $("#selCity").val('0');
-    $($("#selCity")).selectpicker('refresh');
-
-    $("#selArea").val('0');
-    $($("#selArea")).selectpicker('refresh');
 
 }

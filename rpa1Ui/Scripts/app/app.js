@@ -1,13 +1,27 @@
 ﻿
 var app = angular.module("rpa1", []);
 
-//REQUEST CONTROLLER
+//LOGIN CONTROLLER
 //
 app.controller("loginController", function ($scope, $http, rpa1Service) {
 
     $scope.login = { email: '', password: '', isRemember: false };
 
     $scope.register = { name: '', email: '', password: '', confirmPassword: "" };
+
+    $scope.loginName = '';
+
+    $scope.init = function () {
+
+        rpa1Service.getLogin().then(function (success) {
+
+            $scope.loginName = success.data.name;
+
+        }, function (error) {
+            alert('getLogin failed. ' + error.data.message);
+        });
+
+    };
 
     $scope.doRegister = function () {
         //alert('doRegister');
@@ -33,20 +47,11 @@ app.controller("loginController", function ($scope, $http, rpa1Service) {
         }
 
         rpa1Service.register($scope.register).then(function (success) {
-
-            alert('Registration successfull.');
-
-            //debugger;
-
             window.localStorage.setItem("rpa1User", success.data.token);
             window.location.replace("/request");
 
-
         }, function (error) {
-
             alert('Registration failed.' + error.message);
-
-
         });
 
     };
@@ -65,27 +70,16 @@ app.controller("loginController", function ($scope, $http, rpa1Service) {
         }
 
         rpa1Service.login($scope.login).then(function (success) {
-
-            alert('Login successfull.');
-
-            //debugger;
-
             window.localStorage.setItem("rpa1User", success.data.token);
             window.location.replace("/request");
 
-
-
-
         }, function (error) {
-
-            //debugger
-
             alert('Registration failed. ' + error.data.message);
-
         });
 
     };
 
+ 
 });
 
 //REQUEST CONTROLLER
@@ -119,7 +113,18 @@ app.controller("requestController", function ($scope, $http, rpa1Service) {
 
             console.log(success.data);
 
-            $scope.listRequests = success.data;
+            //this.savePlaces($.map(p, function (o) { return o == id ? null : o; }));
+
+            $scope.listRequests = success.data.map(function (item) {
+                if (item.country == 0) {
+                    item.countryText = "United States";
+                }
+                else if (item.country == 1) {
+                    item.countryText = "Canada";
+                }
+
+                return item;
+            });
 
         }, function (error) {
 
@@ -152,4 +157,90 @@ app.controller("requestController", function ($scope, $http, rpa1Service) {
             alert('Registration failed.' + error.message);
         });
     };
+});
+
+//RESULT CONTROLLER
+//
+app.controller("resultController", function ($scope, $http, rpa1Service) {
+
+    $scope.currentUser = {};
+
+    $scope.listResults = [];
+
+    $scope.listResultDetails = [];
+
+    $scope.request = {};
+
+    $scope.response = [];
+    $scope.responseDetail = [];
+
+    $scope.selRes = '';
+
+    $scope.init = function (reqId) {
+
+        rpa1Service.getLogin().then(function (success) {
+
+            $scope.currentUser = success.data;
+
+            $scope.loadRequest(reqId);
+
+            $scope.fillResponse(reqId);
+
+
+        }, function (error) {
+
+            alert('getLogin failed.' + error.message);
+
+        });
+    };
+
+    $scope.loadRequest = function (reqId) {
+
+        rpa1Service.getRequest(reqId).then(function (success) {
+
+            $scope.request = success.data;
+
+        }, function (error) {
+
+            alert('getRequest failed.' + error.message);
+
+        });
+    };
+
+    $scope.fillResponse = function (reqId) {
+
+        rpa1Service.getResponse(reqId).then(function (success) {
+
+            $scope.response = success.data;
+
+            console.log(success.data);
+
+        }, function (error) {
+
+            alert('getResponse failed.' + error.message);
+
+        });
+    };
+
+    $scope.doResponseDetail = function () {
+
+        if ($scope.selRes.trim().length > 0) {
+
+            rpa1Service.getResponseDetail($scope.selRes).then(function (success) {
+
+                $scope.responseDetail = success.data;
+
+                console.log(success.data);
+
+            }, function (error) {
+
+                alert('getResponseDetail failed.' + error.message);
+
+            });
+
+        }
+
+    }
+
+   
 });

@@ -884,6 +884,7 @@
     <Content Include="css\codemirror\theme\vibrant-ink.css" />
     <Content Include="css\codemirror\theme\xq-dark.css" />
     <Content Include="css\codemirror\theme\xq-light.css" />
+    <Content Include="css\datatables\select.dataTables.min.css" />
     <Content Include="css\dropzone\dropzone.css" />
     <Content Include="css\fontawesome\font-awesome.min.css" />
     <Content Include="css\fonts\fontawesome-webfont.svg" />
@@ -990,6 +991,11 @@
     <Content Include="img\themes\default.jpg" />
     <Content Include="img\themes\light.jpg" />
     <Content Include="js\actions.js" />
+    <Content Include="js\company.js" />
+    <Content Include="js\customer.js" />
+    <Content Include="js\general.js" />
+    <Content Include="js\plugins\datatables\dataTables.select.min.js" />
+    <Content Include="js\supplier.js" />
     <Content Include="js\user.js" />
     <Content Include="js\app.js" />
     <Content Include="js\demo_charts_morris.js" />
@@ -1510,7 +1516,7 @@
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Home\PO.cshtml" />
-    <Content Include="Views\Home\Buyer.cshtml" />
+    <Content Include="Views\Home\Customer.cshtml" />
     <Content Include="Views\Home\MDS.cshtml" />
     <Content Include="Views\Home\JC.cshtml" />
     <Content Include="Views\Home\Style.cshtml" />

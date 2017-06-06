@@ -91,12 +91,12 @@
 
                     //alert(sUser.length);
                     if (sUser.length === 0) {
-                        noty({ text:'User is blank', layout:'topRight', type:'warning' });
+                        noty({ text: 'User is blank', layout: 'topRight', type: 'warning', timeout: 2000 });
                         return;
                     }
 
                     if (sPwd.length === 0) {
-                        noty({ text:'Password is blank', layout:'topRight', type:'warning' });
+                        noty({ text: 'Password is blank', layout: 'topRight', type: 'warning', timeout: 2000 });
                         return;
                     }
 
@@ -123,12 +123,12 @@
                 try {
                     var err = eval("(" + $(xhr.responseText).text() + ")");
 
-                    noty({ text:err.message, layout:'topRight', type:'error' });
+                    noty({ text: err.message, layout: 'topRight', type: 'error', timeout: 2000 });
 
                 }
                 catch(err) {
 
-                    noty({ text:error, layout:'topRight', type:'error' });
+                    noty({ text: error, layout: 'topRight', type: 'error', timeout: 2000 });
 
                 }
             }

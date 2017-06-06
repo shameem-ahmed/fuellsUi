@@ -13,6 +13,7 @@ var isAdmin = false;
 //}
 
 var fuLib = {
+
     navigation: {
         load: function(crPage) {
             //alert('in load navigation');
@@ -134,7 +135,106 @@ var fuLib = {
                     dataType: "json"
                 })
             );
-        }
+        },
+
+        add: function (user) {
+            return (
+                $.ajax({
+                    url: apiUrl + "user/add",
+                    data: JSON.stringify(user),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+    },
+
+    person: {
+
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "person/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "person/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (person) {
+            return (
+                $.ajax({
+                    url: apiUrl + "person/add",
+                    data: JSON.stringify(person),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+    },
+
+    address: {
+
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "address/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "address/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (address) {
+            return (
+                $.ajax({
+                    url: apiUrl + "address/add",
+                    data: JSON.stringify(address),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
     },
 
     access: {
@@ -191,8 +291,205 @@ var fuLib = {
                     }
                 })
             );
+        },
+
+        getLovPersonGovtCodes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/10",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getLovCompanyGovtCodes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/3",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+    },
+
+    gloc: {
+
+        getLoc: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getCountries: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getcountries",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getStates: function (parent) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getstates/" + parent,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getCities: function (parent) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getcities/" + parent,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAreas: function (parent) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getareas/" + parent,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
         }
     },
+
+    supplier: {
+
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllCode: function (suppId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/code/getall/" + suppId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllOffice: function (suppId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/office/getall/" + suppId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllPerson: function (offId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/person/getall/" + offId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (supplier) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/add",
+                    data: JSON.stringify(supplier),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        addCode: function (code) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/code/add",
+                    data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        addOffice: function (code) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/office/add",
+                    data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+    }
+
 }
 
 

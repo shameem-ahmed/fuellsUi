@@ -11,7 +11,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" >
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,12 +21,12 @@
                 </button>
                 @Html.ActionLink("RPA1 - Faisal", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" >
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Login", "Index", "Login")</li>
                     <li>@Html.ActionLink("Request", "Index", "Request")</li>
-                    <li>@Html.ActionLink("Result", "Index", "Result")</li>
                 </ul>
+                <span style="color: #fff; position:relative; top:15px;" class="pull-right">Shameem Ahmed</span>
             </div>
         </div>
     </div>
