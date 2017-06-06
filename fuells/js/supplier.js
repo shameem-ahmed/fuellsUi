@@ -73,6 +73,7 @@ function doSupplier(crPage) {
             $("#btnUserAccess").prop('disabled', selAdmin == "true");
 
             fillCode(selId);
+            fillOffice(selId);
 
         }
     });
@@ -283,14 +284,13 @@ function doSupplier(crPage) {
     });
 
     //NEW SUPPLIER-Cancel click event
-    $("#btnUserUpdateCancel").click(function () {
+    $("#btnSupplierUpdateCancel").click(function () {
      
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
 
     });
-
 
     //NEW CODE-SAVE CHANGES click event
     $("#btnCodeUpdateSave").click(function () {
@@ -347,8 +347,8 @@ function doSupplier(crPage) {
 
     });
 
-    //NEW SUPPLIER-Cancel click event
-    $("#btnUserUpdateCancel").click(function () {
+    //NEW CODE-Cancel click event
+    $("#btnCodeUpdateCancel").click(function () {
 
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-8").addClass("col-md-12");
@@ -356,6 +356,100 @@ function doSupplier(crPage) {
 
     });
 
+
+    //NEW OFFICE-SAVE CHANGES click event
+    $("#btnOfficeUpdateSave").click(function () {
+
+        var isEmptyOffice = false;
+
+        var oOffice = {
+            title: $("#txtTitle").val(),
+            address1: $("#txtAddress1").val(),
+            address2: $("#txtAddress2").val(),
+            geoLoc: null,
+            email: $("#txtEmail").val(),
+            phone: $("#txtPhone").val(),
+            fax: $("#txtFax").val(),
+            supplier: selId,
+            isActive: true,
+            flag: 0
+        };
+
+        if ($("#selArea").val() == '0' || $("#selArea").val() == null) {
+
+            if ($("#selCity").val() == '0' || $("#selCity").val() == null) {
+
+                if ($("#selState").val() == '0' || $("#selState").val() == null) {
+
+                    if ($("#selCountry").val() == '0' || $("#selCountry").val() == null) {
+
+                    }
+                    else {
+                        oOffice.geoLoc = $("#selCountry").val();
+                    }
+                }
+                else {
+                    oOffice.geoLoc = $("#selState").val();
+                }
+            }
+            else {
+                oOffice.geoLoc = $("#selCity").val();
+            }
+        }
+        else {
+            oOffice.geoLoc = $("#selArea").val();
+        }
+
+        //check if oOffice is empty
+        if (oOffice.title.trim().length == 0) {
+            isEmptyOffice = true;
+        }
+
+        if (modeUpdate == 'new') {
+
+            if (isEmptyOffice == true) {
+                noty({ text: "Please type office details", layout: 'topRight', type: 'error', timeout: 2000 });
+                return false;
+            }
+            else {
+
+                fuLib.supplier.addOffice(oOffice).success(function (data, status, xhr) {
+
+                    console.log(data);
+
+                    noty({ text: 'Supplier Office added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                    tableOffice = $("#tblOffice").DataTable();
+                    tableOffice.ajax.reload();
+
+                }).error(function (xhr, status, error) {
+                    //supplier.addOffice failed
+                    handleError('supplier.addOffice', xhr, status, error);
+                });
+            }
+
+            $("#divUpdate").hide();
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+
+            return false;
+
+        }
+        else if (modeUpdate == 'edit') {
+
+        }
+
+        return false;
+
+    });
+
+    //NEW OFFICE-Cancel click event
+    $("#btnOfficeUpdateCancel").click(function () {
+
+        $("#divUpdate").hide();
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+        return false;
+
+    });
 
 }
 
@@ -396,14 +490,52 @@ function fillCode(suppId) {
             },
             "columns": [
                 { "data": "value", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "LovType", "defaultContent": "<span class='text-muted'>Not set</span>" }
+                { "data": "LovType.title", "defaultContent": "<span class='text-muted'>Not set</span>" }
             ],
         });
     }
 }
 
 function fillOffice(suppId) {
+    if ($.fn.dataTable.isDataTable("#tblOffice")) {
 
+        tableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
+    }
+    else {
+        //Configures OFFICE DataTable
+        $("#tblOffice").on('xhr.dt', function (e, settings, data, xhr) {
+            //DataTable AJAX load complete event
+
+            //data will be null is AJAX error
+            if (data) {
+                $('#tblOffice').on('draw.dt', function () {
+                    //DataTable draw complete event
+
+                    tableOffice = $("#tblOffice").DataTable();
+                    //select first row by default
+                    tableOffice.rows(':eq(0)', { page: 'current' }).select();
+                });
+            }
+        }).DataTable({
+            "autoWidth": false,
+            "select": {
+                style: 'single'
+            },
+            deferRender: true,
+            rowId: "_id",
+            "ajax": {
+                "url": apiUrl + "supplier/office/getall/" + suppId,
+                "dataSrc": "",
+                "headers": {
+                    "Authorization": "Bearer " + token
+                }
+            },
+            "columns": [
+                { "data": "title", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
+            ],
+        });
+    }
 }
 
 function fillPerson(offId) {

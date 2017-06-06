@@ -473,6 +473,21 @@ var fuLib = {
                 })
             );
         },
+
+        addOffice: function (code) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/office/add",
+                    data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
     }
 
 }
