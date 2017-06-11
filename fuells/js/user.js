@@ -11,7 +11,7 @@ function doUser(crPage) {
     $("#divAccess").hide();
     $("#divUpdate").hide();
 
-    $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+    $("#divTable").removeClass("col-md-9").addClass("col-md-12");
 
     //Configures DataTable
     $("#tblUser").on('xhr.dt', function (e, settings, data, xhr) {
@@ -78,15 +78,16 @@ function doUser(crPage) {
         onresize();
     });
 
-    $("#btnTest").click(function () {
+    //$("#btnTest").click(function () {
 
-        var table = $("#tblUser").DataTable();
-        table.rows(':eq(0)', { page: 'current' }).select();
-    });
+    //    var table = $("#tblUser").DataTable();
+    //    table.rows(':eq(0)', { page: 'current' }).select();
+    //});
 
     //fill COUNTRIES
     fuLib.gloc.getCountries().success(function (data, status, xhr) {
         fillCombo('#selCountry', data);
+        
 
     }).error(function (xhr, status, error) {
         //gloc.getCountries failed
@@ -95,7 +96,7 @@ function doUser(crPage) {
 
     //fill PERSON GOVT CODES
     fuLib.lov.getLovPersonGovtCodes().success(function (data, status, xhr) {
-        fillCombo('#selGovtCode', data);
+        fillUl('#ulGovtCode', data);
 
     }).error(function (xhr, status, error) {
         //lov.getLovPersonGovtCodes failed
@@ -160,14 +161,14 @@ function doUser(crPage) {
     });
 
     //chkAdmin check event
-    $('#chkAdmin').on('ifChecked', function (event) {
-        $('#chkAdminText').text("Yes");
-    });
+    //$('#chkAdmin').on('ifChecked', function (event) {
+    //    $('#chkAdminText').text("Administrator");
+    //});
 
     //chkAdmin un-check event
-    $('#chkAdmin').on('ifUnchecked', function (event) {
-        $('#chkAdminText').text("No");
-    });
+    //$('#chkAdmin').on('ifUnchecked', function (event) {
+    //    $('#chkAdminText').text("Not Administrator");
+    //});
 
     //BTN USER NEW click event
     $("#btnUserNew").click(function () {
@@ -180,7 +181,7 @@ function doUser(crPage) {
         $("#divEditOffice").hide();
         $("#divEditPerson").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
     });
@@ -216,21 +217,36 @@ function doUser(crPage) {
                 $("#txtTwitter").val(user.person.twitter);
                 $("#txtSkype").val(user.person.skype);
 
-                $("#selGovtCode option[value='" + user.person.lovGovtNo + "']").prop("selected", true);
-                $("#selGovtCode").selectpicker('refresh');
+                //$("#selGovtCode option[value='" + user.person.lovGovtNo + "']").prop("selected", true);
+                //$("#selGovtCode").selectpicker('refresh');
 
+                $("#ulGovtCode li").each(function () {
 
+                    var a = $(this).find('a');
+
+                    if ($(a).attr('href').search(new RegExp(user.person.lovGovtNo, "i")) < 0) {
+                        $("#ulGovtCodeSpan").text($(this).text());
+                        return false;
+                    }
+                });
+
+                $("#ulGovtCodeId").val(user.person.lovGovtNo);
                 $("#txtGovtCode").val(user.person.govtNo);
+
                 $("#txtDateBirth").val('');
                 $("#txtDateAnniversary").val('');
-                $("input[name=iradioMStatus]:checked", "#frmPerson").val('0');
-                $("input[name=iradioGender]:checked", "#frmPerson").val('0');
+                //$("input[name=iradioMStatus]:checked", "#frmPerson").val('0');
+                //$("input[name=iradioGender]:checked", "#frmPerson").val('0');
+
+                $("#selGender option[value='" + user.person.gender + "']").prop("selected", true);
+                $("#selGender").selectpicker('refresh');
+
+                $("#selMStatus option[value='" + user.person.maritalStatus + "']").prop("selected", true);
+                $("#selMStatus").selectpicker('refresh');
 
                 if (user.person.address != null) {
                     $("#txtAddress1").val(user.person.address.address1);
                     $("#txtAddress2").val(user.person.address.address2);
-
-                    alert(user.person.address.geoLoc);
 
                     fuLib.gloc.getLoc(user.person.address.geoLoc).success(function (data, status, xhr) {
 
@@ -242,8 +258,6 @@ function doUser(crPage) {
 
                                 //debugger
                                 console.log(data2);
-
-                                alert(user.person.address.geoLoc);
 
                                 fillCombo('#selCountry', data2);
 
@@ -397,7 +411,7 @@ function doUser(crPage) {
             handleError('user.getOne', xhr, status, error);
         });
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
     });
@@ -432,13 +446,15 @@ function doUser(crPage) {
             twitter: $("#txtTwitter").val(),
             skype: $("#txtSkype").val(),
             address: null,
-            lovGovtNo: $("#selGovtCode").val(),
+            lovGovtNo: $("#ulGovtCodeId").val(),
             govtNo: $("#txtGovtCode").val(),
             photo: '',
             dateBirth: $("#txtDateBirth").val(),
             dateAnniversary: $("#txtDateAnniversary").val(),
             maritalStatus: $("input[name=iradioMStatus]:checked", "#frmPerson").val(),
             gender: $("input[name=iradioGender]:checked", "#frmPerson").val(),
+            maritalStatus: $("#selMStatus").val(),
+            gender: $("#selGender").val(),
             isActive: true,
             flag: 0
         };
@@ -628,7 +644,7 @@ function doUser(crPage) {
             }
 
             $("#divUpdate").hide();
-            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+            $("#divTable").removeClass("col-md-9").addClass("col-md-12");
 
             return false;
 
@@ -645,7 +661,7 @@ function doUser(crPage) {
     $("#btnUserUpdateCancel").click(function () {
 
         $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+        $("#divTable").removeClass("col-md-9").addClass("col-md-12");
         return false;
 
     });
@@ -725,8 +741,6 @@ function doUser(crPage) {
 
 // PERMISSION/SECURITY/ACCESS PANEL
 function userShowAccess(userId) {
-
-    alert(userId);
 
     $("#hidSelUser").val(userId);
 
@@ -830,11 +844,7 @@ function userClearEditPanel() {
     $("#txtFacebook").val('');
     $("#txtTwitter").val('');
     $("#txtSkype").val('');
-
-    $("#selGovtCode option[value='0']").prop("selected", true);
-    $("#selGovtCode").selectpicker('refresh');
-
-
+    $("#ulGovtCodeId").val('');
     $("#txtGovtCode").val('');
     $("#txtDateBirth").val('');
     $("#txtDateAnniversary").val('');

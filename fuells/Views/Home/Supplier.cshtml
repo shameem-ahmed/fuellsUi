@@ -21,7 +21,7 @@
     <div class="row">
 
         <!-- SUPPLIER TABLE, GOVT CODES, OFFICE & OFF PERSONS -->
-        <div class="col-md-8" id="divTable">
+        <div class="col-md-9" id="divTable">
 
             <div class="row">
                 <!-- SUPPLIER TABLE -->
@@ -173,57 +173,40 @@
         </div>
 
         <!--SUPPLIER EDIT PANELS -->
-        <div class="col-md-4" id="divUpdate">
+        <div class="col-md-3" id="divUpdate">
 
             <div class="panel panel-default" id="divEditSupplier">
                 <div class="panel-body">
                     <h4>Supplier details</h4>
                     <!-- SUPPLIER form -->
-                    <form class="form-horizontal" action="#" role="form" id="frmSupplier">
+                    <form class="form" action="#" role="form" id="frmSupplier">
+                      
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Supplier name</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtName" class="form-control" placeholder="Supplier Name" />
+                            <input type="text" id="txtName" class="form-control" placeholder="Supplier Name" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="txtCode" class="form-control" placeholder="Code" />
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <input type="text" id="txtWebsite" class="form-control" placeholder="Website" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Code</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtCode" class="form-control" placeholder="Code" />
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Website</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                                    <input type="text" id="txtWebsite" class="form-control" placeholder="Website" />
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Phone</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Fax</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtFax" class="form-control" placeholder="Fax" />
-                            </div>
+                            <input type="text" id="txtFax" class="form-control" placeholder="Fax" />
                         </div>
                     </form>
                 </div>
@@ -237,18 +220,12 @@
                 <div class="panel-body">
                     <h4>Code details</h4>
                     <!-- GOVT CODE form -->
-                    <form class="form-horizontal" action="#" role="form" id="frmCode">
+                    <form class="form" action="#" role="form" id="frmCode">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Govt code type</label>
-                            <div class="col-md-9">
-                                <select id="selLovGCode" class="form-control select"></select>
-                            </div>
+                            <select id="selLovGCode" class="form-control select"></select>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Govt code</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtGCode" class="form-control" placeholder="Govt code" />
-                            </div>
+                            <input type="text" id="txtGCode" class="form-control" placeholder="Govt code" />
                         </div>
                     </form>
                 </div>
@@ -262,72 +239,42 @@
                 <div class="panel-body">
                     <h4>Office details</h4>
                     <!-- OFFICE form -->
-                    <form class="form-horizontal" action="#" role="form" id="frmOffice">
+                    <form class="form" action="#" role="form" id="frmOffice">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Title</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtTitle" class="form-control" placeholder="Office title" />
+                            <input type="text" id="txtTitle" class="form-control" placeholder="Office title" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
+                        </div>
+                        <div class="form-group">
+                            <select id="selCountry" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <select id="selState" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <select id="selCity" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <select id="selArea" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="text" id="txtEmailO" class="form-control" placeholder="Email Address" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Address 1</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" id="txtPhoneO" class="form-control" placeholder="Phone" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Address 2</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Country</label>
-                            <div class="col-md-9">
-                                <select id="selCountry" class="form-control select"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">State</label>
-                            <div class="col-md-9">
-                                <select id="selState" class="form-control select"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">City</label>
-                            <div class="col-md-9">
-                                <select id="selCity" class="form-control select"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Area</label>
-                            <div class="col-md-9">
-                                <select id="selArea" class="form-control select"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="text" id="txtEmailO" class="form-control" placeholder="Email Address" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Phone</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" id="txtPhoneO" class="form-control" placeholder="Phone" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Fax</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtFaxO" class="form-control" placeholder="Fax" />
-                            </div>
+                            <input type="text" id="txtFaxO" class="form-control" placeholder="Fax" />
                         </div>
                     </form>
                 </div>
@@ -341,112 +288,78 @@
                 <div class="panel-body">
                     <h4>Person details</h4>
                     <!-- PERSON form -->
-                    <form class="form-horizontal" action="#" role="form" id="frmPerson">
+                    <form class="form" action="#" role="form" id="frmPerson">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Full name</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="txtNameP" placeholder="Full Name" />
+                            <input type="text" class="form-control" id="txtNameP" placeholder="Full Name" />
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="text" id="txtEmailP" class="form-control" placeholder="Email Address" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="text" id="txtEmailP" class="form-control" placeholder="Email Address" />
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" id="txtPhoneP" class="form-control" placeholder="Phone" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Phone</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" id="txtPhoneP" class="form-control" placeholder="Phone" />
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                                <input type="text" id="txtFacebook" class="form-control" placeholder="Facebook" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Facebook</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-                                    <input type="text" id="txtFacebook" class="form-control" placeholder="Facebook" />
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                                <input type="text" id="txtSkype" class="form-control" placeholder="Skype" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Skype</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-skype"></i></span>
-                                    <input type="text" id="txtSkype" class="form-control" placeholder="Skype" />
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                                <input type="text" id="txtTwitter" class="form-control" placeholder="Twitter" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Twitter</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-                                    <input type="text" id="txtTwitter" class="form-control" placeholder="Twitter" />
-                                </div>
+                            <select id="selGovtCode" class="form-control select"></select>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
+                                <input id="txtGovtCode" type="text" class="form-control" placeholder="Govt Code" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Govt. Code</label>
-                            <div class="col-md-4">
-                                <select id="selGovtCode" class="form-control select"></select>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
-                                    <input id="txtGovtCode" type="text" class="form-control" placeholder="Govt Code" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Photo</label>
-                            <div class="col-md-9">
-                                <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
-                                <input id="filePhoto" type="file" class="fileinput" name="filename1" id="filename1" />
-                            </div>
+                            <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
+                            <input id="filePhoto" type="file" class="fileinput" name="filename1" id="filename1" />
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Birth date</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <input type="text" id="txtDateBirth" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
+                            <div class="input-group">
+                                <input type="text" id="txtDateBirth" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Anniversary date</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
+                            <div class="input-group">
+                                <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
+                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Gender</label>
-                            <div class="col-md-9">
-                                <label class="check"><input type="radio" class="iradio" name="iradioGender" checked="checked" value="0" /> Not set</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioGender" value="1" /> Male</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioGender" value="2" /> Female</label>
-                            </div>
+                            <select id="selGender" class="form-control select">
+                                <option value="0" selected="selected">Not Set</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Maritial status</label>
-                            <div class="col-md-9">
-                                <label class="check"><input type="radio" class="iradio" name="iradioMStatus" checked="checked" value="0" /> Not set</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="1" /> Married</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="2" /> Not Married</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="3" /> Widow</label>
-                            </div>
+                            <select id="selMStatus" class="form-control select">
+                                <option value="0" selected="selected">Not Set</option>
+                                <option value="1">Married</option>
+                                <option value="2">Not Married</option>
+                                <option value="3">Widow</option>
+                            </select>
                         </div>
                     </form>
                 </div>
@@ -455,6 +368,7 @@
                     <button id="btnPersonUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                 </div>
             </div>
+        
         </div>
     </div>
     <!-- PAGE CONTENT - ENDS -->

@@ -125,7 +125,10 @@ var fuLib = {
             );
         },
 
-        login: function(name, pwd) {
+        login: function (name, pwd) {
+            
+            debugger
+
             return (
                 $.ajax({
                     url: apiUrl + "user/login",
@@ -488,8 +491,167 @@ var fuLib = {
                 })
             );
         },
-    }
+    },
 
+    style: {
+
+        getAllMaterial: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/material/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOneMaterial: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/maetrial/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        addMaterial: function (material) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/material/add",
+                    data: JSON.stringify(material),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllLeather: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/leather/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOneLeather: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/leather/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        addLeather: function (leather) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/leather/add",
+                    data: JSON.stringify(leather),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllColor: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/color/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOneColor: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/color/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        addColor: function (color) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/color/add",
+                    data: JSON.stringify(color),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllSize: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/size/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOneSize: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/size/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        addSize: function (size) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/size/add",
+                    data: JSON.stringify(size),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
+      
+    }
 }
 
 

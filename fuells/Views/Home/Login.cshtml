@@ -103,6 +103,8 @@
                     //do login
                     fuLib.user.login(sUser, sPwd).success(function(result, status, xhr) {
 
+                        debugger
+
                         //store jwt token in localStorage
                         window.localStorage.setItem("fuelUser", result.token);
                         window.location.replace("/");

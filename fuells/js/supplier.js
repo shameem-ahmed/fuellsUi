@@ -12,7 +12,7 @@ function doSupplier(crPage) {
    
     $("#divUpdate").hide();
 
-    $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+    $("#divTable").removeClass("col-md-9").addClass("col-md-12");
 
     //Configures SUPPLIER DataTable
     //
@@ -169,7 +169,7 @@ function doSupplier(crPage) {
         $("#divEditOffice").hide();
         $("#divEditPerson").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
     });
@@ -185,7 +185,7 @@ function doSupplier(crPage) {
         $("#divEditOffice").hide();
         $("#divEditPerson").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
     });
@@ -201,7 +201,7 @@ function doSupplier(crPage) {
         $("#divEditOffice").show();
         $("#divEditPerson").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
     });
@@ -217,7 +217,7 @@ function doSupplier(crPage) {
         $("#divEditOffice").hide();
         $("#divEditPerson").show();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
     });
@@ -586,7 +586,8 @@ function supplierClearEditPanel() {
     $("#txtGovtCode").val('');
     $("#txtDateBirth").val('');
     $("#txtDateAnniversary").val('');
-    $("input[name=iradioMStatus]:checked", "#frmPerson").val('0');
-    $("input[name=iradioGender]:checked", "#frmPerson").val('0');
-
+    $("#selGender option[value='0']").prop("selected", true);
+    $("#selGender").selectpicker('refresh');
+    $("#selMStatus option[value='0']").prop("selected", true);
+    $("#selMStatus").selectpicker('refresh');
 }

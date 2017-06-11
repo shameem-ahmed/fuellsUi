@@ -996,6 +996,7 @@
     <Content Include="js\general.js" />
     <Content Include="js\plugins\datatables\dataTables.select.min.js" />
     <Content Include="js\supplier.js" />
+    <Content Include="js\style.js" />
     <Content Include="js\user.js" />
     <Content Include="js\app.js" />
     <Content Include="js\demo_charts_morris.js" />
