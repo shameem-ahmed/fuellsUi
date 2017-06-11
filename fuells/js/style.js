@@ -129,97 +129,120 @@ function doStyle(crPage) {
         onresize();
     });
 
-    //$("#btnTest").click(function () {
+    //COLOR TABLE CONFIG
+    //
+    $("#tblColor").on('xhr.dt', function (e, settings, data, xhr) {
+        //DataTable AJAX load complete event
 
-    //    var table = $("#tblUser").DataTable();
-    //    table.rows(':eq(0)', { page: 'current' }).select();
-    //});
-
-    //fill COUNTRIES
-    fuLib.gloc.getCountries().success(function (data, status, xhr) {
-        fillCombo('#selCountry', data);
-
-
-    }).error(function (xhr, status, error) {
-        //gloc.getCountries failed
-        handleError('gloc.getCountries', xhr, status, error);
-    });
-
-    //fill PERSON GOVT CODES
-    fuLib.lov.getLovPersonGovtCodes().success(function (data, status, xhr) {
-        fillUl('#ulGovtCode', data);
-
-    }).error(function (xhr, status, error) {
-        //lov.getLovPersonGovtCodes failed
-        handleError('lov.getLovPersonGovtCodes', xhr, status, error);
-    });
-
-    //ADDRESS COUNTRY dropdown change event
-    $('#selCountry').change(function (e) {
-        var parent = $('#selCountry').val();
-
-        clearCombo($("#selState"));
-        clearCombo($("#selCity"));
-        clearCombo($("#selArea"));
-
-        if (parent != '0') {
-            fuLib.gloc.getStates(parent).success(function (data, status, xhr) {
-                //fill STATES
-                fillCombo('#selState', data);
-
-            }).error(function (xhr, status, error) {
-                //gloc.getStates failed
-                handleError('gloc.getStates', xhr, status, error);
+        //data will be null is AJAX error
+        if (data) {
+            $('#tblColor').on('draw.dt', function () {
+                //DataTable draw complete event
+                var table = $("#tblColor").DataTable();
+                //select first row by default
+                table.rows(':eq(0)', { page: 'current' }).select();
             });
+        }
+    }).DataTable({
+        "autoWidth": false,
+        "select": {
+            style: 'single'
+        },
+        deferRender: true,
+        rowId: "_id",
+        "ajax": {
+            "url": apiUrl + "style/color/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            {
+                "render": function (data, type, row) {
+                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
+                }
+            },
+            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ],
+    });
+
+    //COLOR TABLE ROW click event
+    $("#tblColor tbody").on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            var table = $('#tblColor').DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selColorId = $(this).find('input[type=hidden]').eq(0).val();
         }
     });
 
-    //ADDRESS STATE dropdown change event
-    $('#selState').change(function (e) {
-        var parent = $('#selState').val();
+    $('#tblColor').on('draw.dt', function () {
+        onresize();
+    });
 
-        clearCombo($("#selCity"));
-        clearCombo($("#selArea"));
 
-        if (parent != '0') {
-            fuLib.gloc.getCities(parent).success(function (data, status, xhr) {
-                //fill CITIES
-                fillCombo('#selCity', data);
+    //SIZE TABLE CONFIG
+    //
+    $("#tblSize").on('xhr.dt', function (e, settings, data, xhr) {
+        //DataTable AJAX load complete event
 
-            }).error(function (xhr, status, error) {
-                //gloc.getCities failed
-                handleError('gloc.getCities', xhr, status, error);
+        //data will be null is AJAX error
+        if (data) {
+            $('#tblSize').on('draw.dt', function () {
+                //DataTable draw complete event
+                var table = $("#tblSize").DataTable();
+                //select first row by default
+                table.rows(':eq(0)', { page: 'current' }).select();
             });
+        }
+    }).DataTable({
+        "autoWidth": false,
+        "select": {
+            style: 'single'
+        },
+        deferRender: true,
+        rowId: "_id",
+        "ajax": {
+            "url": apiUrl + "style/size/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            {
+                "render": function (data, type, row) {
+                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
+                }
+            },
+            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ],
+    });
+
+    //COLOR TABLE ROW click event
+    $("#tblSize tbody").on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            var table = $('#tblSize').DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selColorId = $(this).find('input[type=hidden]').eq(0).val();
         }
     });
 
-    //ADDRESS CITY dropdown change event
-    $('#selCity').change(function (e) {
-        var parent = $('#selCity').val();
-
-        clearCombo($("#selArea"));
-
-        if (parent != '0') {
-            fuLib.gloc.getAreas(parent).success(function (data, status, xhr) {
-                //fill AREAS
-                fillCombo('#selArea', data);
-
-            }).error(function (xhr, status, error) {
-                //gloc.getAreas failed
-                handleError('gloc.getAreas', xhr, status, error);
-            });
-        }
+    $('#tblSize').on('draw.dt', function () {
+        onresize();
     });
-
-    //chkAdmin check event
-    //$('#chkAdmin').on('ifChecked', function (event) {
-    //    $('#chkAdminText').text("Administrator");
-    //});
-
-    //chkAdmin un-check event
-    //$('#chkAdmin').on('ifUnchecked', function (event) {
-    //    $('#chkAdminText').text("Not Administrator");
-    //});
 
     //BTN NEW STYLE click event
     $("#btnNewStyle").click(function () {
@@ -543,7 +566,6 @@ function doStyle(crPage) {
 
     });
 
-
     //STYLE CANCEL click event
     $("#btnCancelStyle").click(function () {
 
@@ -609,14 +631,12 @@ function doStyle(crPage) {
 
     });
 
-
     //MATERIAL CANCEL click event
     $("#btnCancelMaterial").click(function () {
 
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-9").addClass("col-md-12");
         return false;
-
     });
 
     //LEATHER SAVE click event
@@ -678,6 +698,141 @@ function doStyle(crPage) {
 
     //LEATHER CANCEL click event
     $("#btnCancelLeather").click(function () {
+
+        $("#divUpdate").hide();
+        $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+        return false;
+
+    });
+
+
+
+    //COLOR SAVE click event
+    $("#btnSaveColor").click(function () {
+
+        var isEmptyColor = false;
+
+        var oColor = {
+            title: $("#txtColorTitle").val(),
+            isActive: true,
+            flag: 0
+        };
+
+        //check if oColor is empty
+        if (oColor.title.trim().length == 0) {
+            isEmptyColor = true;
+        }
+
+
+        if (modeUpdate == 'newColor') {
+
+            if (isEmptyColor == true) {
+                noty({ text: "Please type color details", layout: 'topRight', type: 'error', timeout: 2000 });
+                return false;
+            }
+            else {
+
+                //save COLOR details
+
+                fuLib.style.addColor(oColor).success(function (data, status, xhr) {
+
+                    console.log(data);
+
+                    noty({ text: 'Color added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                    var table = $("#tblColor").DataTable();
+                    table.ajax.reload();
+
+                }).error(function (xhr, status, error) {
+                    //style.addLeather failed
+                    handleError('style.addColor', xhr, status, error);
+                });
+            }
+
+            $("#divUpdate").hide();
+            $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+
+            return false;
+
+        }
+        else if (modeUpdate == 'edit') {
+
+        }
+
+        return false;
+
+    });
+
+
+    //LEATHER CANCEL click event
+    $("#btnCancelColor").click(function () {
+
+        $("#divUpdate").hide();
+        $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+        return false;
+
+    });
+
+
+
+    //SIZE SAVE click event
+    $("#btnSaveSize").click(function () {
+
+        var isEmptySize = false;
+
+        var oSize = {
+            title: $("#txtSizeTitle").val(),
+            isActive: true,
+            flag: 0
+        };
+
+        //check if oLeather is empty
+        if (oSize.title.trim().length == 0) {
+            isEmptySize = true;
+        }
+
+
+        if (modeUpdate == 'newSize') {
+
+            if (isEmptySize == true) {
+                noty({ text: "Please type size details", layout: 'topRight', type: 'error', timeout: 2000 });
+                return false;
+            }
+            else {
+
+                //save SIZE details
+
+                fuLib.style.addSize(oSize).success(function (data, status, xhr) {
+
+                    console.log(data);
+
+                    noty({ text: 'Size added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                    var table = $("#tblSize").DataTable();
+                    table.ajax.reload();
+
+                }).error(function (xhr, status, error) {
+                    //style.addLeather failed
+                    handleError('style.addSize', xhr, status, error);
+                });
+            }
+
+            $("#divUpdate").hide();
+            $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+
+            return false;
+
+        }
+        else if (modeUpdate == 'edit') {
+
+        }
+
+        return false;
+
+    });
+
+    //SIZE CANCEL click event
+    $("#btnCancelSize").click(function () {
 
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-9").addClass("col-md-12");
