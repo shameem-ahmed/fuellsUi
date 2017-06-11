@@ -1,5 +1,360 @@
 ﻿@{
     ViewBag.Title = "Style";
 }
-
 <input type="hidden" id="hidSelMenu" value="liPageStyle" />
+<input type="hidden" id="hidSelStyle" value="000" />
+
+<ul class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Style</a></li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- PAGE TITLE -->
+<div class="page-title">
+    <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
+</div>
+<!-- END PAGE TITLE -->
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="row" id="divList">
+        <div class="col-md-9" id="divTable">
+
+            <div class="panel panel-default tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li id="tabStyle" class="active"><a href="#tab-style" role="tab" data-toggle="tab">Style</a></li>
+                    <li id="tabMaterial"><a href="#tab-material" role="tab" data-toggle="tab">Material</a></li>
+                    <li id="tabLeather"><a href="#tab-leather" role="tab" data-toggle="tab">Leather</a></li>
+                    <li id="tabColor"><a href="#tab-color" role="tab" data-toggle="tab">Color</a></li>
+                    <li id="tabSize"><a href="#tab-size" role="tab" data-toggle="tab">Size</a></li>
+                </ul>
+                <div class="panel-body tab-content">
+                    <div class="tab-pane active" id="tab-style">
+                        <!--STYLE TABLE -->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnNewStyle" type="button" class="btn btn-primary">New Style</button>
+                                <button id="btnEditStyle" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnDeleteStyle" type="button" class="btn btn-danger">Delete</button>
+
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblStyle">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Title</th>
+                                            <th width="20%">Leather</th>
+                                            <th width="20%">Color</th>
+                                            <th width="20%">Size</th>
+                                            <th width="20%">Material</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-material">
+                        <!--MATERIAL TABLE -->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnNewMaterial" type="button" class="btn btn-primary">New Material</button>
+                                <button id="btnEditMaterial" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnDeleteMaterial" type="button" class="btn btn-danger">Delete</button>
+
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblMaterial">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Title</th>
+                                            <th width="20%">Active</th>
+                                            <th width="20%">Flag</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-leather">
+                        <!--LEATHER TABLE -->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnNewLeather" type="button" class="btn btn-primary">New Leather</button>
+                                <button id="btnEditLeather" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnDeleteLeather" type="button" class="btn btn-danger">Delete</button>
+
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblLeather">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Title</th>
+                                            <th width="20%">Active</th>
+                                            <th width="20%">Flag</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="tab-pane" id="tab-color">
+                        <!--COLOR TABLE -->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnNewColor" type="button" class="btn btn-primary">New Color</button>
+                                <button id="btnEditColor" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnDeleteColor" type="button" class="btn btn-danger">Delete</button>
+
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblColor">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Title</th>
+                                            <th width="20%">Active</th>
+                                            <th width="20%">Flag</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                      
+                    </div>
+                    <div class="tab-pane" id="tab-size">
+                        <!--SIZE TABLE -->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnNewSize" type="button" class="btn btn-primary">New Size</button>
+                                <button id="btnEditSize" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnDeleteSize" type="button" class="btn btn-danger">Delete</button>
+
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblSize">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Title</th>
+                                            <th width="20%">Active</th>
+                                            <th width="20%">Flag</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <h3>Footer</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- UPDATE PANELS -->
+        <div class="col-md-3" id="divUpdate">
+            <!-- STYLE PANEL -->
+            <div class="panel panel-warning" id="divEditStyle">
+                <div class="panel-heading">
+                    <h4>Style details</h4>
+                </div>
+                <div class="panel-body">
+                    <!-- STYLE form -->
+                    <form class="form" action="#" role="form" id="frmStyle">
+                        <div class="form-group">
+                            <input type="text" id="txtStyleTitle" class="form-control" placeholder="Style title" />
+                        </div>
+                        <div class="form-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Style Materials</h3>
+                                    <ul class="panel-controls">
+                                        <li><a href="#" class="control-primary"><span class="fa fa-plus"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="panel-body list-group list-group-contacts" id="lstStyleMaterial">
+                                    <a href="#" class="list-group-item">
+                                        <div class="list-group-status status-online"></div>
+                                        <span class="contacts-title">Brad Pitt</span>
+                                        <p>Actor and Film Producer</p>
+                                        <div class="list-group-controls">
+                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="list-group-status status-online"></div>
+                                        <span class="contacts-title">Dmitry Ivaniuk</span>
+                                        <p>Web Developer/Designer</p>
+                                        <div class="list-group-controls">
+                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Style Leather</h3>
+                                    <ul class="panel-controls">
+                                        <li><a href="#" class="control-primary"><span class="fa fa-plus"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="panel-body list-group list-group-contacts" id="lstStyleLeather">
+                                    <a href="#" class="list-group-item">
+                                        <div class="list-group-status status-online"></div>
+                                        <span class="contacts-title">Brad Pitt</span>
+                                        <p>Actor and Film Producer</p>
+                                        <div class="list-group-controls">
+                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="list-group-status status-online"></div>
+                                        <span class="contacts-title">Dmitry Ivaniuk</span>
+                                        <p>Web Developer/Designer</p>
+                                        <div class="list-group-controls">
+                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Style Size</h3>
+                                    <ul class="panel-controls">
+                                        <li><a href="#" class="control-primary"><span class="fa fa-plus"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="panel-body list-group list-group-contacts" id="lstStyleSize">
+                                    <a href="#" class="list-group-item">
+                                        <div class="list-group-status status-online"></div>
+                                        <span class="contacts-title">Brad Pitt</span>
+                                        <p>Actor and Film Producer</p>
+                                        <div class="list-group-controls">
+                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="list-group-status status-online"></div>
+                                        <span class="contacts-title">Dmitry Ivaniuk</span>
+                                        <p>Web Developer/Designer</p>
+                                        <div class="list-group-controls">
+                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button id="btnCancelStyle" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnSaveStyle" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                </div>
+            </div>
+
+            <!-- MATERIAL PANEL -->
+            <div class="panel panel-warning" id="divEditMaterial">
+                <div class="panel-heading">
+                    <h4>Material details</h4>
+                </div>
+                <div class="panel-body">
+                    <!-- MATERIAL form -->
+                    <form class="form" action="#" role="form" id="frmMaterial">
+                        <div class="form-group">
+                            <input type="text" id="txtMaterialTitle" class="form-control" placeholder="Material title" />
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button id="btnCancelMaterial" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnSaveMaterial" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                </div>
+            </div>
+
+            <!-- LEATHER PANEL -->
+            <div class="panel panel-warning" id="divEditLeather">
+                <div class="panel-heading">
+                    <h4>Leather details</h4>
+                </div>
+                <div class="panel-body">
+                    <!-- LEATHER form -->
+                    <form class="form" action="#" role="form" id="frmLeather">
+                        <div class="form-group">
+                            <input type="text" id="txtLeatherTitle" class="form-control" placeholder="Leather title" />
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button id="btnCancelLeather" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnSaveLeather" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                </div>
+            </div>
+
+            <!-- COLOR PANEL -->
+            <div class="panel panel-warning" id="divEditColor">
+                <div class="panel-heading">
+                    <h4>Color details</h4>
+                </div>
+                <div class="panel-body">
+                    <!-- COLOR form -->
+                    <form class="form" action="#" role="form" id="frmMaterial">
+                        <div class="form-group">
+                            <input type="text" id="txtColorTitle" class="form-control" placeholder="Color title" />
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button id="btnCancelColor" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnSaveColor" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                </div>
+            </div>
+
+            <!-- SIZE PANEL -->
+            <div class="panel panel-warning" id="divEditSize">
+                <div class="panel-heading">
+                    <h4>Size details</h4>
+                </div>
+                <div class="panel-body">
+                    <!-- SIZE form -->
+                    <form class="form" action="#" role="form" id="frmSize">
+                        <div class="form-group">
+                            <input type="text" id="txtSizeTitle" class="form-control" placeholder="Size title" />
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button id="btnCancelSize" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnSaveSize" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
