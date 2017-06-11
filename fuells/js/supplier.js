@@ -9,10 +9,10 @@ function doSupplier(crPage) {
     var tableCode;
     var tableOffice;
     var tablePerson;
-   
+
     $("#divUpdate").hide();
 
-    $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+    $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
     //Configures SUPPLIER DataTable
     //
@@ -94,12 +94,14 @@ function doSupplier(crPage) {
 
     //fill PERSON GOVT CODES
     fuLib.lov.getLovCompanyGovtCodes().success(function (data, status, xhr) {
-        fillCombo('#selLovGCode', data);
+        fillCombo('#selGovtCode', data);
 
     }).error(function (xhr, status, error) {
         //lov.getLovCompanyGovtCodes failed
         handleError('lov.getLovCompanyGovtCodes', xhr, status, error);
     });
+
+
 
     //ADDRESS COUNTRY dropdown change event
     $('#selCountry').change(function (e) {
@@ -169,7 +171,7 @@ function doSupplier(crPage) {
         $("#divEditOffice").hide();
         $("#divEditPerson").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
     });
@@ -185,7 +187,7 @@ function doSupplier(crPage) {
         $("#divEditOffice").hide();
         $("#divEditPerson").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
     });
@@ -201,7 +203,7 @@ function doSupplier(crPage) {
         $("#divEditOffice").show();
         $("#divEditPerson").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
     });
@@ -217,7 +219,7 @@ function doSupplier(crPage) {
         $("#divEditOffice").hide();
         $("#divEditPerson").show();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
     });
@@ -249,8 +251,8 @@ function doSupplier(crPage) {
         if (modeUpdate == 'new') {
 
             if (isEmptySupplier == true) {
-                    noty({ text: "Please type supplier details", layout: 'topRight', type: 'error', timeout: 2000 });
-                    return false;
+                noty({ text: "Please type supplier details", layout: 'topRight', type: 'error', timeout: 2000 });
+                return false;
             }
             else {
 
@@ -278,14 +280,14 @@ function doSupplier(crPage) {
         else if (modeUpdate == 'edit') {
 
         }
-       
+
         return false;
 
     });
 
     //NEW SUPPLIER-Cancel click event
     $("#btnSupplierUpdateCancel").click(function () {
-     
+
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
@@ -451,6 +453,61 @@ function doSupplier(crPage) {
 
     });
 
+    $("#btnPersonUpdateSave").click(function () {
+     
+        var isEmptyPerson = false;
+        var oPerson = {
+            name: $("#txtName").val(),
+            email: $("#txtEmail").val(),
+            phone: $("#txtPhone").val(),
+            facebook: $("#txtFacebook").val(),
+            twitter: $("#txtTwitter").val(),
+            skype: $("#txtSkype").val(),
+            address: null,
+            lovGovtNo: $("#selGovtCode").val(),
+            govtNo: $("#txtGovtCode").val(),
+            photo: '',
+            dateBirth: $("#txtDateBirth").val(),
+            dateAnniversary: $("#txtDateAnniversary").val(),
+            maritalStatus: $("input[name=iradioMStatus]:checked", "#frmPerson").val(),
+            gender: $("input[name=iradioGender]:checked", "#frmPerson").val(),
+            isActive: true,
+            flag: 0
+        };
+        alert(oPerson);
+        if (oPerson.name.trim().length == 0 &&
+            oPerson.email.trim().length == 0 &&
+            oPerson.phone.trim().length == 0 &&
+            oPerson.facebook.trim().length == 0 &&
+            oPerson.twitter.trim().length == 0 &&
+            oPerson.skype.trim().length == 0 &&
+            oPerson.govtNo.trim().length == 0 &&
+            oPerson.dateBirth.trim().length == 0 &&
+            oPerson.dateAnniversary.trim().length == 0) {
+            isPersonEmpty = true;
+        }
+        if (modeUpdate == 'new') {
+            if (isEmptyPerson == false) {
+                //save USER details
+
+                fuLib.person.add(oPerson).success(function (data, status, xhr) {
+
+                    console.log(data);
+
+                    noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                    //var table = $("#tblUser").DataTable();
+                    //table.ajax.reload();
+
+                }).error(function (xhr, status, error) {
+                    //user.add failed
+                    handleError('user.add', xhr, status, error);
+                });
+            }
+        }
+
+    });
+
 }
 
 function fillCode(suppId) {
@@ -551,7 +608,7 @@ function supplierClearEditPanel() {
     $("#txtEmail").val('');
     $("#txtPhone").val('');
     $("#txtFax").val('');
-  
+
 
     //supplier govt code
     $("#selLovGCode option[value='0']").prop("selected", true);
@@ -573,7 +630,7 @@ function supplierClearEditPanel() {
     $("#txtEmailO").val('');
     $("#txtPhoneO").val('');
     $("#txtFaxO").val('');
-  
+
     //supplier office person
     $("#txtNameP").val('');
     $("#txtEmailP").val('');
@@ -586,8 +643,7 @@ function supplierClearEditPanel() {
     $("#txtGovtCode").val('');
     $("#txtDateBirth").val('');
     $("#txtDateAnniversary").val('');
-    $("#selGender option[value='0']").prop("selected", true);
-    $("#selGender").selectpicker('refresh');
-    $("#selMStatus option[value='0']").prop("selected", true);
-    $("#selMStatus").selectpicker('refresh');
+    $("input[name=iradioMStatus]:checked", "#frmPerson").val('0');
+    $("input[name=iradioGender]:checked", "#frmPerson").val('0');
+
 }
