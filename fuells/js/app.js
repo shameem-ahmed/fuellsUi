@@ -495,6 +495,45 @@ var fuLib = {
 
     style: {
 
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (style) {
+            return (
+                $.ajax({
+                    url: apiUrl + "style/add",
+                    data: JSON.stringify(style),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
         getAllMaterial: function () {
             return (
                 $.ajax({

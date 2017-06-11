@@ -46,9 +46,8 @@
                                     <thead>
                                         <tr>
                                             <th width="20%">Title</th>
-                                            <th width="20%">Leather</th>
-                                            <th width="20%">Color</th>
-                                            <th width="20%">Size</th>
+                                            <th width="20%">Active</th>
+                                            <th width="20%">Flag</th>
                                             <th width="20%">Material</th>
                                         </tr>
                                     </thead>
@@ -110,7 +109,6 @@
                                 </table>
                             </div>
                         </div>
-                        
                     </div>
                     <div class="tab-pane" id="tab-color">
                         <!--COLOR TABLE -->
@@ -138,7 +136,6 @@
                                 </table>
                             </div>
                         </div>
-                      
                     </div>
                     <div class="tab-pane" id="tab-size">
                         <!--SIZE TABLE -->
@@ -187,87 +184,91 @@
                         <div class="form-group">
                             <input type="text" id="txtStyleTitle" class="form-control" placeholder="Style title" />
                         </div>
+                        <!-- STYLE MATERIAL list -->
                         <div class="form-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
-                                    <h3 class="panel-title">Style Materials</h3>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="control-primary"><span class="fa fa-plus"></span></a></li>
-                                    </ul>
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td><h3 class="panel-title">Style Materials</h3></td>
+                                            <td style="width:50%;">
+                                                <select id="selStyleMaterial" class="form-control select"></select>
+                                            </td>
+                                            <td>
+                                                <ul class="panel-controls">
+                                                    <li><a href="javascript:addStyleMaterial();" class="control-primary"><span class="fa fa-plus"></span></a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                                 <div class="panel-body list-group list-group-contacts" id="lstStyleMaterial">
-                                    <a href="#" class="list-group-item">
-                                        <div class="list-group-status status-online"></div>
-                                        <span class="contacts-title">Brad Pitt</span>
-                                        <p>Actor and Film Producer</p>
-                                        <div class="list-group-controls">
-                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <div class="list-group-status status-online"></div>
-                                        <span class="contacts-title">Dmitry Ivaniuk</span>
-                                        <p>Web Developer/Designer</p>
-                                        <div class="list-group-controls">
-                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
-                                        </div>
-                                    </a>
                                 </div>
                             </div>
                         </div>
+                        <!-- STYLE LEATHER list -->
                         <div class="form-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
-                                    <h3 class="panel-title">Style Leather</h3>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="control-primary"><span class="fa fa-plus"></span></a></li>
-                                    </ul>
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td><h3 class="panel-title">Style Leathers</h3></td>
+                                            <td style="width:50%;">
+                                                <select id="selStyleLeather" class="form-control select"></select>
+                                            </td>
+                                            <td>
+                                                <ul class="panel-controls">
+                                                    <li><a href="javascript:addStyleLeather();" class="control-primary"><span class="fa fa-plus"></span></a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                                 <div class="panel-body list-group list-group-contacts" id="lstStyleLeather">
-                                    <a href="#" class="list-group-item">
-                                        <div class="list-group-status status-online"></div>
-                                        <span class="contacts-title">Brad Pitt</span>
-                                        <p>Actor and Film Producer</p>
-                                        <div class="list-group-controls">
-                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <div class="list-group-status status-online"></div>
-                                        <span class="contacts-title">Dmitry Ivaniuk</span>
-                                        <p>Web Developer/Designer</p>
-                                        <div class="list-group-controls">
-                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
-                                        </div>
-                                    </a>
                                 </div>
                             </div>
                         </div>
+                        <!-- STYLE COLOR list -->
                         <div class="form-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
-                                    <h3 class="panel-title">Style Size</h3>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="control-primary"><span class="fa fa-plus"></span></a></li>
-                                    </ul>
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td><h3 class="panel-title">Style Colors</h3></td>
+                                            <td style="width:50%;">
+                                                <select id="selStyleColor" class="form-control select"></select>
+                                            </td>
+                                            <td>
+                                                <ul class="panel-controls">
+                                                    <li><a href="javascript:addStyleColor();" class="control-primary"><span class="fa fa-plus"></span></a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="panel-body list-group list-group-contacts" id="lstStyleColor">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- STYLE SIZE list -->
+                        <div class="form-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td><h3 class="panel-title">Style Sizes</h3></td>
+                                            <td style="width:50%;">
+                                                <select id="selStyleSize" class="form-control select"></select>
+                                            </td>
+                                            <td>
+                                                <ul class="panel-controls">
+                                                    <li><a href="javascript:addStyleSize();" class="control-primary"><span class="fa fa-plus"></span></a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                                 <div class="panel-body list-group list-group-contacts" id="lstStyleSize">
-                                    <a href="#" class="list-group-item">
-                                        <div class="list-group-status status-online"></div>
-                                        <span class="contacts-title">Brad Pitt</span>
-                                        <p>Actor and Film Producer</p>
-                                        <div class="list-group-controls">
-                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <div class="list-group-status status-online"></div>
-                                        <span class="contacts-title">Dmitry Ivaniuk</span>
-                                        <p>Web Developer/Designer</p>
-                                        <div class="list-group-controls">
-                                            <button class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
-                                        </div>
-                                    </a>
                                 </div>
                             </div>
                         </div>
