@@ -11,7 +11,7 @@ function doUser(crPage) {
     $("#divAccess").hide();
     $("#divUpdate").hide();
 
-    $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+    $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
     //Configures DataTable
     $("#tblUser").on('xhr.dt', function (e, settings, data, xhr) {
@@ -181,7 +181,7 @@ function doUser(crPage) {
         $("#divEditOffice").hide();
         $("#divEditPerson").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
     });
@@ -411,7 +411,7 @@ function doUser(crPage) {
             handleError('user.getOne', xhr, status, error);
         });
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
     });
@@ -644,7 +644,7 @@ function doUser(crPage) {
             }
 
             $("#divUpdate").hide();
-            $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
             return false;
 
@@ -661,7 +661,7 @@ function doUser(crPage) {
     $("#btnUserUpdateCancel").click(function () {
 
         $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
 
     });
@@ -725,16 +725,19 @@ function doUser(crPage) {
     //USER TAB click event
     $("#tabUser").click(function () {
         crTab = 0;
+        onresize();
     });
 
     //PERSON TAB click event
     $("#tabPerson").click(function () {
         crTab = 1;
+        onresize();
     });
 
     //ADDRESS TAB click event
     $("#tabAddress").click(function () {
         crTab = 2;
+        onresize();
     });
 
 }

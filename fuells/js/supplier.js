@@ -93,8 +93,8 @@ function doSupplier(crPage) {
     });
 
     //fill PERSON GOVT CODES
-    fuLib.lov.getLovCompanyGovtCodes().success(function (data, status, xhr) {
-        fillCombo('#selGovtCode', data);
+    fuLib.lov.getLovCompanyGovtCodes().success(function (data, status, xhr) {       
+        fillUl('#ulGovtCode', data);
 
     }).error(function (xhr, status, error) {
         //lov.getLovCompanyGovtCodes failed
@@ -454,12 +454,12 @@ function doSupplier(crPage) {
     });
 
     $("#btnPersonUpdateSave").click(function () {
-     
+        debugger;
         var isEmptyPerson = false;
         var oPerson = {
-            name: $("#txtName").val(),
-            email: $("#txtEmail").val(),
-            phone: $("#txtPhone").val(),
+            name: $("#txtNameP").val(),
+            email: $("#txtEmailP").val(),
+            phone: $("#txtPhoneP").val(),
             facebook: $("#txtFacebook").val(),
             twitter: $("#txtTwitter").val(),
             skype: $("#txtSkype").val(),
@@ -474,7 +474,7 @@ function doSupplier(crPage) {
             isActive: true,
             flag: 0
         };
-        alert(oPerson);
+       
         if (oPerson.name.trim().length == 0 &&
             oPerson.email.trim().length == 0 &&
             oPerson.phone.trim().length == 0 &&

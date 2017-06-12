@@ -12,7 +12,7 @@ function fillCombo(combo, data) {
     $(combo).selectpicker('refresh');
 }
 
-// FILL COMBOBOX
+// FILL fillUl
 function fillUl(ul, data) {
 
     var items = '';

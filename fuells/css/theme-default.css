@@ -3183,6 +3183,7 @@ blockquote.pull-right {
   width: 150px;
   display: inline;
   margin-left: 5px;
+  height:25px;
 }
 td.dataTables_empty {
   font-size: 11px;
