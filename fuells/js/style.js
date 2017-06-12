@@ -15,233 +15,50 @@ function doStyle(crPage) {
 
     $("#divTable").removeClass("col-md-9").addClass("col-md-12");
 
-    //MATERIAL TABLE CONFIG
-    //
-    $("#tblMaterial").on('xhr.dt', function (e, settings, data, xhr) {
-        //DataTable AJAX load complete event
+    configStyleTable();
+    configMaterialTable();
+    configLeatherTable();
+    configColorTable();
+    configSizeTable();
 
-        //data will be null is AJAX error
-        if (data) {
-            $('#tblMaterial').on('draw.dt', function () {
-                //DataTable draw complete event
-                var table = $("#tblMaterial").DataTable();
-                //select first row by default
-                table.rows(':eq(0)', { page: 'current' }).select();
-            });
-        }
-    }).DataTable({
-        "autoWidth": false,
-        "select": {
-            style: 'single'
-        },
-        deferRender: true,
-        rowId: "_id",
-        "ajax": {
-            "url": apiUrl + "style/material/getall",
-            "dataSrc": "",
-            "headers": {
-                "Authorization": "Bearer " + token
-            }
-        },
-        "columns": [
-            {
-                "render": function (data, type, row) {
-                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
-                }
-            },
-            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
-        ],
+    //fill MATERIALS FOR STYLE
+    fuLib.style.getAllMaterial().success(function (data, status, xhr) {
+        fillCombo('#selStyleMaterial', data);
+
+
+    }).error(function (xhr, status, error) {
+        //style.getAllMaterial failed
+        handleError('style.getAllMaterial', xhr, status, error);
     });
 
-    //MATERIAL TABLE ROW click event
-    $("#tblMaterial tbody").on('click', 'tr', function () {
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        }
-        else {
-            var table = $('#tblMaterial').DataTable();
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
+    //fill LEATHERS FOR STYLE
+    fuLib.style.getAllLeather().success(function (data, status, xhr) {
+        fillCombo('#selStyleLeather', data);
 
-            selMaterialId = $(this).find('input[type=hidden]').eq(0).val();
-        }
+
+    }).error(function (xhr, status, error) {
+        //style.getAllLeather failed
+        handleError('style.getAllLeather', xhr, status, error);
     });
 
-    $('#tblMaterial').on('draw.dt', function () {
-        onresize();
+    //fill COLORS FOR STYLE
+    fuLib.style.getAllColor().success(function (data, status, xhr) {
+        fillCombo('#selStyleColor', data);
+
+
+    }).error(function (xhr, status, error) {
+        //style.getAllColor failed
+        handleError('style.getAllColor', xhr, status, error);
     });
 
-    //LEATHER TABLE CONFIG
-    //
-    $("#tblLeather").on('xhr.dt', function (e, settings, data, xhr) {
-        //DataTable AJAX load complete event
-
-        //data will be null is AJAX error
-        if (data) {
-            $('#tblLeather').on('draw.dt', function () {
-                //DataTable draw complete event
-                var table = $("#tblLeather").DataTable();
-                //select first row by default
-                table.rows(':eq(0)', { page: 'current' }).select();
-            });
-        }
-    }).DataTable({
-        "autoWidth": false,
-        "select": {
-            style: 'single'
-        },
-        deferRender: true,
-        rowId: "_id",
-        "ajax": {
-            "url": apiUrl + "style/leather/getall",
-            "dataSrc": "",
-            "headers": {
-                "Authorization": "Bearer " + token
-            }
-        },
-        "columns": [
-            {
-                "render": function (data, type, row) {
-                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
-                }
-            },
-            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
-        ],
-    });
-
-    //MATERIAL TABLE ROW click event
-    $("#tblLeather tbody").on('click', 'tr', function () {
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        }
-        else {
-            var table = $('#tblLeather').DataTable();
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-
-            selLeatherId = $(this).find('input[type=hidden]').eq(0).val();
-        }
-    });
-
-    $('#tblLeather').on('draw.dt', function () {
-        onresize();
-    });
-
-    //COLOR TABLE CONFIG
-    //
-    $("#tblColor").on('xhr.dt', function (e, settings, data, xhr) {
-        //DataTable AJAX load complete event
-
-        //data will be null is AJAX error
-        if (data) {
-            $('#tblColor').on('draw.dt', function () {
-                //DataTable draw complete event
-                var table = $("#tblColor").DataTable();
-                //select first row by default
-                table.rows(':eq(0)', { page: 'current' }).select();
-            });
-        }
-    }).DataTable({
-        "autoWidth": false,
-        "select": {
-            style: 'single'
-        },
-        deferRender: true,
-        rowId: "_id",
-        "ajax": {
-            "url": apiUrl + "style/color/getall",
-            "dataSrc": "",
-            "headers": {
-                "Authorization": "Bearer " + token
-            }
-        },
-        "columns": [
-            {
-                "render": function (data, type, row) {
-                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
-                }
-            },
-            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
-        ],
-    });
-
-    //COLOR TABLE ROW click event
-    $("#tblColor tbody").on('click', 'tr', function () {
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        }
-        else {
-            var table = $('#tblColor').DataTable();
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-
-            selColorId = $(this).find('input[type=hidden]').eq(0).val();
-        }
-    });
-
-    $('#tblColor').on('draw.dt', function () {
-        onresize();
-    });
+    //fill SIZES FOR STYLE
+    fuLib.style.getAllSize().success(function (data, status, xhr) {
+        fillCombo('#selStyleSize', data);
 
 
-    //SIZE TABLE CONFIG
-    //
-    $("#tblSize").on('xhr.dt', function (e, settings, data, xhr) {
-        //DataTable AJAX load complete event
-
-        //data will be null is AJAX error
-        if (data) {
-            $('#tblSize').on('draw.dt', function () {
-                //DataTable draw complete event
-                var table = $("#tblSize").DataTable();
-                //select first row by default
-                table.rows(':eq(0)', { page: 'current' }).select();
-            });
-        }
-    }).DataTable({
-        "autoWidth": false,
-        "select": {
-            style: 'single'
-        },
-        deferRender: true,
-        rowId: "_id",
-        "ajax": {
-            "url": apiUrl + "style/size/getall",
-            "dataSrc": "",
-            "headers": {
-                "Authorization": "Bearer " + token
-            }
-        },
-        "columns": [
-            {
-                "render": function (data, type, row) {
-                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
-                }
-            },
-            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
-        ],
-    });
-
-    //COLOR TABLE ROW click event
-    $("#tblSize tbody").on('click', 'tr', function () {
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        }
-        else {
-            var table = $('#tblSize').DataTable();
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-
-            selColorId = $(this).find('input[type=hidden]').eq(0).val();
-        }
-    });
-
-    $('#tblSize').on('draw.dt', function () {
-        onresize();
+    }).error(function (xhr, status, error) {
+        //style.getAllSize failed
+        handleError('style.getAllSize', xhr, status, error);
     });
 
     //BTN NEW STYLE click event
@@ -260,6 +77,7 @@ function doStyle(crPage) {
         $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
+        $("#txtStyleTitle").focus();
     });
 
     //BTN NEW MATERIAL click event
@@ -277,6 +95,7 @@ function doStyle(crPage) {
         $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
+        $("#txtMaterialTitle").focus();
     });
 
     //BTN NEW LEATHER click event
@@ -294,6 +113,7 @@ function doStyle(crPage) {
         $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
+        $("#txtLeatherTitle").focus();
     });
 
     //BTN NEW COLOR click event
@@ -311,6 +131,7 @@ function doStyle(crPage) {
         $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
+        $("#txtColorTitle").focus();
     });
 
     //BTN NEW SIZE click event
@@ -328,228 +149,84 @@ function doStyle(crPage) {
         $("#divTable").removeClass("col-md-12").addClass("col-md-9");
         $("#divUpdate").show();
 
+        $("#txtSizeTitle").focus();
     });
 
     //STYLE SAVE click event
     $("#btnSaveStyle").click(function () {
 
-        var isEmptyUser = false;
-        var isEmptyPerson = false;
-        var isEmptyAddress = false;
+        var isEmptyStyle = false;
 
-        var oUser = {
-            name: $("#txtLogin").val(),
-            pwd: $("#txtPwd1").val(),
-            person: null,
-            dateExpiry: '31-Dec-2050',
+        var oStyle = {
+            title: $("#txtStyleTitle").val(),
             isActive: true,
             flag: 0,
-            isAdmin: $("#chkAdmin").prop('checked'),
+            materials: [],
+            leathers: [],
+            colors: [],
+            sizes: []
         };
 
-        var oPerson = {
-            name: $("#txtName").val(),
-            email: $("#txtEmail").val(),
-            phone: $("#txtPhone").val(),
-            facebook: $("#txtFacebook").val(),
-            twitter: $("#txtTwitter").val(),
-            skype: $("#txtSkype").val(),
-            address: null,
-            lovGovtNo: $("#ulGovtCodeId").val(),
-            govtNo: $("#txtGovtCode").val(),
-            photo: '',
-            dateBirth: $("#txtDateBirth").val(),
-            dateAnniversary: $("#txtDateAnniversary").val(),
-            maritalStatus: $("input[name=iradioMStatus]:checked", "#frmPerson").val(),
-            gender: $("input[name=iradioGender]:checked", "#frmPerson").val(),
-            maritalStatus: $("#selMStatus").val(),
-            gender: $("#selGender").val(),
-            isActive: true,
-            flag: 0
-        };
+        $("#lstStyleMaterial").find("a").each(function () {
+            var oMaterial = {
+                id: ''
+            };
+            oMaterial.id = $(this).find("p").text();
+            oStyle.materials.push(oMaterial);
+        });
 
-        var oAddress = {
-            address1: $("#txtAddress1").val(),
-            address2: $("#txtAddress2").val(),
-            geoLoc: null,
-            isActive: true,
-            flag: 0
-        };
+        $("#lstStyleLeather").find("a").each(function () {
+            var oLeather = {
+                id: ''
+            };
+            oLeather.id = $(this).find("p").text();
+            oStyle.leathers.push(oLeather);
+        });
 
-        if ($("#selArea").val() == '0' || $("#selArea").val() == null) {
+        $("#lstStyleColor").find("a").each(function () {
+            var oColor = {
+                id: ''
+            };
+            oColor.id = $(this).find("p").text();
+            oStyle.colors.push(oColor);
+        });
 
-            if ($("#selCity").val() == '0' || $("#selCity").val() == null) {
+        $("#lstStyleSize").find("a").each(function () {
+            var oSize = {
+                id: ''
+            };
+            oSize.id = $(this).find("p").text();
+            oStyle.sizes.push(oSize);
+        });
 
-                if ($("#selState").val() == '0' || $("#selState").val() == null) {
-
-                    if ($("#selCountry").val() == '0' || $("#selCountry").val() == null) {
-
-                    }
-                    else {
-                        oAddress.geoLoc = $("#selCountry").val();
-                    }
-                }
-                else {
-                    oAddress.geoLoc = $("#selState").val();
-                }
-            }
-            else {
-                oAddress.geoLoc = $("#selCity").val();
-            }
-        }
-        else {
-            oAddress.geoLoc = $("#selArea").val();
-        }
-
-        //console.log(oUser);
-        //console.log(oPerson);
-        //console.log(oAddress);
-
-        //return false;
-
-        //check if oUser is empty
-        if (oUser.name.trim().length == 0 &&
-            oUser.pwd.trim().length == 0
+        //check if oStyle is empty
+        if (oStyle.title.trim().length == 0 ||
+            oStyle.materials.length == 0 ||
+            oStyle.leathers.length == 0 ||
+            oStyle.colors.length == 0 ||
+            oStyle.sizes.length == 0
             ) {
-            isEmptyUser = true;
+            isEmptyStyle = true;
         }
 
-        //check if oPerson is empty
-        if (oPerson.name.trim().length == 0 &&
-            oPerson.email.trim().length == 0 &&
-            oPerson.phone.trim().length == 0 &&
-            oPerson.facebook.trim().length == 0 &&
-            oPerson.twitter.trim().length == 0 &&
-            oPerson.skype.trim().length == 0 &&
-            oPerson.govtNo.trim().length == 0 &&
-            oPerson.dateBirth.trim().length == 0 &&
-            oPerson.dateAnniversary.trim().length == 0
-            ) {
-            isEmptyPerson = true;
-        }
+        if (modeUpdate == 'newStyle') {
 
-        //check if oAddress is empty
-        if (oAddress.address1.trim().length == 0 &&
-            oAddress.address2.trim().length == 0 &&
-            (oAddress.country == '0' || oAddress.country == null) &&
-            (oAddress.state == '0' || oAddress.state == null) &&
-            (oAddress.city == '0' || oAddress.city == null) &&
-            (oAddress.area == '0' || oAddress.area == null)
-            ) {
-            isEmptyAddress = true;
-        }
-
-        console.log(isEmptyUser);
-        console.log(isEmptyPerson);
-        console.log(isEmptyAddress);
-
-        //return false;
-
-        if (modeUpdate == 'new') {
-
-            if (isEmptyUser == true) {
-                noty({ text: "Please type user details", layout: 'topRight', type: 'error', timeout: 2000 });
+            if (isEmptyStyle == true) {
+                noty({ text: "Please type style details with atleast one Material/Leather/Color/Size", layout: 'topCenter', type: 'error', timeout: 2000 });
                 return false;
             }
             else {
-                if (isEmptyPerson == true) {
-                    //save USER details
+                //save STYLE details
+                fuLib.style.add(oStyle).success(function (data, status, xhr) {
+                    noty({ text: 'Style added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+                    var table = $("#tblStyle").DataTable();
+                    table.ajax.reload();
 
-                    fuLib.user.add(oUser).success(function (data, status, xhr) {
+                }).error(function (xhr, status, error) {
+                    //style.add failed
+                    handleError('style.add', xhr, status, error);
+                });
 
-                        console.log(data);
-
-                        noty({ text: 'User added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                        var table = $("#tblUser").DataTable();
-                        table.ajax.reload();
-
-                    }).error(function (xhr, status, error) {
-                        //user.add failed
-                        handleError('user.add', xhr, status, error);
-                    });
-                }
-                else {
-                    if (isEmptyAddress == true) {
-                        //save USER-PERSON details
-
-                        //check if govtNo is blank
-                        if (oPerson.govtNo.trim().length == 0) {
-                            oPerson.lovGovtNo = null;
-                        }
-                        else {
-                            if (oPerson.lovGovtNo == '0') {
-                                noty({ text: "Please select type of govt code", layout: 'topRight', type: 'error', timeout: 2000 });
-                                return false;
-                            }
-                        }
-
-                        //add PERSON
-                        fuLib.person.add(oPerson).success(function (data, status, xhr) {
-
-                            noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                            oUser.person = data.person._id;
-
-                            //add USER
-                            fuLib.user.add(oUser).success(function (data, status, xhr) {
-
-                                noty({ text: 'User added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                                var table = $("#tblUser").DataTable();
-                                table.ajax.reload();
-
-                            }).error(function (xhr, status, error) {
-                                //user.add failed
-                                handleError('user.add', xhr, status, error);
-                            });
-
-                        }).error(function (xhr, status, error) {
-                            //person.add failed
-                            handleError('person.add', xhr, status, error);
-                        });
-                    }
-                    else {
-                        //save USER-PERSON-ADDRESS details
-
-                        //add ADDRESS
-                        fuLib.address.add(oAddress).success(function (data, status, xhr) {
-
-                            noty({ text: 'Address added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                            oPerson.address = data.address._id;
-
-                            //add PERSON
-                            fuLib.person.add(oPerson).success(function (data, status, xhr) {
-
-                                noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                                oUser.person = data.person._id;
-
-                                //add USER
-                                fuLib.user.add(oUser).success(function (data, status, xhr) {
-
-                                    noty({ text: 'User added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                                    var table = $("#tblUser").DataTable();
-                                    table.ajax.reload();
-
-                                }).error(function (xhr, status, error) {
-                                    //address.add failed
-                                    handleError('address.add', xhr, status, error);
-                                });
-
-                            }).error(function (xhr, status, error) {
-                                //person.add failed
-                                handleError('person.add', xhr, status, error);
-                            });
-
-                        }).error(function (xhr, status, error) {
-                            //user.add failed
-                            handleError('user.add', xhr, status, error);
-                        });
-                    }
-                }
             }
 
             $("#divUpdate").hide();
@@ -572,7 +249,6 @@ function doStyle(crPage) {
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-9").addClass("col-md-12");
         return false;
-
     });
 
     //MATERIAL SAVE click event
@@ -599,15 +275,9 @@ function doStyle(crPage) {
                 return false;
             }
             else {
-
                 //save MATERIAL details
-
                 fuLib.style.addMaterial(oMaterial).success(function (data, status, xhr) {
-
-                    console.log(data);
-
                     noty({ text: 'Material added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
                     var table = $("#tblMaterial").DataTable();
                     table.ajax.reload();
 
@@ -695,7 +365,6 @@ function doStyle(crPage) {
 
     });
 
-
     //LEATHER CANCEL click event
     $("#btnCancelLeather").click(function () {
 
@@ -704,8 +373,6 @@ function doStyle(crPage) {
         return false;
 
     });
-
-
 
     //COLOR SAVE click event
     $("#btnSaveColor").click(function () {
@@ -758,11 +425,8 @@ function doStyle(crPage) {
         else if (modeUpdate == 'edit') {
 
         }
-
         return false;
-
     });
-
 
     //LEATHER CANCEL click event
     $("#btnCancelColor").click(function () {
@@ -772,8 +436,6 @@ function doStyle(crPage) {
         return false;
 
     });
-
-
 
     //SIZE SAVE click event
     $("#btnSaveSize").click(function () {
@@ -837,9 +499,438 @@ function doStyle(crPage) {
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-9").addClass("col-md-12");
         return false;
+    });
+}
 
+function configStyleTable() {
+    $("#tblStyle").on('xhr.dt', function (e, settings, data, xhr) {
+        //DataTable AJAX load complete event
+
+        //data will be null is AJAX error
+        if (data) {
+            $('#tblStyle').on('draw.dt', function () {
+                //DataTable draw complete event
+                var table = $("#tblStyle").DataTable();
+                //select first row by default
+                table.rows(':eq(0)', { page: 'current' }).select();
+            });
+        }
+    }).DataTable({
+        "autoWidth": false,
+        "select": {
+            style: 'single'
+        },
+        deferRender: true,
+        rowId: "_id",
+        "ajax": {
+            "url": apiUrl + "style/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            {
+                "render": function (data, type, row) {
+                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
+                }
+            },
+            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            {
+                "render": function (data, type, row) {
+                    return '<span>' + row.materials.length + '</span>';
+                }
+            },
+        ],
     });
 
+    //STYLE TABLE ROW click event
+    $("#tblStyle tbody").on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            var table = $('#tblStyle').DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selStyleId = $(this).find('input[type=hidden]').eq(0).val();
+        }
+    });
+
+    $('#tblStyle').on('draw.dt', function () {
+        onresize();
+    });
+}
+
+function configMaterialTable() {
+    $("#tblMaterial").on('xhr.dt', function (e, settings, data, xhr) {
+        //DataTable AJAX load complete event
+
+        //data will be null is AJAX error
+        if (data) {
+            $('#tblMaterial').on('draw.dt', function () {
+                //DataTable draw complete event
+                var table = $("#tblMaterial").DataTable();
+                //select first row by default
+                table.rows(':eq(0)', { page: 'current' }).select();
+            });
+        }
+    }).DataTable({
+        "autoWidth": false,
+        "select": {
+            style: 'single'
+        },
+        deferRender: true,
+        rowId: "_id",
+        "ajax": {
+            "url": apiUrl + "style/material/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            {
+                "render": function (data, type, row) {
+                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
+                }
+            },
+            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ],
+    });
+
+    //MATERIAL TABLE ROW click event
+    $("#tblMaterial tbody").on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            var table = $('#tblMaterial').DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selMaterialId = $(this).find('input[type=hidden]').eq(0).val();
+        }
+    });
+
+    $('#tblMaterial').on('draw.dt', function () {
+        onresize();
+    });
+}
+
+function configLeatherTable() {
+    $("#tblLeather").on('xhr.dt', function (e, settings, data, xhr) {
+        //DataTable AJAX load complete event
+
+        //data will be null is AJAX error
+        if (data) {
+            $('#tblLeather').on('draw.dt', function () {
+                //DataTable draw complete event
+                var table = $("#tblLeather").DataTable();
+                //select first row by default
+                table.rows(':eq(0)', { page: 'current' }).select();
+            });
+        }
+    }).DataTable({
+        "autoWidth": false,
+        "select": {
+            style: 'single'
+        },
+        deferRender: true,
+        rowId: "_id",
+        "ajax": {
+            "url": apiUrl + "style/leather/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            {
+                "render": function (data, type, row) {
+                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
+                }
+            },
+            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ],
+    });
+
+    //MATERIAL TABLE ROW click event
+    $("#tblLeather tbody").on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            var table = $('#tblLeather').DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selLeatherId = $(this).find('input[type=hidden]').eq(0).val();
+        }
+    });
+
+    $('#tblLeather').on('draw.dt', function () {
+        onresize();
+    });
+}
+
+function configColorTable() {
+    $("#tblColor").on('xhr.dt', function (e, settings, data, xhr) {
+        //DataTable AJAX load complete event
+
+        //data will be null is AJAX error
+        if (data) {
+            $('#tblColor').on('draw.dt', function () {
+                //DataTable draw complete event
+                var table = $("#tblColor").DataTable();
+                //select first row by default
+                table.rows(':eq(0)', { page: 'current' }).select();
+            });
+        }
+    }).DataTable({
+        "autoWidth": false,
+        "select": {
+            style: 'single'
+        },
+        deferRender: true,
+        rowId: "_id",
+        "ajax": {
+            "url": apiUrl + "style/color/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            {
+                "render": function (data, type, row) {
+                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
+                }
+            },
+            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ],
+    });
+
+    //COLOR TABLE ROW click event
+    $("#tblColor tbody").on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            var table = $('#tblColor').DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selColorId = $(this).find('input[type=hidden]').eq(0).val();
+        }
+    });
+
+    $('#tblColor').on('draw.dt', function () {
+        onresize();
+    });
+}
+
+function configSizeTable() {
+    $("#tblSize").on('xhr.dt', function (e, settings, data, xhr) {
+        //DataTable AJAX load complete event
+
+        //data will be null is AJAX error
+        if (data) {
+            $('#tblSize').on('draw.dt', function () {
+                //DataTable draw complete event
+                var table = $("#tblSize").DataTable();
+                //select first row by default
+                table.rows(':eq(0)', { page: 'current' }).select();
+            });
+        }
+    }).DataTable({
+        "autoWidth": false,
+        "select": {
+            style: 'single'
+        },
+        deferRender: true,
+        rowId: "_id",
+        "ajax": {
+            "url": apiUrl + "style/size/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            {
+                "render": function (data, type, row) {
+                    return '<input type="hidden" value="' + row._id + '"/>' + row.title;
+                }
+            },
+            { "data": "isActive", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ],
+    });
+
+    //COLOR TABLE ROW click event
+    $("#tblSize tbody").on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            var table = $('#tblSize').DataTable();
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selColorId = $(this).find('input[type=hidden]').eq(0).val();
+        }
+    });
+
+    $('#tblSize').on('draw.dt', function () {
+        onresize();
+    });
+}
+
+function addStyleMaterial() {
+    var sMaterial = $('#selStyleMaterial option:selected').text();
+    var sMatVal = $('#selStyleMaterial option:selected').val();
+
+    if (sMatVal == '0') {
+        noty({ text: 'Please select a material.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var l1 = $('#lstStyleMaterial').find('a[id="sm' + sMatVal + '"]');
+
+    if (l1.length > 0 ) {
+        noty({ text: 'Material already added.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var item = '<a href="#" id="sm' + sMatVal + '" class="list-group-item">';
+    item += '<div class="list-group-status status-online"></div>';
+    item += '<span class="contacts-title">' + sMaterial + '</span>';
+    item += '<p>' + sMatVal + '</p>';
+    item += '<div class="list-group-controls">';
+    item += '<button class="btn btn-danger" onclick="deleteStyleMaterial(\'sm' + sMatVal + '\');"><span class="fa fa-trash-o"></span></button>';
+    item += '</div></a>';
+
+    $('#lstStyleMaterial').append(item);
+
+    onresize();
+
+}
+
+function deleteStyleMaterial(id) {
+    $('#' + id).hide("slide", {}, 500, function () {
+        $('#' + id).remove();
+    });
+}
+
+function addStyleLeather() {
+    var sLeather = $('#selStyleLeather option:selected').text();
+    var sLthVal = $('#selStyleLeather option:selected').val();
+
+    if (sLthVal == '0') {
+        noty({ text: 'Please select a leather.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var l1 = $('#lstStyleLeather').find('a[id="sl' + sLthVal + '"]');
+
+    if (l1.length > 0) {
+        noty({ text: 'Leather already added.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var item = '<a href="#" id="sl' + sLthVal + '" class="list-group-item">';
+    item += '<div class="list-group-status status-online"></div>';
+    item += '<span class="contacts-title">' + sLeather + '</span>';
+    item += '<p>' + sLthVal + '</p>';
+    item += '<div class="list-group-controls">';
+    item += '<button class="btn btn-danger" onclick="deleteStyleLeather(\'sl' + sLthVal + '\');"><span class="fa fa-trash-o"></span></button>';
+    item += '</div></a>';
+
+    $('#lstStyleLeather').append(item);
+
+    onresize();
+}
+
+function deleteStyleLeather(id) {
+    $('#' + id).hide("slide", {}, 500, function () {
+        $('#' + id).remove();
+    });
+}
+
+function addStyleColor() {
+    var sColor = $('#selStyleColor option:selected').text();
+    var sClrVal = $('#selStyleColor option:selected').val();
+
+    if (sClrVal == '0') {
+        noty({ text: 'Please select a color.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var l1 = $('#lstStyleColor').find('a[id="sc' + sClrVal + '"]');
+
+    if (l1.length > 0) {
+        noty({ text: 'Color already added.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var item = '<a href="#" id="sc' + sClrVal + '" class="list-group-item">';
+    item += '<div class="list-group-status status-online"></div>';
+    item += '<span class="contacts-title">' + sColor + '</span>';
+    item += '<p>' + sClrVal + '</p>';
+    item += '<div class="list-group-controls">';
+    item += '<button class="btn btn-danger" onclick="deleteStyleColor(\'sc' + sClrVal + '\');"><span class="fa fa-trash-o"></span></button>';
+    item += '</div></a>';
+
+    $('#lstStyleColor').append(item);
+
+    onresize();
+}
+
+function deleteStyleColor(id) {
+    $('#' + id).hide("slide", {}, 500, function () {
+        $('#' + id).remove();
+    });
+}
+
+function addStyleSize() {
+    var sSize = $('#selStyleSize option:selected').text();
+    var sSizVal = $('#selStyleSize option:selected').val();
+
+    if (sSizVal == '0') {
+        noty({ text: 'Please select a size.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var l1 = $('#lstStyleSize').find('a[id="ss' + sSizVal + '"]');
+
+    if (l1.length > 0) {
+        noty({ text: 'Size already added.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var item = '<a href="#" id="ss' + sSizVal + '" class="list-group-item">';
+    item += '<div class="list-group-status status-online"></div>';
+    item += '<span class="contacts-title">' + sSize + '</span>';
+    item += '<p>' + sSizVal + '</p>';
+    item += '<div class="list-group-controls">';
+    item += '<button class="btn btn-danger" onclick="deleteStyleSize(\'ss' + sSizVal + '\');"><span class="fa fa-trash-o"></span></button>';
+    item += '</div></a>';
+
+    $('#lstStyleSize').append(item);
+
+    onresize();
+}
+
+function deleteStyleSize(id) {
+    $('#' + id).hide("slide", {}, 500, function () {
+        $('#' + id).remove();
+    });
 }
 
 function clearEditPanel(panel) {
@@ -850,7 +941,9 @@ function clearEditPanel(panel) {
 
         $('#lstStyleMaterial').html('');
         $('#lstStyleLeather').html('');
+        $('#lstStyleColor').html('');
         $('#lstStyleSize').html('');
+
     }
     else if (panel == 'material') {
 
@@ -860,7 +953,6 @@ function clearEditPanel(panel) {
     else if (panel == 'leather') {
 
         $("#txtLeatherTitle").val('');
-        $('#lstLeatherColor').html('');
 
     }
     else if (panel == 'color') {

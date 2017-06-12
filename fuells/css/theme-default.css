@@ -3181,6 +3181,7 @@ blockquote.pull-right {
 }
 .dataTables_filter label input {
   width: 150px;
+  height:25px;
   display: inline;
   margin-left: 5px;
   height:25px;
