@@ -5,8 +5,7 @@
 <input type="hidden" id="hidSelSupplier" value="000" />
 
 <ul class="breadcrumb">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">CompanyM</a></li>
+    <li><a href="#">Home</a></li>          
     <li class="active">Suppliers</li>
 </ul>
 <!-- END BREADCRUMB -->
@@ -18,134 +17,108 @@
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap">
     <!-- PAGE CONTENT - BEGINS -->
-    <div class="row">
+    <div class="row" id="divList">
 
         <!-- SUPPLIER TABLE, GOVT CODES, OFFICE & OFF PERSONS -->
         <div class="col-md-8" id="divTable">
 
-            <div class="row">
-                <!-- SUPPLIER TABLE -->
-                <div class="col-md-8">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Actions <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a id="btnSuppNew" href="#"><i class="fa fa-plus"></i>Add Supplier</a></li>
-                                    <li><a id="btnSuppEdit" href="#"><i class="fa fa-edit"></i>Edit Supplier</a></li>
-                                    <li><a id="btnSuppDelete" href="#"><i class="fa fa-trash-o"></i>Delete Supplier</a></li>
+            <div class="panel panel-default tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li id="tabSupplier" class="active"><a href="#tab-supplier" role="tab" data-toggle="tab">Supplier</a></li>
+                    <li id="tabGovcode"><a href="#tab-govcode" role="tab" data-toggle="tab">GovCode</a></li>
+                    <li id="tabOffice"><a href="#tab-office" role="tab" data-toggle="tab">Office</a></li>
+                    <li id="tabPerson"><a href="#tab-person" role="tab" data-toggle="tab">Person</a></li>
+                </ul>
+                <div class="panel-body tab-content">
+                    <!-- SUPPLIER TABLE -->
+                    <div class="tab-pane active" id="tab-supplier">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnSuppNew" type="button" class="btn btn-primary">Add Supplier</button>
+                                <button id="btnSuppEdit" type="button" class="btn btn-info">Edit Supplier</button>
+                                <button id="btnSuppDelete" type="button" class="btn btn-danger">Delete Supplier</button>
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                                 </ul>
                             </div>
-                            <ul class="panel-controls">
-                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            </ul>
-                        </div>
 
-                        <div class="panel-body">
-                            <table class="table DataTable" id="tblSupplier">
-                                <thead>
-                                    <tr>
-                                        <th width="20%">Supplier name</th>
-                                        <th width="15%">Code</th>
-                                        <th width="20%">Website</th>
-                                        <th width="25%">Email</th>
-                                        <th width="20%">Phone</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row">
-                        <!-- GOVT CODES -->
-                        <div class="col-md-12">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Actions <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a id="btnCodeNew" href="#"><i class="fa fa-plus"></i>Add Code</a></li>
-                                            <li><a id="btnCodeEdit" href="#"><i class="fa fa-edit"></i>Edit Code</a></li>
-                                            <li><a id="btnCodeDelete" href="#"><i class="fa fa-trash-o"></i>Delete Code</a></li>
-                                        </ul>
-                                    </div>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="panel-body">
-                                    <table class="table DataTable" id="tblCode">
-                                        <thead>
-                                            <tr>
-                                                <th width="20%">Govt Code</th>
-                                                <th width="15%">Type</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblSupplier">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Supplier name</th>
+                                            <th width="15%">Code</th>
+                                            <th width="20%">Website</th>
+                                            <th width="25%">Email</th>
+                                            <th width="20%">Phone</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <!-- OFFICES  -->
-                        <div class="col-md-12">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Actions <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a id="btnOffNew" href="#"><i class="fa fa-plus"></i>Add Office</a></li>
-                                            <li><a id="btnOffEdit" href="#"><i class="fa fa-edit"></i>Edit Office</a></li>
-                                            <li><a id="btnOffDelete" href="#"><i class="fa fa-trash-o"></i>Delete Office</a></li>
-                                        </ul>
-                                    </div>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                    </ul>
-                                </div>
+                    <!-- GOVT CODES -->
+                    <div class="tab-pane" id="tab-govcode">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnCodeNew" type="button" class="btn btn-primary">New Code</button>
+                                <button id="btnCodeEdit" type="button" class="btn btn-info">Edit Code</button>
+                                <button id="btnCodeDelete" type="button" class="btn btn-danger">Delete Code</button>
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
 
-                                <div class="panel-body">
-                                    <table class="table DataTable" id="tblOffice">
-                                        <thead>
-                                            <tr>
-                                                <th width="20%">Office title</th>
-                                                <th width="20%">Phone</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblCode">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Govt Code</th>
+                                            <th width="15%">Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <!-- OFF PERSONS -->
+                    <!-- OFFICES  -->
+                    <div class="tab-pane" id="tab-office">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnOffNew" type="button" class="btn btn-primary">New Office</button>
+                                <button id="btnOffEdit" type="button" class="btn btn-info">Edit Office</button>
+                                <button id="btnOffDelete" type="button" class="btn btn-danger">Delete Office</button>
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblOffice">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Office title</th>
+                                            <th width="20%">Phone</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- OFF PERSONS -->
+                    <div class="tab-pane" id="tab-person">
                         <div class="col-md-12">
-                            <div class="panel panel-info">
+                            <div class="panel panel-primary">
                                 <div class="panel-heading">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Actions <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a id="btnPersonNew" href="#"><i class="fa fa-plus"></i>Add Person</a></li>
-                                            <li><a id="btnPersonEdit" href="#"><i class="fa fa-edit"></i>Edit Person</a></li>
-                                            <li><a id="btnPersonDelete" href="#"><i class="fa fa-trash-o"></i>Delete Person</a></li>
-                                        </ul>
-                                    </div>
+                                    <button id="btnPersonNew" type="button" class="btn btn-primary">New Person</button>
+                                    <button id="btnPersonEdit" type="button" class="btn btn-info">Edit Person</button>
+                                    <button id="btnPersonDelete" type="button" class="btn btn-danger">Delete Person</button>
                                     <ul class="panel-controls">
                                         <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                                         <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
@@ -180,7 +153,7 @@
                     <h4>Supplier details</h4>
                     <!-- SUPPLIER form -->
                     <form class="form" action="#" role="form" id="frmSupplier">
-                      
+
                         <div class="form-group">
                             <input type="text" id="txtName" class="form-control" placeholder="Supplier Name" />
                         </div>
@@ -336,12 +309,12 @@
                         </div>
 
                         @*<div class="form-group">
-                            <select id="selGovtCode" class="form-control select"></select>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
-                                <input id="txtGovtCode" type="text" class="form-control" placeholder="Govt Code" />
-                            </div>
-                        </div>*@
+                                <select id="selGovtCode" class="form-control select"></select>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
+                                    <input id="txtGovtCode" type="text" class="form-control" placeholder="Govt Code" />
+                                </div>
+                            </div>*@
                         <div class="form-group">
                             <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
                             <input id="filePhoto" type="file" class="fileinput" name="filename1" />
@@ -381,7 +354,7 @@
                     <button id="btnPersonUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                 </div>
             </div>
-        
+
         </div>
     </div>
     <!-- PAGE CONTENT - ENDS -->

@@ -4,6 +4,7 @@ function doSupplier(crPage) {
     var crTab = 0;
     var modeUpdate = 'new';
     var selId = '';
+    var offId = '';
 
     var tableSupplier;
     var tableCode;
@@ -173,7 +174,7 @@ function doSupplier(crPage) {
 
         $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
-
+        onresize();
     });
 
     //BTN CODE NEW click event
@@ -189,7 +190,7 @@ function doSupplier(crPage) {
 
         $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
-
+        onresize();
     });
 
     //BTN OFFICE NEW click event
@@ -205,7 +206,7 @@ function doSupplier(crPage) {
 
         $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
-
+        onresize();
     });
 
     //BTN PERSON NEW click event
@@ -221,7 +222,7 @@ function doSupplier(crPage) {
 
         $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
-
+         onresize();
     });
 
     //NEW SUPPLIER-SAVE CHANGES click event
@@ -454,7 +455,10 @@ function doSupplier(crPage) {
     });
 
     $("#btnPersonUpdateSave").click(function () {
+        offId = $('#tblOffice tr.selected').attr('id');
+        alert($('#selGender li.selected').attr('rel'))
         debugger;
+
         var isEmptyPerson = false;
         var oPerson = {
             name: $("#txtNameP").val(),
@@ -464,13 +468,14 @@ function doSupplier(crPage) {
             twitter: $("#txtTwitter").val(),
             skype: $("#txtSkype").val(),
             address: null,
-            lovGovtNo: $("#selGovtCode").val(),
+            lovGovtNo: $("#ulGovtCodeId").val(),
             govtNo: $("#txtGovtCode").val(),
             photo: '',
             dateBirth: $("#txtDateBirth").val(),
             dateAnniversary: $("#txtDateAnniversary").val(),
             maritalStatus: $("input[name=iradioMStatus]:checked", "#frmPerson").val(),
-            gender: $("input[name=iradioGender]:checked", "#frmPerson").val(),
+            gender: $('#selGender option:selected').val(),
+            officeid:offId,
             isActive: true,
             flag: 0
         };
@@ -555,8 +560,7 @@ function fillCode(suppId) {
 
 function fillOffice(suppId) {
     if ($.fn.dataTable.isDataTable("#tblOffice")) {
-
-        tableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
+        tableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();     
     }
     else {
         //Configures OFFICE DataTable
@@ -570,7 +574,8 @@ function fillOffice(suppId) {
 
                     tableOffice = $("#tblOffice").DataTable();
                     //select first row by default
-                    tableOffice.rows(':eq(0)', { page: 'current' }).select();
+                    tableOffice.rows(':eq(0)', { page: 'current' }).select();                  
+                   
                 });
             }
         }).DataTable({
@@ -592,7 +597,11 @@ function fillOffice(suppId) {
                 { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
             ],
         });
+        
     }
+
+   
+    
 }
 
 function fillPerson(offId) {
