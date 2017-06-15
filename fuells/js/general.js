@@ -1,3 +1,4 @@
+"use strict";
 
 // FILL COMBOBOX
 function fillCombo(combo, data) {

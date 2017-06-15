@@ -1,3 +1,5 @@
+"use strict";
+
 var userToggleRow = true;
 
 //CALLED FROM _LAYOUT2
@@ -13,7 +15,7 @@ function doStyle(crPage) {
 
     $("#divUpdate").hide();
 
-    $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+    $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
     configStyleTable();
     configMaterialTable();
@@ -74,7 +76,7 @@ function doStyle(crPage) {
         $("#divEditColor").hide();
         $("#divEditSize").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
         $("#txtStyleTitle").focus();
@@ -92,7 +94,7 @@ function doStyle(crPage) {
         $("#divEditColor").hide();
         $("#divEditSize").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
         $("#txtMaterialTitle").focus();
@@ -110,7 +112,7 @@ function doStyle(crPage) {
         $("#divEditColor").hide();
         $("#divEditSize").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
         $("#txtLeatherTitle").focus();
@@ -128,7 +130,7 @@ function doStyle(crPage) {
         $("#divEditStyle").hide();
         $("#divEditSize").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
         $("#txtColorTitle").focus();
@@ -146,7 +148,7 @@ function doStyle(crPage) {
         $("#divEditColor").hide();
         $("#divEditStyle").hide();
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-9");
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
         $("#txtSizeTitle").focus();
@@ -168,36 +170,46 @@ function doStyle(crPage) {
         };
 
         $("#lstStyleMaterial").find("a").each(function () {
-            var oMaterial = {
-                id: ''
-            };
-            oMaterial.id = $(this).find("p").text();
-            oStyle.materials.push(oMaterial);
+            //var oMaterial = {
+            //    id: ''
+            //};
+            //oMaterial.id = $(this).find("p").text();
+
+            var mat1 = $(this).find("p").text();
+            oStyle.materials.push(mat1);
         });
 
         $("#lstStyleLeather").find("a").each(function () {
-            var oLeather = {
-                id: ''
-            };
-            oLeather.id = $(this).find("p").text();
-            oStyle.leathers.push(oLeather);
+            //var oLeather = {
+            //    id: ''
+            //};
+            //oLeather.id = $(this).find("p").text();
+
+            var lea1 = $(this).find("p").text();
+            oStyle.leathers.push(lea1);
         });
 
         $("#lstStyleColor").find("a").each(function () {
-            var oColor = {
-                id: ''
-            };
-            oColor.id = $(this).find("p").text();
-            oStyle.colors.push(oColor);
+            //var oColor = {
+            //    id: ''
+            //};
+            //oColor.id = $(this).find("p").text();
+
+            var col1 = $(this).find("p").text();
+            oStyle.colors.push(col1);
         });
 
         $("#lstStyleSize").find("a").each(function () {
-            var oSize = {
-                id: ''
-            };
-            oSize.id = $(this).find("p").text();
-            oStyle.sizes.push(oSize);
+            //var oSize = {
+            //    id: ''
+            //};
+            //oSize.id = $(this).find("p").text();
+
+            var siz1 = $(this).find("p").text();
+            oStyle.sizes.push(siz1);
         });
+
+        console.log(oStyle);
 
         //check if oStyle is empty
         if (oStyle.title.trim().length == 0 ||
@@ -230,7 +242,7 @@ function doStyle(crPage) {
             }
 
             $("#divUpdate").hide();
-            $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
             return false;
 
@@ -247,7 +259,7 @@ function doStyle(crPage) {
     $("#btnCancelStyle").click(function () {
 
         $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
     });
 
@@ -288,7 +300,7 @@ function doStyle(crPage) {
             }
 
             $("#divUpdate").hide();
-            $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
             return false;
 
@@ -305,7 +317,7 @@ function doStyle(crPage) {
     $("#btnCancelMaterial").click(function () {
 
         $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
     });
 
@@ -352,7 +364,7 @@ function doStyle(crPage) {
             }
 
             $("#divUpdate").hide();
-            $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
             return false;
 
@@ -369,7 +381,7 @@ function doStyle(crPage) {
     $("#btnCancelLeather").click(function () {
 
         $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
 
     });
@@ -417,7 +429,7 @@ function doStyle(crPage) {
             }
 
             $("#divUpdate").hide();
-            $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
             return false;
 
@@ -432,7 +444,7 @@ function doStyle(crPage) {
     $("#btnCancelColor").click(function () {
 
         $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
 
     });
@@ -480,7 +492,7 @@ function doStyle(crPage) {
             }
 
             $("#divUpdate").hide();
-            $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
             return false;
 
@@ -497,7 +509,7 @@ function doStyle(crPage) {
     $("#btnCancelSize").click(function () {
 
         $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-9").addClass("col-md-12");
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
     });
 }
@@ -539,9 +551,41 @@ function configStyleTable() {
             { "data": "flag", "defaultContent": "<span class='text-muted'>Not set</span>" },
             {
                 "render": function (data, type, row) {
-                    return '<span>' + row.materials.length + '</span>';
+                    var sMats = '';
+                    for(let mat of row.materials) {
+                        sMats += '<span class="label label-primary">' + mat.title + '</span>&nbsp;';
+                    }
+                    return '<h3><span>' + sMats + '</span></h3>';
                 }
             },
+            {
+                "render": function (data, type, row) {
+                    var sLeas = '';
+                    for(let lea of row.leathers) {
+                        sLeas += '<span class="label label-success">' + lea.title + '</span>&nbsp;';
+                    }
+                    return '<h3><span>' + sLeas + '</span></h3>';
+                }
+            },
+            {
+                "render": function (data, type, row) {
+                    var sCols = '';
+                    for(let col of row.colors) {
+                        sCols += '<span class="label label-warning">' + col.title + '</span>&nbsp;';
+                    }
+                    return '<h3><span>' + sCols + '</span></h3>';
+                }
+            },
+            {
+                "render": function (data, type, row) {
+                    var sSizs = '';
+                    for(let siz of row.sizes) {
+                        sSizs += '<span class="label label-danger">' + siz.title + '</span>&nbsp;';
+                    }
+                    return '<h3><span>' + sSizs + '</span></h3>';
+                }
+            },
+
         ],
     });
 

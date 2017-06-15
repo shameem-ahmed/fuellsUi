@@ -10,15 +10,15 @@
 </ul>
 <!-- END BREADCRUMB -->
 <!-- PAGE TITLE -->
-<div class="page-title">
-    <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
-</div>
+
 <!-- END PAGE TITLE -->
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap">
     <div class="row" id="divList">
-        <div class="col-md-9" id="divTable">
-
+        <div class="col-md-8" id="divTable">
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
+            </div>
             <div class="panel panel-default tabs">
                 <ul class="nav nav-tabs" role="tablist">
                     <li id="tabStyle" class="active"><a href="#tab-style" role="tab" data-toggle="tab">Style</a></li>
@@ -45,10 +45,14 @@
                                 <table class="table DataTable" id="tblStyle">
                                     <thead>
                                         <tr>
-                                            <th width="20%">Title</th>
-                                            <th width="20%">Active</th>
-                                            <th width="20%">Flag</th>
+                                            <th width="10%">Title</th>
+                                            <th width="5%">Active</th>
+                                            <th width="5%">Flag</th>
                                             <th width="20%">Material</th>
+                                            <th width="20%">Leather</th>
+                                            <th width="20%">Color</th>
+                                            <th width="20%">Size</th>
+
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -165,18 +169,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-footer">
-                    <h3>Footer</h3>
-                </div>
             </div>
         </div>
 
         <!-- UPDATE PANELS -->
-        <div class="col-md-3" id="divUpdate">
+        <div class="col-md-4" id="divUpdate">
             <!-- STYLE PANEL -->
             <div class="panel panel-warning" id="divEditStyle">
                 <div class="panel-heading">
-                    <h4>Style details</h4>
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Style details</h3>
                 </div>
                 <div class="panel-body">
                     <!-- STYLE form -->
@@ -283,7 +284,7 @@
             <!-- MATERIAL PANEL -->
             <div class="panel panel-warning" id="divEditMaterial">
                 <div class="panel-heading">
-                    <h4>Material details</h4>
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Materials details</h3>
                 </div>
                 <div class="panel-body">
                     <!-- MATERIAL form -->
@@ -302,7 +303,7 @@
             <!-- LEATHER PANEL -->
             <div class="panel panel-warning" id="divEditLeather">
                 <div class="panel-heading">
-                    <h4>Leather details</h4>
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Leather details</h3>
                 </div>
                 <div class="panel-body">
                     <!-- LEATHER form -->
@@ -321,7 +322,7 @@
             <!-- COLOR PANEL -->
             <div class="panel panel-warning" id="divEditColor">
                 <div class="panel-heading">
-                    <h4>Color details</h4>
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Color details</h3>
                 </div>
                 <div class="panel-body">
                     <!-- COLOR form -->
@@ -340,7 +341,7 @@
             <!-- SIZE PANEL -->
             <div class="panel panel-warning" id="divEditSize">
                 <div class="panel-heading">
-                    <h4>Size details</h4>
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Size details</h3>
                 </div>
                 <div class="panel-body">
                     <!-- SIZE form -->

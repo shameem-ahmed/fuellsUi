@@ -1,87 +1,21 @@
+"use strict";
+
+var supCrTab = 0;
+var supModeUpdate = 'new';
+var supSelId = '';
+
+var supTableSupplier;
+var supTableOffice;
+var supTablePeople;
+
 //CALLED FROM _LAYOUT2
 function doSupplier(crPage) {
-
-    var crTab = 0;
-    var modeUpdate = 'new';
-    var selId = '';
-
-    var tableSupplier;
-    var tableCode;
-    var tableOffice;
-    var tablePerson;
 
     $("#divUpdate").hide();
 
     $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
-    //Configures SUPPLIER DataTable
-    //
-    //DATATABLE AJAX LOAD COMPLETE EVENT
-    $("#tblSupplier").on('xhr.dt', function (e, settings, data, xhr) {
-
-        //data will be null is AJAX error
-        if (data) {
-            //DATATABLE DRAW COMPLETE EVENT
-            $('#tblSupplier').on('draw.dt', function () {
-
-                tableSupplier = $("#tblSupplier").DataTable();
-                //select first row by default
-                tableSupplier.rows(':eq(0)', { page: 'current' }).select();
-            });
-        }
-    }).DataTable({
-        "autoWidth": false,
-        "select": {
-            style: 'single'
-        },
-        deferRender: true,
-        rowId: "_id",
-        "ajax": {
-            "url": apiUrl + "supplier/getall",
-            "dataSrc": "",
-            "headers": {
-                "Authorization": "Bearer " + token
-            }
-        },
-        "columns": [
-            {
-                "render": function (data, type, row) {
-                    return '<input type="hidden" value="' + row._id + '"/>' + row.name;
-                }
-            },
-            { "data": "code", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "urlWeb", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
-        ],
-    });
-
-    //TABLE ROW CLICK EVENT
-    $("#tblSupplier tbody").on('click', 'tr', function () {
-
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        }
-        else {
-            tableSupplier = $('#tblUser').DataTable();
-            tableSupplier.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-
-            selId = $(this).find('input[type=hidden]').eq(0).val();
-            selAdmin = $(this).find('input[type=hidden]').eq(1).val();
-
-            $("#btnUserAccess").prop('disabled', selAdmin == "true");
-
-            fillCode(selId);
-            fillOffice(selId);
-
-        }
-    });
-
-    //TABLE REDRAW EVENT
-    $('#tblSupplier').on('draw.dt', function () {
-        onresize();
-    });
+    configSupplierTable();
 
     //fill COUNTRIES
     fuLib.gloc.getCountries().success(function (data, status, xhr) {
@@ -93,15 +27,22 @@ function doSupplier(crPage) {
     });
 
     //fill PERSON GOVT CODES
-    fuLib.lov.getLovCompanyGovtCodes().success(function (data, status, xhr) {       
-        fillUl('#ulGovtCode', data);
+    fuLib.lov.getPersonGovtNos().success(function (data, status, xhr) {       
+        fillUl('#ulGovtNo', data);
 
     }).error(function (xhr, status, error) {
-        //lov.getLovCompanyGovtCodes failed
-        handleError('lov.getLovCompanyGovtCodes', xhr, status, error);
+        //lov.getPersonGovtNos failed
+        handleError('lov.getPersonGovtNos', xhr, status, error);
     });
 
+    //fill SUPPLIER GOVT CODES
+    fuLib.lov.getCompanyGovtNos().success(function (data, status, xhr) {
+        fillUl('#ulSuppGovtNo', data);
 
+    }).error(function (xhr, status, error) {
+        //lov.getCompanyGovtNos failed
+        handleError('lov.getCompanyGovtNos', xhr, status, error);
+    });
 
     //ADDRESS COUNTRY dropdown change event
     $('#selCountry').change(function (e) {
@@ -162,28 +103,11 @@ function doSupplier(crPage) {
 
     //BTN SUPPLIER NEW click event
     $("#btnSuppNew").click(function () {
-        modeUpdate = 'new';
+        supModeUpdate = 'new';
 
         supplierClearEditPanel();
 
         $("#divEditSupplier").show();
-        $("#divEditCode").hide();
-        $("#divEditOffice").hide();
-        $("#divEditPerson").hide();
-
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
-        $("#divUpdate").show();
-
-    });
-
-    //BTN CODE NEW click event
-    $("#btnCodeNew").click(function () {
-        modeUpdate = 'new';
-
-        supplierClearEditPanel();
-
-        $("#divEditSupplier").hide();
-        $("#divEditCode").show();
         $("#divEditOffice").hide();
         $("#divEditPerson").hide();
 
@@ -194,12 +118,11 @@ function doSupplier(crPage) {
 
     //BTN OFFICE NEW click event
     $("#btnOffNew").click(function () {
-        modeUpdate = 'new';
+        supModeUpdate = 'new';
 
         supplierClearEditPanel();
 
         $("#divEditSupplier").hide();
-        $("#divEditCode").hide();
         $("#divEditOffice").show();
         $("#divEditPerson").hide();
 
@@ -210,12 +133,11 @@ function doSupplier(crPage) {
 
     //BTN PERSON NEW click event
     $("#btnPersonNew").click(function () {
-        modeUpdate = 'new';
+        supModeUpdate = 'new';
 
         supplierClearEditPanel();
 
         $("#divEditSupplier").hide();
-        $("#divEditCode").hide();
         $("#divEditOffice").hide();
         $("#divEditPerson").show();
 
@@ -237,6 +159,8 @@ function doSupplier(crPage) {
             phone: $("#txtPhone").val(),
             fax: $("#txtFax").val(),
             logo: '',
+            lovGovtNo: $("#ulSuppGovtNoId").val(),
+            govtNo: $("#txtSuppGovtNo").val(),
             isActive: true,
             flag: 0
         };
@@ -248,7 +172,7 @@ function doSupplier(crPage) {
             isEmptySupplier = true;
         }
 
-        if (modeUpdate == 'new') {
+        if (supModeUpdate == 'new') {
 
             if (isEmptySupplier == true) {
                 noty({ text: "Please type supplier details", layout: 'topRight', type: 'error', timeout: 2000 });
@@ -277,7 +201,7 @@ function doSupplier(crPage) {
             return false;
 
         }
-        else if (modeUpdate == 'edit') {
+        else if (supModeUpdate == 'edit') {
 
         }
 
@@ -302,7 +226,7 @@ function doSupplier(crPage) {
         var oCode = {
             value: $("#txtGCode").val(),
             LovType: $("#selLovGCode").val(),
-            supplier: selId,
+            supplier: supSelId,
             isActive: true,
             flag: 0
         };
@@ -312,7 +236,7 @@ function doSupplier(crPage) {
             isEmptyCode = true;
         }
 
-        if (modeUpdate == 'new') {
+        if (supModeUpdate == 'new') {
 
             if (isEmptyCode == true) {
                 noty({ text: "Please type govt code details", layout: 'topRight', type: 'error', timeout: 2000 });
@@ -341,7 +265,7 @@ function doSupplier(crPage) {
             return false;
 
         }
-        else if (modeUpdate == 'edit') {
+        else if (supModeUpdate == 'edit') {
 
         }
 
@@ -372,7 +296,7 @@ function doSupplier(crPage) {
             email: $("#txtEmail").val(),
             phone: $("#txtPhone").val(),
             fax: $("#txtFax").val(),
-            supplier: selId,
+            supplier: supSelId,
             isActive: true,
             flag: 0
         };
@@ -407,7 +331,7 @@ function doSupplier(crPage) {
             isEmptyOffice = true;
         }
 
-        if (modeUpdate == 'new') {
+        if (supModeUpdate == 'new') {
 
             if (isEmptyOffice == true) {
                 noty({ text: "Please type office details", layout: 'topRight', type: 'error', timeout: 2000 });
@@ -421,8 +345,8 @@ function doSupplier(crPage) {
 
                     noty({ text: 'Supplier Office added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                    tableOffice = $("#tblOffice").DataTable();
-                    tableOffice.ajax.reload();
+                    supTableOffice = $("#tblOffice").DataTable();
+                    supTableOffice.ajax.reload();
 
                 }).error(function (xhr, status, error) {
                     //supplier.addOffice failed
@@ -436,7 +360,7 @@ function doSupplier(crPage) {
             return false;
 
         }
-        else if (modeUpdate == 'edit') {
+        else if (supModeUpdate == 'edit') {
 
         }
 
@@ -464,8 +388,8 @@ function doSupplier(crPage) {
             twitter: $("#txtTwitter").val(),
             skype: $("#txtSkype").val(),
             address: null,
-            lovGovtNo: $("#selGovtCode").val(),
-            govtNo: $("#txtGovtCode").val(),
+            lovGovtNo: $("#selGovtNo").val(),
+            govtNo: $("#txtGovtNo").val(),
             photo: '',
             dateBirth: $("#txtDateBirth").val(),
             dateAnniversary: $("#txtDateAnniversary").val(),
@@ -486,7 +410,7 @@ function doSupplier(crPage) {
             oPerson.dateAnniversary.trim().length == 0) {
             isPersonEmpty = true;
         }
-        if (modeUpdate == 'new') {
+        if (supModeUpdate == 'new') {
             if (isEmptyPerson == false) {
                 //save USER details
 
@@ -510,53 +434,10 @@ function doSupplier(crPage) {
 
 }
 
-function fillCode(suppId) {
-
-    if ($.fn.dataTable.isDataTable("#tblCode")) {
-
-        tableCode.ajax.url(apiUrl + "supplier/code/getall/" + suppId).load();
-    }
-    else {
-        //Configures GOVT CODE DataTable
-        $("#tblCode").on('xhr.dt', function (e, settings, data, xhr) {
-            //DataTable AJAX load complete event
-
-            //data will be null is AJAX error
-            if (data) {
-                $('#tblCode').on('draw.dt', function () {
-                    //DataTable draw complete event
-
-                    tableCode = $("#tblCode").DataTable();
-                    //select first row by default
-                    tableCode.rows(':eq(0)', { page: 'current' }).select();
-                });
-            }
-        }).DataTable({
-            "autoWidth": false,
-            "select": {
-                style: 'single'
-            },
-            deferRender: true,
-            rowId: "_id",
-            "ajax": {
-                "url": apiUrl + "supplier/code/getall/" + suppId,
-                "dataSrc": "",
-                "headers": {
-                    "Authorization": "Bearer " + token
-                }
-            },
-            "columns": [
-                { "data": "value", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "LovType.title", "defaultContent": "<span class='text-muted'>Not set</span>" }
-            ],
-        });
-    }
-}
-
 function fillOffice(suppId) {
     if ($.fn.dataTable.isDataTable("#tblOffice")) {
 
-        tableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
+        supTableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
     }
     else {
         //Configures OFFICE DataTable
@@ -568,9 +449,9 @@ function fillOffice(suppId) {
                 $('#tblOffice').on('draw.dt', function () {
                     //DataTable draw complete event
 
-                    tableOffice = $("#tblOffice").DataTable();
+                    supTableOffice = $("#tblOffice").DataTable();
                     //select first row by default
-                    tableOffice.rows(':eq(0)', { page: 'current' }).select();
+                    supTableOffice.rows(':eq(0)', { page: 'current' }).select();
                 });
             }
         }).DataTable({
@@ -589,6 +470,8 @@ function fillOffice(suppId) {
             },
             "columns": [
                 { "data": "title", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "address1", "defaultContent": "<span class='text-muted'>Not set</span>"},
+                { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
                 { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
             ],
         });
@@ -608,12 +491,6 @@ function supplierClearEditPanel() {
     $("#txtEmail").val('');
     $("#txtPhone").val('');
     $("#txtFax").val('');
-
-
-    //supplier govt code
-    $("#selLovGCode option[value='0']").prop("selected", true);
-    $("#selLovGCode").selectpicker('refresh');
-    $("#txtGCode").val('');
 
     //supplier office
     $("#txtTitle").val('');
@@ -638,12 +515,78 @@ function supplierClearEditPanel() {
     $("#txtFacebook").val('');
     $("#txtTwitter").val('');
     $("#txtSkype").val('');
-    $("#selGovtCode option[value='0']").prop("selected", true);
-    $("#selGovtCode").selectpicker('refresh');
-    $("#txtGovtCode").val('');
+    $("#selGovtNo option[value='0']").prop("selected", true);
+    $("#selGovtNo").selectpicker('refresh');
+    $("#txtGovtNo").val('');
     $("#txtDateBirth").val('');
     $("#txtDateAnniversary").val('');
     $("input[name=iradioMStatus]:checked", "#frmPerson").val('0');
     $("input[name=iradioGender]:checked", "#frmPerson").val('0');
+}
 
+function configSupplierTable() {
+    //"option strict";
+
+    //DATATABLE AJAX LOAD COMPLETE EVENT
+    $("#tblSupplier").on('xhr.dt', function (e, settings, data, xhr) {
+
+        //data will be null is AJAX error
+        if (data) {
+            //DATATABLE DRAW COMPLETE EVENT
+            $('#tblSupplier').on('draw.dt', function () {
+
+                supTableSupplier = $("#tblSupplier").DataTable();
+                //select first row by default
+                supTableSupplier.rows(':eq(0)', { page: 'current' }).select();
+            });
+        }
+    }).DataTable({
+        "autoWidth": false,
+        "select": {
+            style: 'single'
+        },
+        deferRender: true,
+        rowId: "_id",
+        "ajax": {
+            "url": apiUrl + "supplier/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            {
+                "render": function (data, type, row) {
+                    return '<input type="hidden" value="' + row._id + '"/>' + row.name;
+                }
+            },
+            { "data": "code", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "urlWeb", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ],
+    });
+
+    //TABLE ROW CLICK EVENT
+    $("#tblSupplier tbody").on('click', 'tr', function () {
+
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            supTableSupplier = $('#tblUser').DataTable();
+            supTableSupplier.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            supSelId = $(this).find('input[type=hidden]').eq(0).val();
+
+            fillOffice(supSelId);
+
+        }
+    });
+
+    //TABLE REDRAW EVENT
+    $('#tblSupplier').on('draw.dt', function () {
+        onresize();
+    });
 }

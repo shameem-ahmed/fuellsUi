@@ -1,3 +1,5 @@
+"use strict";
+
 var apiUrl = "http://localhost:5000/";
 
 var token = localStorage.getItem("fuelUser");
@@ -296,10 +298,10 @@ var fuLib = {
             );
         },
 
-        getLovPersonGovtCodes: function () {
+        getDesignations: function () {
             return (
                 $.ajax({
-                    url: apiUrl + "lov/getlov/10",
+                    url: apiUrl + "lov/getlov/0",
                     type: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
@@ -308,7 +310,31 @@ var fuLib = {
             );
         },
 
-        getLovCompanyGovtCodes: function () {
+        getDepartments: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/1",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOfficeTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/2",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getCompanyGovtNos: function () {
             return (
                 $.ajax({
                     url: apiUrl + "lov/getlov/3",
@@ -320,6 +346,89 @@ var fuLib = {
             );
         },
 
+        getUserTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/4",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOrderTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/5",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOrderStatuses: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/6",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getPOInternalDetailTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/7",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getJobCardStatuses: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/8",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getContactTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/9",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getPersonGovtNos: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/10",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
     },
 
     gloc: {

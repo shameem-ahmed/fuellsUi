@@ -1,3 +1,5 @@
+"use strict";
+
 //CALLED FROM _LAYOUT2
 function doCustomer(crPage) {
     
