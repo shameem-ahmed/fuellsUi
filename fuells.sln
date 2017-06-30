@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rpa1Timer", "rpa1Timer\rpa1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mongoDotNet", "mongoDotNet\mongoDotNet.csproj", "{EB84506E-6128-4E58-8B24-AB3928A18F02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PusherRealtimeChat.WebAPI", "PusherRealtimeChat.WebAPI\PusherRealtimeChat.WebAPI.csproj", "{AD90B9DC-1FFE-4833-892F-78E710D1E431}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PusherRealtimeChat.UI", "PusherRealtimeChat.UI\PusherRealtimeChat.UI.csproj", "{C6FF6069-271B-41B1-B2EF-E385F460F10B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{EB84506E-6128-4E58-8B24-AB3928A18F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB84506E-6128-4E58-8B24-AB3928A18F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB84506E-6128-4E58-8B24-AB3928A18F02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD90B9DC-1FFE-4833-892F-78E710D1E431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD90B9DC-1FFE-4833-892F-78E710D1E431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD90B9DC-1FFE-4833-892F-78E710D1E431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD90B9DC-1FFE-4833-892F-78E710D1E431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6FF6069-271B-41B1-B2EF-E385F460F10B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6FF6069-271B-41B1-B2EF-E385F460F10B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6FF6069-271B-41B1-B2EF-E385F460F10B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6FF6069-271B-41B1-B2EF-E385F460F10B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
