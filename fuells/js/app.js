@@ -128,9 +128,6 @@ var fuLib = {
         },
 
         login: function (name, pwd) {
-            
-            debugger
-
             return (
                 $.ajax({
                     url: apiUrl + "user/login",

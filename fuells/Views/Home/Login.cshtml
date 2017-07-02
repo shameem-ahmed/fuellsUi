@@ -86,6 +86,7 @@
             $(function() {
 
                 $("#btnLogin").on('click', (event) => {
+
                     var sUser = $("#txtUser").val();
                     var sPwd = $("#txtPwd").val();
 
@@ -102,36 +103,25 @@
 
                     //do login
                     fuLib.user.login(sUser, sPwd).success(function(result, status, xhr) {
-
-                        debugger
-
                         //store jwt token in localStorage
                         window.localStorage.setItem("fuelUser", result.token);
                         window.location.replace("/");
 
-                    }).error(function(xhr, status, error) {
+                    }).error(function (xhr, status, error) {
                         //user.login failed
                         handleError('user.login', xhr, status, error);
-
                         window.localStorage.removeItem("fuelUser");
-
                     });
-
-
                 });
             });
 
             function handleError(xhr, status, error) {
                 try {
                     var err = eval("(" + $(xhr.responseText).text() + ")");
-
                     noty({ text: err.message, layout: 'topRight', type: 'error', timeout: 2000 });
-
                 }
                 catch(err) {
-
                     noty({ text: error, layout: 'topRight', type: 'error', timeout: 2000 });
-
                 }
             }
     </script>

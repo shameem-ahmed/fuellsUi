@@ -10,21 +10,35 @@
 }
 
 .labelPrimary {
+    text-align: right;
     color: #101215;
 }
 
 .labelInfo {
+    text-align: right;
     color: #1caf9a;
 }
 
 .labelDanger {
+    text-align: right;
     color: #e04b4a;
 }
 
 .labelWarning {
+    text-align: right;
     color: #fe970a;
 }
 
 .labelSuccess {
+    text-align: right;
     color: #95b75d;
+}
+
+.tableEdit {
+    width:100%;
+
+}
+
+.tableEdit tr td {
+    padding: 5px;
 }
