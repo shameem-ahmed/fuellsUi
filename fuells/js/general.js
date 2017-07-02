@@ -3,6 +3,8 @@
 // FILL COMBOBOX
 function fillCombo(combo, data) {
 
+    //alert('fillCombo');
+
     var items = '<option value="0">--select--</option>';
 
     for (var i = 0; i < data.length; i++) {
@@ -27,6 +29,21 @@ function fillUl(ul, data) {
     if (data.length > 0) {
         changeUlTitle(ul, data[0]._id, data[0].title);
     }
+}
+
+// FILL USER
+function fillUser(combo, data) {
+
+    //alert('fillUser');
+
+    var items = '<option value="0">--select--</option>';
+
+    for (var i = 0; i < data.length; i++) {
+        items += '<option value="' + data[i]._id + '">' + data[i].name + '</option>';
+    }
+
+    $(combo).html(items);
+    $(combo).selectpicker('refresh');
 }
 
 // CLEAR A COMBOBOX 

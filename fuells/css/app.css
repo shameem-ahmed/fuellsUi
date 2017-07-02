@@ -8,3 +8,23 @@
     background-color: #fec558;
     color: black;
 }
+
+.labelPrimary {
+    color: #101215;
+}
+
+.labelInfo {
+    color: #1caf9a;
+}
+
+.labelDanger {
+    color: #e04b4a;
+}
+
+.labelWarning {
+    color: #fe970a;
+}
+
+.labelSuccess {
+    color: #95b75d;
+}

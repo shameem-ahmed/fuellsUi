@@ -210,78 +210,13 @@ function doSupplier(crPage) {
     });
 
     //NEW SUPPLIER-Cancel click event
-    $("#btnSupplierUpdateCancel").click(function () {
+    $("#btnSuppUpdateCancel").click(function () {
 
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
 
     });
-
-    //NEW CODE-SAVE CHANGES click event
-    $("#btnCodeUpdateSave").click(function () {
-
-        var isEmptyCode = false;
-
-        var oCode = {
-            value: $("#txtGCode").val(),
-            LovType: $("#selLovGCode").val(),
-            supplier: supSelId,
-            isActive: true,
-            flag: 0
-        };
-
-        //check if oSupplier is empty
-        if (oCode.value.trim().length == 0) {
-            isEmptyCode = true;
-        }
-
-        if (supModeUpdate == 'new') {
-
-            if (isEmptyCode == true) {
-                noty({ text: "Please type govt code details", layout: 'topRight', type: 'error', timeout: 2000 });
-                return false;
-            }
-            else {
-
-                fuLib.supplier.addCode(oCode).success(function (data, status, xhr) {
-
-                    console.log(data);
-
-                    noty({ text: 'Govt code added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                    tableCode = $("#tblCode").DataTable();
-                    tableCode.ajax.reload();
-
-                }).error(function (xhr, status, error) {
-                    //supplier.addCode failed
-                    handleError('supplier.addCode', xhr, status, error);
-                });
-            }
-
-            $("#divUpdate").hide();
-            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
-
-            return false;
-
-        }
-        else if (supModeUpdate == 'edit') {
-
-        }
-
-        return false;
-
-    });
-
-    //NEW CODE-Cancel click event
-    $("#btnCodeUpdateCancel").click(function () {
-
-        $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
-        return false;
-
-    });
-
 
     //NEW OFFICE-SAVE CHANGES click event
     $("#btnOfficeUpdateSave").click(function () {
@@ -432,9 +367,15 @@ function doSupplier(crPage) {
 
     });
 
+    //NEW PERSON-Cancel click event
+    $("#btnPersonUpdateCancel").click(function () {
+        $("#divUpdate").hide();
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+        return false;
+    });
 }
 
-function fillOffice(suppId) {
+function fillSupplierOffice(suppId) {
     if ($.fn.dataTable.isDataTable("#tblOffice")) {
 
         supTableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
@@ -580,7 +521,7 @@ function configSupplierTable() {
 
             supSelId = $(this).find('input[type=hidden]').eq(0).val();
 
-            fillOffice(supSelId);
+            fillSupplierOffice(supSelId);
 
         }
     });

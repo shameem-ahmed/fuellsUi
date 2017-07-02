@@ -1,201 +1,169 @@
 ﻿@{
     ViewBag.Title = "Company";
 }
-
 <input type="hidden" id="hidSelMenu" value="liPageCompany" />
 <input type="hidden" id="hidSelCompany" value="000" />
 
 <ul class="breadcrumb">
     <li><a href="#">Home</a></li>
     <li><a href="#">Company</a></li>
-    <li class="active">Company Info.</li>
+    <li class="active">Company</li>
 </ul>
 <!-- END BREADCRUMB -->
-<!-- PAGE TITLE -->
-<div class="page-title">
-    <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
-</div>
-<!-- END PAGE TITLE -->
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap">
-    <!--PAGE CONTENT - BEGINS -->
-    <div class="row">
-        <!-- Company TABLE, GOVT CODES, OFFICE & OFF PERSONS -->
+    <!-- PAGE CONTENT - BEGINS -->
+    <div class="row" id="divList">
         <div class="col-md-8" id="divTable">
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> Company</h2>
+            </div>
+            <div class="panel panel-default tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li id="tabCompany" class="active"><a href="#tab-company" role="tab" data-toggle="tab">Company</a></li>
+                    <li id="tabOffice"><a href="#tab-office" role="tab" data-toggle="tab">Office</a></li>
+                    <li id="tabPeople"><a href="#tab-people" role="tab" data-toggle="tab">People</a></li>
+                </ul>
+                <div class="panel-body tab-content">
+                    <div class="tab-pane active" id="tab-company">
+                        <!--COMPANY TABLE-->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnCompNew" type="button" class="btn btn-primary">New Company</button>
+                                <button id="btnCompEdit" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnCompDelete" type="button" class="btn btn-danger">Delete</button>
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
 
-            <div class="row">
-                <!-- Company TABLE -->
-                <div class="col-md-8">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <button type="button" class="btn btn-primary" id="btnCompNew">New Company</button>
-                            <button type="button" class="btn btn-info" id="btnCompEdit">Edit</button>
-                            <button type="button" class="btn btn-danger" id="btnCompDelete">Delete</button>
-                            <ul class="panel-controls">
-                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            </ul>
-                        </div>
-
-                        <div class="panel-body">
-                            <table class="table DataTable" id="tblCompany">
-                                <thead>
-                                    <tr>
-                                        <th width="20%">Company name</th>
-                                        <th width="15%">Code</th>
-                                        <th width="20%">Website</th>
-                                        <th width="25%">Email</th>
-                                        <th width="20%">Phone</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row">
-                        <!-- GOVT CODES -->
-                        <div class="col-md-12">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <button type="button" class="btn btn-primary" id="btnCodeNew">New Code</button>
-                                    <button type="button" class="btn btn-info" id="btnCodeEdit">Edit</button>
-                                    <button type="button" class="btn btn-danger" id="btnCodeDelete">Delete</button>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="panel-body">
-                                    <table class="table DataTable" id="tblCode">
-                                        <thead>
-                                            <tr>
-                                                <th width="20%">Govt Code</th>
-                                                <th width="15%">Type</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblCompany">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Company name</th>
+                                            <th width="15%">Code</th>
+                                            <th width="20%">Website</th>
+                                            <th width="25%">Email</th>
+                                            <th width="20%">Phone</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <!-- OFFICES  -->
-                        <div class="col-md-12">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <button type="button" class="btn btn-primary" id="btnOffNew">New Office</button>
-                                    <button type="button" class="btn btn-info" id="btnOffEdit">Edit</button>
-                                    <button type="button" class="btn btn-danger" id="btnOffDelete">Delete</button>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                    </ul>
-                                </div>
+                    <div class="tab-pane" id="tab-office">
+                        <!--OFFICE TABLE-->
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <button id="btnOffNew" type="button" class="btn btn-primary">New Office</button>
+                                <button id="btnOffEdit" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnOffDelete" type="button" class="btn btn-danger">Delete</button>
 
-                                <div class="panel-body">
-                                    <table class="table DataTable" id="tblOffice">
-                                        <thead>
-                                            <tr>
-                                                <th width="20%">Office title</th>
-                                                <th width="20%">Phone</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblOffice">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Office title</th>
+                                            <th width="20%">Address</th>
+                                            <th width="20%">Email</th>
+                                            <th width="20%">Phone</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <!-- OFF PERSONS -->
-                        <div class="col-md-12">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <button type="button" class="btn btn-primary" id="btnPersonNew">New Person</button>
-                                    <button type="button" class="btn btn-info" id="btnPersonEdit">Edit</button>
-                                    <button type="button" class="btn btn-danger" id="btnPersonDelete">Delete</button>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                    </ul>
-                                </div>
+                    <div class="tab-pane" id="tab-people">
+                        <!--PERSON TABLE-->
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <button id="btnPersonNew" type="button" class="btn btn-primary">New Person</button>
+                                <button id="btnPersonEdit" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnPersonDelete" type="button" class="btn btn-danger">Delete</button>
 
-                                <div class="panel-body">
-                                    <table class="table DataTable" id="tblPerson">
-                                        <thead>
-                                            <tr>
-                                                <th width="20%">Name</th>
-                                                <th width="20%">Phone</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblPerson">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Name</th>
+                                            <th width="20%">Phone</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
 
-        <!--Company EDIT PANELS -->
+        <!-- UPDATE PANELS -->
         <div class="col-md-4" id="divUpdate">
-
+            <!-- COMPANY PANEL -->
             <div class="panel panel-default" id="divEditCompany">
+                <div class="panel-heading">
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Company details</h3>
+                </div>
                 <div class="panel-body">
-                    <h4>Company details</h4>
-                    <!-- Company form -->
-                    <form class="form-horizontal" action="#" role="form" id="frmCompany">
+                    <form class="form" action="#" role="form" id="frmCompany">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Company name</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtLogin" class="form-control" placeholder="Company Name" />
+                            <label class="labelDanger" for="txtName">Company Name /</label>
+                            <input type="text" id="txtName" class="form-control" placeholder="Company Name" />
+                        </div>
+                        <div class="form-group">
+                            <label class="labelDanger" for="txtCode">Company Code /</label>
+                            <input type="text" id="txtCode" class="form-control" placeholder="Code" />
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <input type="text" id="txtWebsite" class="form-control" placeholder="Website" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Code</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtPwd1" class="form-control" placeholder="Code" />
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Website</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                                    <input type="text" id="txtFacebook" class="form-control" placeholder="Website" />
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtFax">Fax /</label>
+                            <input type="text" id="txtFax" class="form-control" placeholder="Fax" />
+                        </div>
+                        <div class="form-group" data-toggle="tooltip" data-placement="left" title="Govt Code">
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span id="ulCompGovtNoSpan">Action </span><span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" id="ulCompGovtNo"></ul>
                                 </div>
+                                <input type="text" class="form-control" placeholder="Govt Code" id="txtCompGovtNo">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Phone</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Fax</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtPwd2" class="form-control" placeholder="Fax" />
-                            </div>
+                            <input type="hidden" class="form-control" id="ulCompGovtNoId">
                         </div>
                     </form>
                 </div>
@@ -205,229 +173,179 @@
                 </div>
             </div>
 
-            <div class="panel panel-default" id="divEditCode">
-                <div class="panel-body">
-                    <h4>Code details</h4>
-                    <!-- GOVT CODE form -->
-                    <form class="form-horizontal" action="#" role="form" id="frmCode">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Govt code type</label>
-                            <div class="col-md-9">
-                                <select id="selCountry" class="form-control select"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Govt code</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtAddress1" class="form-control" placeholder="Govt code" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="panel-footer">
-                    <button id="btnCompUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                    <button id="btnCompUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
-                </div>
-            </div>
-
+            <!-- OFFICE PANEL -->
             <div class="panel panel-default" id="divEditOffice">
+                <div class="panel-heading">
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Office details</h3>
+                </div>
                 <div class="panel-body">
-                    <h4>Office details</h4>
-                    <!-- OFFICE form -->
-                    <form class="form-horizontal" action="#" role="form" id="frmOffice">
+                    <form class="form" action="#" role="form" id="frmOffice">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Title</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtAddress1" class="form-control" placeholder="Office title" />
+                            <label class="labelDanger" for="txtTitle">Office Title /</label>
+                            <input type="text" id="txtTitle" class="form-control" placeholder="Office title" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtAddress1">Address 1 /</label>
+                            <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtAddress2">Address 2 /</label>
+                            <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
+                        </div>
+                        <div class="form-group">
+                            <label for="selCountry">Country /</label>
+                            <select id="selCountry" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selState">State /</label>
+                            <select id="selState" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selCity">City /</label>
+                            <select id="selCity" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selArea">Area /</label>
+                            <select id="selArea" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="text" id="txtEmailO" class="form-control" placeholder="Email Address" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Address 1</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" id="txtPhoneO" class="form-control" placeholder="Phone" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Address 2</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Country</label>
-                            <div class="col-md-9">
-                                <select id="selCountry" class="form-control select"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">State</label>
-                            <div class="col-md-9">
-                                <select id="selState" class="form-control select"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">City</label>
-                            <div class="col-md-9">
-                                <select id="selCity" class="form-control select"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Area</label>
-                            <div class="col-md-9">
-                                <select id="selArea" class="form-control select"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Phone</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Fax</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtPwd2" class="form-control" placeholder="Fax" />
-                            </div>
+                            <label for="txtFaxO">Fax /</label>
+                            <input type="text" id="txtFaxO" class="form-control" placeholder="Fax" />
                         </div>
                     </form>
                 </div>
                 <div class="panel-footer">
-                    <button id="btnCompUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                    <button id="btnCompUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                    <button id="btnOfficeUpdateCancel" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnOfficeUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                 </div>
             </div>
 
+            <!-- PERSON PANEL -->
             <div class="panel panel-default" id="divEditPerson">
+                <div class="panel-heading">
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> People details</h3>
+                </div>
                 <div class="panel-body">
-                    <h4>Person details</h4>
-                    <!-- PERSON form -->
-                    <form class="form-horizontal" action="#" role="form" id="frmPerson">
+                    <form class="form" action="#" role="form" id="frmPerson">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Full name</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="txtName" placeholder="Full Name" />
+                            <label class="labelDanger" for="txtNameP">Person Name /</label>
+                            <input type="text" class="form-control" id="txtNameP" placeholder="Full Name" />
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="text" id="txtEmailP" class="form-control" placeholder="Email Address" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" id="txtPhoneP" class="form-control" placeholder="Phone" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                                <input type="text" id="txtFacebook" class="form-control" placeholder="Facebook" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                                <input type="text" id="txtSkype" class="form-control" placeholder="Skype" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                                <input type="text" id="txtTwitter" class="form-control" placeholder="Twitter" />
+                            </div>
+                        </div>
+                        <div class="form-group" data-toggle="tooltip" data-placement="left" title="Govt Code">
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span id="ulGovtNoSpan">Action </span><span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" id="ulGovtNo"></ul>
                                 </div>
+                                <input type="text" class="form-control" placeholder="Govt Code" id="txtGovtNo">
                             </div>
+                            <input type="hidden" class="form-control" id="ulGovtNoId">
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Phone</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Facebook</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-                                    <input type="text" id="txtFacebook" class="form-control" placeholder="Facebook" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Skype</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-skype"></i></span>
-                                    <input type="text" id="txtSkype" class="form-control" placeholder="Skype" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Twitter</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-                                    <input type="text" id="txtTwitter" class="form-control" placeholder="Twitter" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Govt. Code</label>
-                            <div class="col-md-4">
-                                <select id="selGovtCode" class="form-control select"></select>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
-                                    <input id="txtGovtCode" type="text" class="form-control" placeholder="Govt Code" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Photo</label>
-                            <div class="col-md-9">
-                                <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
-                                <input id="filePhoto" type="file" class="fileinput" name="filename1" id="filename1" />
-                            </div>
+                            <label for="txtNameP">Photo /</label>
+                            <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
+                            <input id="filePhoto" type="file" class="fileinput" name="filename1" />
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Birth date</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <input type="text" id="txtDateBirth" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
+                            <label for="txtDateBirth">Birth day /</label>
+                            <div class="input-group">
+                                <input type="text" id="txtDateBirth" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Anniversary date</label>
-                            <div class="col-md-9">
-                                <div class="input-group">
-                                    <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
+                            <label for="txtDateAnniversary">Anniversary day /</label>
+                            <div class="input-group">
+                                <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
+                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Gender</label>
-                            <div class="col-md-9">
-                                <label class="check"><input type="radio" class="iradio" name="iradioGender" checked="checked" value="0" /> Not set</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioGender" value="1" /> Male</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioGender" value="2" /> Female</label>
-                            </div>
+                            <label for="selGender">Gender /</label>
+                            <select id="selGender" class="form-control select">
+                                <option value="0" selected="selected">Not Set</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Maritial status</label>
-                            <div class="col-md-9">
-                                <label class="check"><input type="radio" class="iradio" name="iradioMStatus" checked="checked" value="0" /> Not set</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="1" /> Married</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="2" /> Not Married</label>
-                                <label class="check"><input type="radio" class="iradio" name="iradioMStatus" value="3" /> Widow</label>
-                            </div>
+                            <label for="selMStatus">Maritial Status /</label>
+                            <select id="selMStatus" class="form-control select">
+                                <option value="0" selected="selected">Not Set</option>
+                                <option value="1">Married</option>
+                                <option value="2">Not Married</option>
+                                <option value="3">Widow</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selDesig">Designation /</label>
+                            <select id="selDesig" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selDept">Department /</label>
+                            <select id="selDept" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selContract">Contract type /</label>
+                            <select id="selContract" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selUser">Login user /</label>
+                            <select id="selUser" class="form-control select"></select>
                         </div>
                     </form>
                 </div>
                 <div class="panel-footer">
-                    <button id="btnCompUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                    <button id="btnCompUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+                    <button id="btnPersonUpdateCancel" class="btn btn-link pull-right">Cancel</button>
+                    <button id="btnPersonUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                 </div>
             </div>
         </div>
     </div>
-    <!--PAGE CONTENT - ENDS -->
+    <!-- PAGE CONTENT - ENDS -->
 </div>

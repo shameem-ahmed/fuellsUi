@@ -406,7 +406,7 @@ var fuLib = {
             );
         },
 
-        getContactTypes: function () {
+        getContractTypes: function () {
             return (
                 $.ajax({
                     url: apiUrl + "lov/getlov/9",
@@ -508,18 +508,6 @@ var fuLib = {
             );
         },
 
-        getAllCode: function (suppId) {
-            return (
-                $.ajax({
-                    url: apiUrl + "supplier/code/getall/" + suppId,
-                    type: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + token
-                    }
-                })
-            );
-        },
-
         getAllOffice: function (suppId) {
             return (
                 $.ajax({
@@ -571,11 +559,77 @@ var fuLib = {
             );
         },
 
-        addCode: function (code) {
+        addOffice: function (code) {
             return (
                 $.ajax({
-                    url: apiUrl + "supplier/code/add",
+                    url: apiUrl + "supplier/office/add",
                     data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+    },
+
+    company: {
+
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllOffice: function (compId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/office/getall/" + compId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllPerson: function (offId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/person/getall/" + offId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (company) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/add",
+                    data: JSON.stringify(company),
                     type: "POST",
                     contentType: "application/json",
                     dataType: "json",
@@ -589,7 +643,7 @@ var fuLib = {
         addOffice: function (code) {
             return (
                 $.ajax({
-                    url: apiUrl + "supplier/office/add",
+                    url: apiUrl + "company/office/add",
                     data: JSON.stringify(code),
                     type: "POST",
                     contentType: "application/json",
