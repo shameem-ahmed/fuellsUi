@@ -570,6 +570,21 @@ var fuLib = {
                 })
             );
         },
+
+        addPerson: function (code) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/person/add",
+                    data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
     },
 
     company: {

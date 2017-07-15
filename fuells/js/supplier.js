@@ -2,11 +2,14 @@
 
 var supCrTab = 0;
 var supModeUpdate = 'new';
-var supSelId = '';
 
-var supTableSupplier;
-var supTableOffice;
-var supTablePeople;
+var selIdSupplier = '';
+var selIdOffice = '';
+var selIdPerson = '';
+
+var tableSupplier;
+var tableOffice;
+var tablePeople;
 
 //CALLED FROM _LAYOUT2
 function doSupplier(crPage) {
@@ -231,7 +234,7 @@ function doSupplier(crPage) {
             email: $("#txtEmail").val(),
             phone: $("#txtPhone").val(),
             fax: $("#txtFax").val(),
-            supplier: supSelId,
+            supplier: selIdSupplier,
             isActive: true,
             flag: 0
         };
@@ -280,8 +283,8 @@ function doSupplier(crPage) {
 
                     noty({ text: 'Supplier Office added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                    supTableOffice = $("#tblOffice").DataTable();
-                    supTableOffice.ajax.reload();
+                    tableOffice = $("#tblOffice").DataTable();
+                    tableOffice.ajax.reload();
 
                 }).error(function (xhr, status, error) {
                     //supplier.addOffice failed
@@ -312,8 +315,8 @@ function doSupplier(crPage) {
 
     });
 
+    //NEW PERSON-SAVE CHANGES click event
     $("#btnPersonUpdateSave").click(function () {
-        debugger;
         var isEmptyPerson = false;
         var oPerson = {
             name: $("#txtNameP").val(),
@@ -352,15 +355,32 @@ function doSupplier(crPage) {
                 fuLib.person.add(oPerson).success(function (data, status, xhr) {
 
                     console.log(data);
+                    alert(data.person._id);
+                    debugger
 
-                    noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+                    var oOfficePerson = {
+                        supplierOffice: selIdOffice,
+                        person: data.person._id,
+                        isPrimary: false,
+                        isManager: false,
+                        LovDesignation: null,
+                        LovDepartment: null,
+                        isActive: true,
+                        flag: 0
+                    };
 
-                    //var table = $("#tblUser").DataTable();
-                    //table.ajax.reload();
+                    fuLib.supplier.addPerson(oOfficePerson).success(function (data, status, xhr) {
+
+                        noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                    }).error(function (xhr, status, error) {
+                        //supplier.addPerson failed
+                        handleError('supplier.addPerson', xhr, status, error);
+                    });
 
                 }).error(function (xhr, status, error) {
-                    //user.add failed
-                    handleError('user.add', xhr, status, error);
+                    //person.add failed
+                    handleError('person.add', xhr, status, error);
                 });
             }
         }
@@ -376,9 +396,10 @@ function doSupplier(crPage) {
 }
 
 function fillSupplierOffice(suppId) {
+
     if ($.fn.dataTable.isDataTable("#tblOffice")) {
 
-        supTableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
+        tableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
     }
     else {
         //Configures OFFICE DataTable
@@ -390,9 +411,12 @@ function fillSupplierOffice(suppId) {
                 $('#tblOffice').on('draw.dt', function () {
                     //DataTable draw complete event
 
-                    supTableOffice = $("#tblOffice").DataTable();
+                    tableOffice = $("#tblOffice").DataTable();
                     //select first row by default
-                    supTableOffice.rows(':eq(0)', { page: 'current' }).select();
+                    tableOffice.rows(':eq(0)', { page: 'current' }).select();
+
+                    selIdOffice = tableOffice.rows(':eq(0)', { page: 'current' }).ids()[0];
+                    fillOfficePerson(selIdOffice);
                 });
             }
         }).DataTable({
@@ -416,11 +440,99 @@ function fillSupplierOffice(suppId) {
                 { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
             ],
         });
+
+
+        //TABLE ROW CLICK EVENT
+        $("#tblOffice tbody").on('click', 'tr', function () {
+
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                tableOffice = $('#tblOffice').DataTable();
+                tableOffice.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+
+                selIdOffice = $(this).attr('id');
+
+                fillOfficePerson(selIdOffice);
+
+            }
+        });
+
+        //TABLE REDRAW EVENT
+        $('#tblOffice').on('draw.dt', function () {
+            onresize();
+        });
+
+
     }
 }
 
-function fillPerson(offId) {
+function fillOfficePerson(offId) {
 
+    if ($.fn.dataTable.isDataTable("#tblPerson")) {
+
+        tablePeople.ajax.url(apiUrl + "supplier/person/getall/" + offId).load();
+    }
+    else {
+        //Configures PERSON DataTable
+        $("#tblPerson").on('xhr.dt', function (e, settings, data, xhr) {
+            //DataTable AJAX load complete event
+
+            //data will be null is AJAX error
+            if (data) {
+                $('#tblPerson').on('draw.dt', function () {
+                    //DataTable draw complete event
+
+                    tablePeople = $("#tblPerson").DataTable();
+                    //select first row by default
+                    tablePeople.rows(':eq(0)', { page: 'current' }).select();
+                });
+            }
+        }).DataTable({
+            "autoWidth": false,
+            "select": {
+                style: 'single'
+            },
+            deferRender: true,
+            rowId: "_id",
+            "ajax": {
+                "url": apiUrl + "supplier/person/getall/" + offId,
+                "dataSrc": "",
+                "headers": {
+                    "Authorization": "Bearer " + token
+                }
+            },
+            "columns": [
+                { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "isManager", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "LovDesignation", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            ],
+        });
+
+
+        //TABLE ROW CLICK EVENT
+        $("#tblPerson tbody").on('click', 'tr', function () {
+
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                tablePeople = $('#tblPerson').DataTable();
+                tablePeople.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+
+                selIdPerson = $(this).attr('id');
+                alert(selIdPerson);
+            }
+        });
+
+        //TABLE REDRAW EVENT
+        $('#tblPerson').on('draw.dt', function () {
+            onresize();
+        });
+    }
 }
 
 function supplierClearEditPanel() {
@@ -476,9 +588,18 @@ function configSupplierTable() {
             //DATATABLE DRAW COMPLETE EVENT
             $('#tblSupplier').on('draw.dt', function () {
 
-                supTableSupplier = $("#tblSupplier").DataTable();
+                tableSupplier = $("#tblSupplier").DataTable();
                 //select first row by default
-                supTableSupplier.rows(':eq(0)', { page: 'current' }).select();
+
+                tableSupplier.rows(':eq(0)', { page: 'current' }).select();
+                selIdSupplier = tableSupplier.rows(':eq(0)', { page: 'current' }).ids()[0];
+
+                console.log(selIdSupplier);
+
+                fillSupplierOffice(selIdSupplier);
+
+
+
             });
         }
     }).DataTable({
@@ -496,11 +617,7 @@ function configSupplierTable() {
             }
         },
         "columns": [
-            {
-                "render": function (data, type, row) {
-                    return '<input type="hidden" value="' + row._id + '"/>' + row.name;
-                }
-            },
+            { "data": "name", "defaultContent": "<span class='text-muted'>Not set</span>" },
             { "data": "code", "defaultContent": "<span class='text-muted'>Not set</span>" },
             { "data": "urlWeb", "defaultContent": "<span class='text-muted'>Not set</span>" },
             { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
@@ -515,14 +632,13 @@ function configSupplierTable() {
             $(this).removeClass('selected');
         }
         else {
-            supTableSupplier = $('#tblUser').DataTable();
-            supTableSupplier.$('tr.selected').removeClass('selected');
+            tableSupplier = $('#tblSupplier').DataTable();
+            tableSupplier.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
 
-            supSelId = $(this).find('input[type=hidden]').eq(0).val();
+            selIdSupplier = $(this).attr("id");
 
-            fillSupplierOffice(supSelId);
-
+            fillSupplierOffice(selIdSupplier);
         }
     });
 
