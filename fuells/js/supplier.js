@@ -79,6 +79,27 @@ function doSupplier(crPage) {
         }
     });
 
+
+
+     //OFFICE TABLE ROW CLICK EVENT
+    $("#tblOffice tbody").on('click', 'tr', function () {
+        debugger;
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+          
+            $(this).addClass('selected');
+
+            offId = $('#tblOffice tr.selected').attr('id');
+
+            fillPerson(offId);
+          
+
+        }
+    });
+
+
     //TABLE REDRAW EVENT
     $('#tblSupplier').on('draw.dt', function () {
         onresize();
@@ -606,6 +627,46 @@ function fillOffice(suppId) {
 
 function fillPerson(offId) {
 
+    if ($.fn.dataTable.isDataTable("#tblPerson")) {
+        tableOffice.ajax.url(apiUrl + "supplier/person/getall/" + suppId).load();
+    }
+    else {
+        //Configures OFFICE DataTable
+        $("#tblPerson").on('xhr.dt', function (e, settings, data, xhr) {
+            //DataTable AJAX load complete event
+
+            //data will be null is AJAX error
+            if (data) {
+                $('#tblPerson').on('draw.dt', function () {
+                    //DataTable draw complete event
+
+                    tableOffice = $("#tblPerson").DataTable();
+                    //select first row by default
+                    tableOffice.rows(':eq(0)', { page: 'current' }).select();
+
+                });
+            }
+        }).DataTable({
+            "autoWidth": false,
+            "select": {
+                style: 'single'
+            },
+            deferRender: true,
+            rowId: "_id",
+            "ajax": {
+                "url": apiUrl + "supplier/person/getall/" + offId,
+                "dataSrc": "",
+                "headers": {
+                    "Authorization": "Bearer " + token
+                }
+            },
+            "columns": [
+                { "data": "title", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
+            ],
+        });
+
+    }
 }
 
 function supplierClearEditPanel() {
