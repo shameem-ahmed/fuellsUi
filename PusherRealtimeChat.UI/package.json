@@ -1,0 +1,22 @@
+{
+	"version": "1.0.0",
+	"name": "ASP.NET",
+	"private": true,
+  "devDependencies": {
+    "webpack": "3.0.0",
+    "babel": "6.23.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-react": "6.24.1",
+    "babel-loader": "7.1.1"
+  },
+  "dependencies": {
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "axios": "0.16.2",
+    "pusher-js": "4.1.0"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "-vs-binding": { "AfterBuild": [ "build" ] }
+}

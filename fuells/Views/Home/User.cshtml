@@ -11,15 +11,16 @@
 </ul>
 <!-- END BREADCRUMB -->
 <!-- PAGE TITLE -->
-<div class="page-title">
-    <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
-</div>
+
 <!-- END PAGE TITLE -->
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap">
     <!--USER TABLE -->
     <div class="row" id="divList">
         <div class="col-md-8" id="divTable">
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
+            </div>
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <button id="btnUserNew" type="button" class="btn btn-primary">New User</button>
@@ -51,143 +52,218 @@
         <!--USER UPDATE TABS -->
         <div class="col-md-4" id="divUpdate">
             <div class="block">
-                <form class="form" action="#" role="form" id="frmPerson">
-                    <div class="panel panel-default tabs">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li id="tabUser" class="active"><a href="#tab-first" role="tab" data-toggle="tab">User</a></li>
-                            <li id="tabPerson"><a href="#tab-second" role="tab" data-toggle="tab">Person</a></li>
-                            <li id="tabAddress"><a href="#tab-third" role="tab" data-toggle="tab">Address</a></li>
-                        </ul>
-                        <div class="panel-body tab-content">
-                            <div class="tab-pane active" id="tab-first">
-                                <!-- USER tab -->
-                                <div class="form-group">
-                                    <input type="text" id="txtLogin" class="form-control" placeholder="Login Name" data-toggle="tooltip" data-placement="left" title="Login Name" />
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" id="txtPwd1" class="form-control" placeholder="Password" data-toggle="tooltip" data-placement="left" title="Password" />
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" id="txtPwd2" class="form-control" placeholder="Confirm Password" data-toggle="tooltip" data-placement="left" title="Confirm Password" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="check"><input id="chkAdmin" type="checkbox" class="icheckbox" /> Administrator</label>
-                                </div>
-
-                            </div>
-                            <div class="tab-pane" id="tab-second">
-                                <!-- PERSON tab -->
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtName" placeholder="Full Name" data-toggle="tooltip" data-placement="left" title="Full Name"/>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" data-toggle="tooltip" data-placement="left" title="Email Address"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                        <input type="text" id="txtPhone" class="form-control" placeholder="Phone" data-toggle="tooltip" data-placement="left" title="Phone"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-                                        <input type="text" id="txtFacebook" class="form-control" placeholder="Facebook" data-toggle="tooltip" data-placement="left" title="Facebook"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-skype"></i></span>
-                                        <input type="text" id="txtSkype" class="form-control" placeholder="Skype" data-toggle="tooltip" data-placement="left" title="Skype"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-                                        <input type="text" id="txtTwitter" class="form-control" placeholder="Twitter" data-toggle="tooltip" data-placement="left" title="Twitter"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group" data-toggle="tooltip" data-placement="left" title="Govt Code">
-                                    <div class="input-group">
-                                        <div class="input-group-btn">
-                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span id="ulGovtCodeSpan">Action </span><span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" id="ulGovtCode">
-                                            </ul>
-                                        </div>
-                                        <input type="text" class="form-control" placeholder="Govt Code" id="txtGovtCode">
-                                    </div>
-                                    <input type="hidden" class="form-control" id="ulGovtCodeId">
-                                </div>
-                              
-                                <div class="form-group">
-                                    <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
-                                    <input id="filePhoto" type="file" class="fileinput" name="filename1" data-toggle="tooltip" data-placement="left" title="Profile Photo"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" id="txtDateBirth" class="form-control datepicker" placeholder="Date of birth" value="" data-date="" data-date-format="dd-mm-yyyy" data-toggle="tooltip" data-placement="left" title="Date of birth" />
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" placeholder="Date of anniversary" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" data-toggle="tooltip" data-placement="left" title="Date of anniversary" />
-                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
-                                </div>
-                                <div class="form-group" data-toggle="tooltip" data-placement="left" title="Gender">
-                                    <select id="selGender" class="form-control select">
-                                        <option value="0" selected="selected">Not Set</option>
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" data-toggle="tooltip" data-placement="left" title="Marital Status">
-                                    <select id="selMStatus" class="form-control select" >
-                                        <option value="0" selected="selected">Not Set</option>
-                                        <option value="1">Married</option>
-                                        <option value="2">Not Married</option>
-                                        <option value="3">Widow</option>
-                                    </select>
-                                </div>
-
-                            </div>
-                            <div class="tab-pane" id="tab-third">
-                                <!-- ADDRESS tab -->
-                                <div class="form-group">
-                                    <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
-                                </div>
-                                <div class="form-group">
-                                    <select id="selCountry" class="form-control select"></select>
-                                </div>
-                                <div class="form-group">
-                                    <select id="selState" class="form-control select"></select>
-                                </div>
-                                <div class="form-group">
-                                    <select id="selCity" class="form-control select"></select>
-                                </div>
-                                <div class="form-group">
-                                    <select id="selArea" class="form-control select"></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-footer">
-                            <button id="btnUserUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                            <button id="btnUserUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
-
-                        </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3><span class="fa fa-arrow-circle-o-left"></span> User details</h3>
                     </div>
-                </form>
+                    <div class="panel-body">
+
+                        <form class="form" action="#" role="form" id="frmPerson">
+                            <div class="panel panel-default tabs">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li id="tabUser" class="active"><a href="#tab-first" role="tab" data-toggle="tab">User</a></li>
+                                    <li id="tabPerson"><a href="#tab-second" role="tab" data-toggle="tab">Person</a></li>
+                                    <li id="tabAddress"><a href="#tab-third" role="tab" data-toggle="tab">Address</a></li>
+                                </ul>
+                                <div class="panel-body tab-content">
+                                    <div class="tab-pane active" id="tab-first">
+                                        <table class="tableEdit">
+                                            <tr>
+                                                <td class="labelDanger" style="width:150px;">Login name /</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" id="txtLogin" class="form-control" placeholder="Login Name" data-toggle="tooltip" data-placement="left" title="Login Name" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="labelDanger">Password /</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="password" id="txtPwd1" class="form-control" placeholder="Password" data-toggle="tooltip" data-placement="left" title="Password" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="labelDanger">Confirm password /</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="password" id="txtPwd2" class="form-control" placeholder="Confirm Password" data-toggle="tooltip" data-placement="left" title="Confirm Password" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="check"><input id="chkAdmin" type="checkbox" class="icheckbox" /> Administrator</label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!-- USER tab -->
+                                    </div>
+                                    <div class="tab-pane" id="tab-second">
+                                        <!-- PERSON tab -->
+                                        <table class="tableEdit" border="0">
+                                            <tr>
+                                                <td colspan="2" class="labelDanger">Full name /</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <input type="text" class="form-control" id="txtName" placeholder="Full Name" data-toggle="tooltip" data-placement="left" title="Full Name" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="input-group" style="width:100%;">
+                                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                                        <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" data-toggle="tooltip" data-placement="left" title="Email Address" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                        <input type="text" id="txtPhone" class="form-control" placeholder="Phone" data-toggle="tooltip" data-placement="left" title="Phone" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                                                        <input type="text" id="txtFacebook" class="form-control" placeholder="Facebook" data-toggle="tooltip" data-placement="left" title="Facebook" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                                                        <input type="text" id="txtSkype" class="form-control" placeholder="Skype" data-toggle="tooltip" data-placement="left" title="Skype" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                                                        <input type="text" id="txtTwitter" class="form-control" placeholder="Twitter" data-toggle="tooltip" data-placement="left" title="Twitter" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="input-group" style="width:100%;">
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <span id="ulGovtNoSpan">Action </span><span class="caret"></span>
+                                                            </button>
+                                                            <ul class="dropdown-menu" id="ulGovtNo"></ul>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Govt Code" id="txtGovtNo">
+                                                    </div>
+                                                    <input type="hidden" class="form-control" id="ulGovtNoId">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
+                                                    <input id="filePhoto" type="file" class="fileinput" name="filename1" data-toggle="tooltip" data-placement="left" title="Profile Photo" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="labelPrimary">Date of birth /</td>
+                                                <td class="labelPrimary">Date of anniversary /</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <input type="text" id="txtDateBirth" class="form-control datepicker" placeholder="Date of birth" value="" data-date="" data-date-format="dd-mm-yyyy" data-toggle="tooltip" data-placement="left" title="Date of birth" />
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" placeholder="Date of anniversary" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" data-toggle="tooltip" data-placement="left" title="Date of anniversary" />
+                                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="labelPrimary">Gender /</td>
+                                                <td class="labelPrimary">Marital status /</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <select id="selGender" class="form-control select">
+                                                        <option value="0" selected="selected">Not Set</option>
+                                                        <option value="1">Male</option>
+                                                        <option value="2">Female</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select id="selMStatus" class="form-control select">
+                                                        <option value="0" selected="selected">Not Set</option>
+                                                        <option value="1">Married</option>
+                                                        <option value="2">Not Married</option>
+                                                        <option value="3">Widow</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="tab-third">
+                                        <!-- ADDRESS tab -->
+                                        <table class="tableEdit" border="0">
+                                            <tr>
+                                                <td colspan="2" class="labelDanger">Address 1 /</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="labelPrimary">Address 2 /</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="labelPrimary">Country /</td>
+                                                <td class="labelPrimary">State /</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <select id="selCountry" class="form-control select"></select>
+                                                </td>
+                                                <td>
+                                                    <select id="selState" class="form-control select"></select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="labelPrimary">City /</td>
+                                                <td class="labelPrimary">Area /</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <select id="selCity" class="form-control select"></select>
+                                                </td>
+                                                <td>
+                                                    <select id="selArea" class="form-control select"></select>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <button id="btnUserUpdateCancel" class="btn btn-link pull-right">Cancel</button>
+                                    <button id="btnUserUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -195,6 +271,9 @@
     <!--USER ACCESS PANEL -->
     <div class="row" id="divAccess">
         <div class="col-md-12">
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> User Permissions</h2>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <button type="button" id="btnAccessReset" class="btn btn-default panel-controls">Reset</button>

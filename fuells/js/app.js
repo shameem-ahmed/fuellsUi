@@ -1,3 +1,5 @@
+"use strict";
+
 var apiUrl = "http://localhost:5000/";
 
 var token = localStorage.getItem("fuelUser");
@@ -126,9 +128,6 @@ var fuLib = {
         },
 
         login: function (name, pwd) {
-            
-            debugger
-
             return (
                 $.ajax({
                     url: apiUrl + "user/login",
@@ -296,10 +295,10 @@ var fuLib = {
             );
         },
 
-        getLovPersonGovtCodes: function () {
+        getDesignations: function () {
             return (
                 $.ajax({
-                    url: apiUrl + "lov/getlov/10",
+                    url: apiUrl + "lov/getlov/0",
                     type: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
@@ -308,7 +307,31 @@ var fuLib = {
             );
         },
 
-        getLovCompanyGovtCodes: function () {
+        getDepartments: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/1",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOfficeTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/2",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getCompanyGovtNos: function () {
             return (
                 $.ajax({
                     url: apiUrl + "lov/getlov/3",
@@ -320,6 +343,89 @@ var fuLib = {
             );
         },
 
+        getUserTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/4",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOrderTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/5",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOrderStatuses: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/6",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getPOInternalDetailTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/7",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getJobCardStatuses: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/8",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getContractTypes: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/9",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getPersonGovtNos: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/10",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
     },
 
     gloc: {
@@ -399,18 +505,6 @@ var fuLib = {
             );
         },
 
-        getAllCode: function (suppId) {
-            return (
-                $.ajax({
-                    url: apiUrl + "supplier/code/getall/" + suppId,
-                    type: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + token
-                    }
-                })
-            );
-        },
-
         getAllOffice: function (suppId) {
             return (
                 $.ajax({
@@ -462,11 +556,92 @@ var fuLib = {
             );
         },
 
-        addCode: function (code) {
+        addOffice: function (code) {
             return (
                 $.ajax({
-                    url: apiUrl + "supplier/code/add",
+                    url: apiUrl + "supplier/office/add",
                     data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        addPerson: function (code) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/person/add",
+                    data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
+    },
+
+    company: {
+
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllOffice: function (compId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/office/getall/" + compId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllPerson: function (offId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/person/getall/" + offId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (company) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/add",
+                    data: JSON.stringify(company),
                     type: "POST",
                     contentType: "application/json",
                     dataType: "json",
@@ -480,7 +655,7 @@ var fuLib = {
         addOffice: function (code) {
             return (
                 $.ajax({
-                    url: apiUrl + "supplier/office/add",
+                    url: apiUrl + "company/office/add",
                     data: JSON.stringify(code),
                     type: "POST",
                     contentType: "application/json",

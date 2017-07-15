@@ -189,7 +189,7 @@
                 </div>
                 <div class="mb-footer">
                     <div class="pull-right">
-                        <a href="login.html" class="btn btn-success btn-lg">Yes</a>
+                        <a href="/home/login" class="btn btn-success btn-lg">Yes</a>
                         <button class="btn btn-default btn-lg mb-control-close">No</button>
                     </div>
                 </div>
@@ -247,7 +247,8 @@
     <script type="text/javascript" src="~/js/style.js"></script>
 
     <script type="text/javascript">
-        $(function() {
+
+        $(function () {
 
             if (fuLib.user.jwtToken == null) {
                 window.location.replace("/home/login");

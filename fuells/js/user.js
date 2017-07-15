@@ -1,3 +1,5 @@
+"use strict";
+
 var userToggleRow = true;
 
 //CALLED FROM _LAYOUT2
@@ -95,12 +97,12 @@ function doUser(crPage) {
     });
 
     //fill PERSON GOVT CODES
-    fuLib.lov.getLovPersonGovtCodes().success(function (data, status, xhr) {
-        fillUl('#ulGovtCode', data);
+    fuLib.lov.getPersonGovtNos().success(function (data, status, xhr) {
+        fillUl('#ulGovtNo', data);
 
     }).error(function (xhr, status, error) {
-        //lov.getLovPersonGovtCodes failed
-        handleError('lov.getLovPersonGovtCodes', xhr, status, error);
+        //lov.getPersonGovtNos failed
+        handleError('lov.getPersonGovtNos', xhr, status, error);
     });
 
     //ADDRESS COUNTRY dropdown change event
@@ -217,21 +219,21 @@ function doUser(crPage) {
                 $("#txtTwitter").val(user.person.twitter);
                 $("#txtSkype").val(user.person.skype);
 
-                //$("#selGovtCode option[value='" + user.person.lovGovtNo + "']").prop("selected", true);
-                //$("#selGovtCode").selectpicker('refresh');
+                //$("#selGovtNo option[value='" + user.person.lovGovtNo + "']").prop("selected", true);
+                //$("#selGovtNo").selectpicker('refresh');
 
-                $("#ulGovtCode li").each(function () {
+                $("#ulGovtNo li").each(function () {
 
                     var a = $(this).find('a');
 
                     if ($(a).attr('href').search(new RegExp(user.person.lovGovtNo, "i")) < 0) {
-                        $("#ulGovtCodeSpan").text($(this).text());
+                        $("#ulGovtNoSpan").text($(this).text());
                         return false;
                     }
                 });
 
-                $("#ulGovtCodeId").val(user.person.lovGovtNo);
-                $("#txtGovtCode").val(user.person.govtNo);
+                $("#ulGovtNoId").val(user.person.lovGovtNo);
+                $("#txtGovtNo").val(user.person.govtNo);
 
                 $("#txtDateBirth").val('');
                 $("#txtDateAnniversary").val('');
@@ -446,8 +448,8 @@ function doUser(crPage) {
             twitter: $("#txtTwitter").val(),
             skype: $("#txtSkype").val(),
             address: null,
-            lovGovtNo: $("#ulGovtCodeId").val(),
-            govtNo: $("#txtGovtCode").val(),
+            lovGovtNo: $("#ulGovtNoId").val(),
+            govtNo: $("#txtGovtNo").val(),
             photo: '',
             dateBirth: $("#txtDateBirth").val(),
             dateAnniversary: $("#txtDateAnniversary").val(),
@@ -772,7 +774,7 @@ function userShowAccess(userId) {
 
             $(data).each(function (i, item) {
 
-                var sRow = '<tr><td><span onclick="selectAllOptions(' + i + ');">{0}</span><input type="hidden" value="' + item.pageCode + '" /><input type="hidden" value="' + item.id + '" /></td>';
+                var sRow = '<tr><td><span onclick="userSelectAllOptions(' + i + ');">{0}</span><input type="hidden" value="' + item.pageCode + '" /><input type="hidden" value="' + item.id + '" /></td>';
                 sRow += '<td><label class="switch switch-small"><input type="checkbox" {1} value="{2}" /><span></span></label></td>';
                 sRow += '<td><label class="switch switch-small"><input type="checkbox" {3} value="{4}" /><span></span></label></td>';
                 sRow += '<td><label class="switch switch-small"><input type="checkbox" {5} value="{6}" /><span></span></label></td>';
@@ -847,8 +849,8 @@ function userClearEditPanel() {
     $("#txtFacebook").val('');
     $("#txtTwitter").val('');
     $("#txtSkype").val('');
-    $("#ulGovtCodeId").val('');
-    $("#txtGovtCode").val('');
+    $("#ulGovtNoId").val('');
+    $("#txtGovtNo").val('');
     $("#txtDateBirth").val('');
     $("#txtDateAnniversary").val('');
     $("input[name=iradioMStatus]:checked", "#frmPerson").val('0');

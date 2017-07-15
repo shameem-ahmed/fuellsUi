@@ -1,3 +1,5 @@
+"use strict";
+
 //CALLED FROM _LAYOUT2
 function doCustomer(crPage) {
     
@@ -37,15 +39,6 @@ function doCustomer(crPage) {
     }).error(function (xhr, status, error) {
         //gloc.getCountries failed
         handleError('gloc.getCountries', xhr, status, error);
-    });
-
-    //fill PERSON GOVT CODES
-    fuLib.lov.getLovPersonGovtCodes().success(function (data, status, xhr) {
-        fillLov('#selGovtCode', data);
-
-    }).error(function (xhr, status, error) {
-        //lov.getLovPersonGovtCodes failed
-        handleError('lov.getLovPersonGovtCodes', xhr, status, error);
     });
 
     //ADDRESS COUNTRY dropdown change event

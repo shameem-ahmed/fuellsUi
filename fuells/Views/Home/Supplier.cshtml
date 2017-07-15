@@ -5,38 +5,33 @@
 <input type="hidden" id="hidSelSupplier" value="000" />
 
 <ul class="breadcrumb">
-    <li><a href="#">Home</a></li>          
-    <li class="active">Suppliers</li>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Company</a></li>
+    <li class="active">Supplier</li>
 </ul>
 <!-- END BREADCRUMB -->
-<!-- PAGE TITLE -->
-<div class="page-title">
-    <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
-</div>
-<!-- END PAGE TITLE -->
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap">
     <!-- PAGE CONTENT - BEGINS -->
     <div class="row" id="divList">
-
-        <!-- SUPPLIER TABLE, GOVT CODES, OFFICE & OFF PERSONS -->
         <div class="col-md-8" id="divTable">
-
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> Supplier</h2>
+            </div>
             <div class="panel panel-default tabs">
                 <ul class="nav nav-tabs" role="tablist">
                     <li id="tabSupplier" class="active"><a href="#tab-supplier" role="tab" data-toggle="tab">Supplier</a></li>
-                    <li id="tabGovcode"><a href="#tab-govcode" role="tab" data-toggle="tab">GovCode</a></li>
                     <li id="tabOffice"><a href="#tab-office" role="tab" data-toggle="tab">Office</a></li>
-                    <li id="tabPerson"><a href="#tab-person" role="tab" data-toggle="tab">Person</a></li>
+                    <li id="tabPeople"><a href="#tab-people" role="tab" data-toggle="tab">People</a></li>
                 </ul>
                 <div class="panel-body tab-content">
-                    <!-- SUPPLIER TABLE -->
                     <div class="tab-pane active" id="tab-supplier">
+                        <!--SUPPLIER TABLE-->
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <button id="btnSuppNew" type="button" class="btn btn-primary">Add Supplier</button>
-                                <button id="btnSuppEdit" type="button" class="btn btn-info">Edit Supplier</button>
-                                <button id="btnSuppDelete" type="button" class="btn btn-danger">Delete Supplier</button>
+                                <button id="btnSuppNew" type="button" class="btn btn-primary">New Supplier</button>
+                                <button id="btnSuppEdit" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnSuppDelete" type="button" class="btn btn-danger">Delete</button>
                                 <ul class="panel-controls">
                                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                                     <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
@@ -59,39 +54,14 @@
                             </div>
                         </div>
                     </div>
-                    <!-- GOVT CODES -->
-                    <div class="tab-pane" id="tab-govcode">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <button id="btnCodeNew" type="button" class="btn btn-primary">New Code</button>
-                                <button id="btnCodeEdit" type="button" class="btn btn-info">Edit Code</button>
-                                <button id="btnCodeDelete" type="button" class="btn btn-danger">Delete Code</button>
-                                <ul class="panel-controls">
-                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                </ul>
-                            </div>
-
-                            <div class="panel-body">
-                                <table class="table DataTable" id="tblCode">
-                                    <thead>
-                                        <tr>
-                                            <th width="20%">Govt Code</th>
-                                            <th width="15%">Type</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- OFFICES  -->
                     <div class="tab-pane" id="tab-office">
-                        <div class="panel panel-primary">
+                        <!--OFFICE TABLE-->
+                        <div class="panel panel-info">
                             <div class="panel-heading">
                                 <button id="btnOffNew" type="button" class="btn btn-primary">New Office</button>
-                                <button id="btnOffEdit" type="button" class="btn btn-info">Edit Office</button>
-                                <button id="btnOffDelete" type="button" class="btn btn-danger">Delete Office</button>
+                                <button id="btnOffEdit" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnOffDelete" type="button" class="btn btn-danger">Delete</button>
+                             
                                 <ul class="panel-controls">
                                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                                     <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
@@ -103,7 +73,37 @@
                                     <thead>
                                         <tr>
                                             <th width="20%">Office title</th>
+                                            <th width="20%">Address</th>
+                                            <th width="20%">Email</th>
                                             <th width="20%">Phone</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>                      
+                    </div>
+                    <div class="tab-pane" id="tab-people">
+                        <!--PERSON TABLE-->
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <button id="btnPersonNew" type="button" class="btn btn-primary">New Person</button>
+                                <button id="btnPersonEdit" type="button" class="btn btn-info">Edit</button>
+                                <button id="btnPersonDelete" type="button" class="btn btn-danger">Delete</button>
+                          
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="panel-body">
+                                <table class="table DataTable" id="tblPerson">
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Name</th>
+                                            <th width="20%">Manager</th>
+                                            <th width="20%">Desig</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -111,76 +111,82 @@
                             </div>
                         </div>
                     </div>
-                    <!-- OFF PERSONS -->
-                    <div class="tab-pane" id="tab-person">
-                        <div class="col-md-12">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <button id="btnPersonNew" type="button" class="btn btn-primary">New Person</button>
-                                    <button id="btnPersonEdit" type="button" class="btn btn-info">Edit Person</button>
-                                    <button id="btnPersonDelete" type="button" class="btn btn-danger">Delete Person</button>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="panel-body">
-                                    <table class="table DataTable" id="tblPerson">
-                                        <thead>
-                                            <tr>
-                                                <th width="20%">Name</th>
-                                                <th width="20%">Phone</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-
         </div>
 
-        <!--SUPPLIER EDIT PANELS -->
+        <!-- UPDATE PANELS -->
         <div class="col-md-4" id="divUpdate">
-
+            <!-- SUPPLIER PANEL -->
             <div class="panel panel-default" id="divEditSupplier">
+                <div class="panel-heading">
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Supplier details</h3>
+                </div>
                 <div class="panel-body">
-                    <h4>Supplier details</h4>
-                    <!-- SUPPLIER form -->
                     <form class="form" action="#" role="form" id="frmSupplier">
-
-                        <div class="form-group">
-                            <input type="text" id="txtName" class="form-control" placeholder="Supplier Name" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtCode" class="form-control" placeholder="Code" />
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                                <input type="text" id="txtWebsite" class="form-control" placeholder="Website" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtFax" class="form-control" placeholder="Fax" />
-                        </div>
+                        <table class="tableEdit" border="0">
+                            <tr>
+                                <td colspan="2" class="labelDanger">Supplier name /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtName" class="form-control" placeholder="Supplier Name" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="labelPrimary">Supplier code /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtCode" class="form-control" placeholder="Code" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                        <input type="text" id="txtWebsite" class="form-control" placeholder="Website" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">Phone /</td>
+                                <td class="labelPrimary">Fax /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtFax" class="form-control" placeholder="Fax" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span id="ulSuppGovtNoSpan">Action </span><span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" id="ulSuppGovtNo"></ul>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Govt Code" id="txtSuppGovtNo">
+                                    </div>
+                                    <input type="hidden" class="form-control" id="ulSuppGovtNoId">
+                                </td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
                 <div class="panel-footer">
@@ -189,66 +195,87 @@
                 </div>
             </div>
 
-            <div class="panel panel-default" id="divEditCode">
-                <div class="panel-body">
-                    <h4>Code details</h4>
-                    <!-- GOVT CODE form -->
-                    <form class="form" action="#" role="form" id="frmCode">
-                        <div class="form-group">
-                            <select id="selLovGCode" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtGCode" class="form-control" placeholder="Govt code" />
-                        </div>
-                    </form>
-                </div>
-                <div class="panel-footer">
-                    <button id="btnCodeUpdateCancel" class="btn btn-link pull-right">Cancel</button>
-                    <button id="btnCodeUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
-                </div>
-            </div>
-
+            <!-- OFFICE PANEL -->
             <div class="panel panel-default" id="divEditOffice">
+                <div class="panel-heading">
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Office details</h3>
+                </div>
                 <div class="panel-body">
-                    <h4>Office details</h4>
-                    <!-- OFFICE form -->
                     <form class="form" action="#" role="form" id="frmOffice">
-                        <div class="form-group">
-                            <input type="text" id="txtTitle" class="form-control" placeholder="Office title" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
-                        </div>
-                        <div class="form-group">
-                            <select id="selCountry" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <select id="selState" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <select id="selCity" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <select id="selArea" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" id="txtEmailO" class="form-control" placeholder="Email Address" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" id="txtPhoneO" class="form-control" placeholder="Phone" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtFaxO" class="form-control" placeholder="Fax" />
-                        </div>
+
+                        <table class="tableEdit" border="0">
+                            <tr>
+                                <td colspan="2" class="labelDanger">Office title /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtTitle" class="form-control" placeholder="Office title" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="labelPrimary">Address 1 /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="labelPrimary">Address 2 /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">Country /</td>
+                                <td class="labelPrimary">State /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="selCountry" class="form-control select"></select>
+                                </td>
+                                <td>
+                                    <select id="selState" class="form-control select"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">City /</td>
+                                <td class="labelPrimary">Area /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="selCity" class="form-control select"></select>
+                                </td>
+                                <td>
+                                    <select id="selArea" class="form-control select"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" id="txtEmailO" class="form-control" placeholder="Email Address" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">Phone /</td>
+                                <td class="labelPrimary">Fax /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" id="txtPhoneO" class="form-control" placeholder="Phone" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtFaxO" class="form-control" placeholder="Fax" />
+                                </td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
                 <div class="panel-footer">
@@ -257,10 +284,13 @@
                 </div>
             </div>
 
+            <!-- PERSON PANEL -->
             <div class="panel panel-default" id="divEditPerson">
+                <div class="panel-heading">
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> People details</h3>
+                </div>
                 <div class="panel-body">
                     <h4>Person details</h4>
-                    <!-- PERSON form -->
                     <form class="form" action="#" role="form" id="frmPerson">
                         <div class="form-group">
                             <input type="text" class="form-control" id="txtNameP" placeholder="Full Name" />
@@ -299,22 +329,14 @@
                             <div class="input-group">
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span id="ulGovtCodeSpan">Action </span><span class="caret"></span>
+                                        <span id="ulGovtNoSpan">Action </span><span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu" id="ulGovtCode"></ul>
+                                    <ul class="dropdown-menu" id="ulGovtNo"></ul>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Govt Code" id="txtGovtCode">
+                                <input type="text" class="form-control" placeholder="Govt Code" id="txtGovtNo">
                             </div>
-                            <input type="hidden" class="form-control" id="ulGovtCodeId">
+                            <input type="hidden" class="form-control" id="ulGovtNoId">
                         </div>
-
-                        @*<div class="form-group">
-                                <select id="selGovtCode" class="form-control select"></select>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
-                                    <input id="txtGovtCode" type="text" class="form-control" placeholder="Govt Code" />
-                                </div>
-                            </div>*@
                         <div class="form-group">
                             <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
                             <input id="filePhoto" type="file" class="fileinput" name="filename1" />
@@ -354,7 +376,6 @@
                     <button id="btnPersonUpdateSave" class="btn btn-primary pull-right">Save Changes <span class="fa fa-floppy-o fa-right"></span></button>
                 </div>
             </div>
-
         </div>
     </div>
     <!-- PAGE CONTENT - ENDS -->
