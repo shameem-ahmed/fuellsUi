@@ -28,3 +28,14 @@
 .labelSuccess {
     color: #95b75d;
 }
+
+.tableEdit {
+    width: 100%;
+    text-align: right;
+}
+
+.tableEdit td {
+    padding: 5px;
+    text-align: right;
+
+}

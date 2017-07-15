@@ -123,46 +123,69 @@
                 </div>
                 <div class="panel-body">
                     <form class="form" action="#" role="form" id="frmSupplier">
-
-                        <div class="form-group">
-                            <input type="text" id="txtName" class="form-control" placeholder="Supplier Name" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtCode" class="form-control" placeholder="Code" />
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                                <input type="text" id="txtWebsite" class="form-control" placeholder="Website" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtFax" class="form-control" placeholder="Fax" />
-                        </div>
-                        <div class="form-group" data-toggle="tooltip" data-placement="left" title="Govt Code">
-                            <div class="input-group">
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span id="ulSuppGovtNoSpan">Action </span><span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" id="ulSuppGovtNo"></ul>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Govt Code" id="txtSuppGovtNo">
-                            </div>
-                            <input type="hidden" class="form-control" id="ulSuppGovtNoId">
-                        </div>
+                        <table class="tableEdit" border="0">
+                            <tr>
+                                <td colspan="2" class="labelDanger">Supplier name /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtName" class="form-control" placeholder="Supplier Name" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="labelPrimary">Supplier code /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtCode" class="form-control" placeholder="Code" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                        <input type="text" id="txtWebsite" class="form-control" placeholder="Website" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">Phone /</td>
+                                <td class="labelPrimary">Fax /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtFax" class="form-control" placeholder="Fax" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span id="ulSuppGovtNoSpan">Action </span><span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" id="ulSuppGovtNo"></ul>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Govt Code" id="txtSuppGovtNo">
+                                    </div>
+                                    <input type="hidden" class="form-control" id="ulSuppGovtNoId">
+                                </td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
                 <div class="panel-footer">
@@ -177,44 +200,81 @@
                     <h3><span class="fa fa-arrow-circle-o-left"></span> Office details</h3>
                 </div>
                 <div class="panel-body">
-                    <h4>Office details</h4>
                     <form class="form" action="#" role="form" id="frmOffice">
-                        <div class="form-group">
-                            <input type="text" id="txtTitle" class="form-control" placeholder="Office title" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
-                        </div>
-                        <div class="form-group">
-                            <select id="selCountry" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <select id="selState" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <select id="selCity" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <select id="selArea" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" id="txtEmailO" class="form-control" placeholder="Email Address" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" id="txtPhoneO" class="form-control" placeholder="Phone" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txtFaxO" class="form-control" placeholder="Fax" />
-                        </div>
+
+                        <table class="tableEdit" border="0">
+                            <tr>
+                                <td colspan="2" class="labelDanger">Office title /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtTitle" class="form-control" placeholder="Office title" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="labelPrimary">Address 1 /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="labelPrimary">Address 2 /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">Country /</td>
+                                <td class="labelPrimary">State /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="selCountry" class="form-control select"></select>
+                                </td>
+                                <td>
+                                    <select id="selState" class="form-control select"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">City /</td>
+                                <td class="labelPrimary">Area /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="selCity" class="form-control select"></select>
+                                </td>
+                                <td>
+                                    <select id="selArea" class="form-control select"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" id="txtEmailO" class="form-control" placeholder="Email Address" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">Phone /</td>
+                                <td class="labelPrimary">Fax /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" id="txtPhoneO" class="form-control" placeholder="Phone" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtFaxO" class="form-control" placeholder="Fax" />
+                                </td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
                 <div class="panel-footer">
