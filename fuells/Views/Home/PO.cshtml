@@ -1,5 +1,58 @@
 ﻿@{
-    ViewBag.Title = "Purchae Order";
+    ViewBag.Title = "Purchase Order";
 }
-
 <input type="hidden" id="hidSelMenu" value="liPagePO" />
+<input type="hidden" id="hidSelUser" value="000" />
+
+<ul class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Customer</a></li>
+    <li class="active">Purchase Order</li>
+</ul>
+
+<div class="page-content-wrap">
+    <!--USER TABLE -->
+    <div class="row" id="divList">
+        <div class="col-md-6" id="divTable">
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <button id="btnPONew" type="button" class="btn btn-primary">New PO</button>
+                    <button id="btnPOEdit" type="button" class="btn btn-info">Edit</button>
+                    <button id="btnPODelete" type="button" class="btn btn-danger">Delete</button>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                    </ul>
+                </div>
+
+                <div class="panel-body">
+                    <table class="table DataTable" id="tblPO">
+                        <thead>
+                            <tr>
+                                <th width="10%">Status</th>
+                                <th width="20%">Invoice #</th>
+                                <th width="30%">Customer</th>
+                                <th width="15%">Order Date</th>
+                                <th width="15%">Delivery Date</th>
+                                <th width="10%">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!--LOV UPDATE PANEL -->
+        <div class="col-md-6">
+            <iframe src="/pos/po.pdf" style="width:100%; height:800px;"></iframe>
+        </div>
+    </div>
+
+    <div id="divUpdate">
+
+    </div>
+</div>

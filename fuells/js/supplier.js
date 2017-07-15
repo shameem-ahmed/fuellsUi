@@ -147,6 +147,8 @@ function doSupplier(crPage) {
         $("#divTable").removeClass("col-md-12").addClass("col-md-8");
         $("#divUpdate").show();
 
+        onresize();
+
     });
 
     //NEW SUPPLIER-SAVE CHANGES click event
