@@ -283,11 +283,38 @@ var fuLib = {
             );
         },
 
+        getLov: function (type) {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/getlov/" + type,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
         getOne: function(id) {
             return (
                 $.ajax({
                     url: apiUrl + "lov/getone/" + id,
                     type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (lov) {
+            return (
+                $.ajax({
+                    url: apiUrl + "lov/add",
+                    data: JSON.stringify(lov),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
                     headers: {
                         "Authorization": "Bearer " + token
                     }
