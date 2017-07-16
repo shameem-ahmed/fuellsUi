@@ -26,7 +26,7 @@
                 </ul>
                 <div class="panel-body tab-content">
                     <div class="tab-pane active" id="tab-company">
-                        <!--COMPANY TABLE-->
+                        <!--COMPANY  TABLE-->
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <button id="btnCompNew" type="button" class="btn btn-primary">New Company</button>
@@ -102,7 +102,8 @@
                                     <thead>
                                         <tr>
                                             <th width="20%">Name</th>
-                                            <th width="20%">Phone</th>
+                                            <th width="20%">Manager</th>
+                                            <th width="20%">Desig</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -116,55 +117,76 @@
 
         <!-- UPDATE PANELS -->
         <div class="col-md-4" id="divUpdate">
-            <!-- COMPANY PANEL -->
+            <!-- COMPANY  PANEL -->
             <div class="panel panel-default" id="divEditCompany">
                 <div class="panel-heading">
-                    <h3><span class="fa fa-arrow-circle-o-left"></span> Company details</h3>
+                    <h3><span class="fa fa-arrow-circle-o-left"></span> Company  details</h3>
                 </div>
                 <div class="panel-body">
                     <form class="form" action="#" role="form" id="frmCompany">
-                        <div class="form-group">
-                            <label class="labelDanger" for="txtName">Company Name /</label>
-                            <input type="text" id="txtName" class="form-control" placeholder="Company Name" />
-                        </div>
-                        <div class="form-group">
-                            <label class="labelDanger" for="txtCode">Company Code /</label>
-                            <input type="text" id="txtCode" class="form-control" placeholder="Code" />
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                                <input type="text" id="txtWebsite" class="form-control" placeholder="Website" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="txtFax">Fax /</label>
-                            <input type="text" id="txtFax" class="form-control" placeholder="Fax" />
-                        </div>
-                        <div class="form-group" data-toggle="tooltip" data-placement="left" title="Govt Code">
-                            <div class="input-group">
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span id="ulCompGovtNoSpan">Action </span><span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" id="ulCompGovtNo"></ul>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Govt Code" id="txtCompGovtNo">
-                            </div>
-                            <input type="hidden" class="form-control" id="ulCompGovtNoId">
-                        </div>
+                        <table class="tableEdit" border="0">
+                            <tr>
+                                <td colspan="2" class="labelDanger">Company name /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtName" class="form-control" placeholder="Company Name" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="labelPrimary">Customer code /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtCode" class="form-control" placeholder="Code" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                        <input type="text" id="txtWebsite" class="form-control" placeholder="Website" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" id="txtEmail" class="form-control" placeholder="Email Address" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">Phone /</td>
+                                <td class="labelPrimary">Fax /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" id="txtPhone" class="form-control" placeholder="Phone" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtFax" class="form-control" placeholder="Fax" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span id="ulCompGovtNoSpan">Action </span><span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" id="ulCompGovtNo"></ul>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Govt Code" id="txtCompGovtNo">
+                                    </div>
+                                    <input type="hidden" class="form-control" id="ulCompGovtNoId">
+                                </td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
                 <div class="panel-footer">
@@ -180,50 +202,80 @@
                 </div>
                 <div class="panel-body">
                     <form class="form" action="#" role="form" id="frmOffice">
-                        <div class="form-group">
-                            <label class="labelDanger" for="txtTitle">Office Title /</label>
-                            <input type="text" id="txtTitle" class="form-control" placeholder="Office title" />
-                        </div>
-                        <div class="form-group">
-                            <label for="txtAddress1">Address 1 /</label>
-                            <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
-                        </div>
-                        <div class="form-group">
-                            <label for="txtAddress2">Address 2 /</label>
-                            <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
-                        </div>
-                        <div class="form-group">
-                            <label for="selCountry">Country /</label>
-                            <select id="selCountry" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="selState">State /</label>
-                            <select id="selState" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="selCity">City /</label>
-                            <select id="selCity" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="selArea">Area /</label>
-                            <select id="selArea" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" id="txtEmailO" class="form-control" placeholder="Email Address" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input type="text" id="txtPhoneO" class="form-control" placeholder="Phone" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="txtFaxO">Fax /</label>
-                            <input type="text" id="txtFaxO" class="form-control" placeholder="Fax" />
-                        </div>
+
+                        <table class="tableEdit" border="0">
+                            <tr>
+                                <td colspan="2" class="labelDanger">Office title /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtTitle" class="form-control" placeholder="Office title" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="labelPrimary">Address 1 /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtAddress1" class="form-control" placeholder="Address 1" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="labelPrimary">Address 2 /</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" id="txtAddress2" class="form-control" placeholder="Address 2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">Country /</td>
+                                <td class="labelPrimary">State /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="selCountry" class="form-control select"></select>
+                                </td>
+                                <td>
+                                    <select id="selState" class="form-control select"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">City /</td>
+                                <td class="labelPrimary">Area /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="selCity" class="form-control select"></select>
+                                </td>
+                                <td>
+                                    <select id="selArea" class="form-control select"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group" style="width:100%;">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" id="txtEmailO" class="form-control" placeholder="Email Address" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelPrimary">Phone /</td>
+                                <td class="labelPrimary">Fax /</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input type="text" id="txtPhoneO" class="form-control" placeholder="Phone" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtFaxO" class="form-control" placeholder="Fax" />
+                                </td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
                 <div class="panel-footer">
@@ -238,9 +290,10 @@
                     <h3><span class="fa fa-arrow-circle-o-left"></span> People details</h3>
                 </div>
                 <div class="panel-body">
+                    <h4>Person details</h4>
                     <form class="form" action="#" role="form" id="frmPerson">
                         <div class="form-group">
-                            <label class="labelDanger" for="txtNameP">Person Name /</label>
+                            <label class="labelPrimary">Full Name /</label>
                             <input type="text" class="form-control" id="txtNameP" placeholder="Full Name" />
                         </div>
                         <div class="form-group">
@@ -286,27 +339,42 @@
                             <input type="hidden" class="form-control" id="ulGovtNoId">
                         </div>
                         <div class="form-group">
-                            <label for="txtNameP">Photo /</label>
                             <img id="imgPerson" src="../assets/images/users/no-image.jpg" style="width:100px; height:100px;" />
                             <input id="filePhoto" type="file" class="fileinput" name="filename1" />
                         </div>
-
                         <div class="form-group">
-                            <label for="txtDateBirth">Birth day /</label>
                             <div class="input-group">
-                                <input type="text" id="txtDateBirth" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                <label class="check"><input id="chkPrimary" type="checkbox" class="icheckbox" />Primary</label>&nbsp;
+                                <label class="check"><input id="chkManager" type="checkbox" class="icheckbox" />Manager</label>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelPrimary">Designation /</label>
+
+                            <select id="selDesignation" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelPrimary">Department /</label>
+
+                            <select id="selDepartment" class="form-control select"></select>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+
+                                <input type="text" id="txtDateBirth" title="Date of birth" placeholder="Date of birth" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" />
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="txtDateAnniversary">Anniversary day /</label>
                             <div class="input-group">
-                                <input type="text" id="txtDateAnniversary" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
+
+                                <input type="text" id="txtDateAnniversary" title="Date of anniversary" placeholder="Date of anniversary" class="form-control datepicker" value="" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="months" />
                                 <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="selGender">Gender /</label>
+                            <label class="labelPrimary">Gender  /</label>
                             <select id="selGender" class="form-control select">
                                 <option value="0" selected="selected">Not Set</option>
                                 <option value="1">Male</option>
@@ -314,29 +382,13 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="selMStatus">Maritial Status /</label>
+                            <label class="labelPrimary">Marital status /</label>
                             <select id="selMStatus" class="form-control select">
                                 <option value="0" selected="selected">Not Set</option>
                                 <option value="1">Married</option>
                                 <option value="2">Not Married</option>
                                 <option value="3">Widow</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="selDesig">Designation /</label>
-                            <select id="selDesig" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="selDept">Department /</label>
-                            <select id="selDept" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="selContract">Contract type /</label>
-                            <select id="selContract" class="form-control select"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="selUser">Login user /</label>
-                            <select id="selUser" class="form-control select"></select>
                         </div>
                     </form>
                 </div>

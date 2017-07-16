@@ -30,7 +30,7 @@ function doSupplier(crPage) {
     });
 
     //fill PERSON GOVT CODES
-    fuLib.lov.getPersonGovtNos().success(function (data, status, xhr) {       
+    fuLib.lov.getPersonGovtNos().success(function (data, status, xhr) {
         fillUl('#ulGovtNo', data);
 
     }).error(function (xhr, status, error) {
@@ -46,6 +46,26 @@ function doSupplier(crPage) {
         //lov.getCompanyGovtNos failed
         handleError('lov.getCompanyGovtNos', xhr, status, error);
     });
+
+    //fill Designation 
+    fuLib.lov.getDesignations().success(function (data, status, xhr) {
+        fillCombo('#selDesignation', data);
+
+    }).error(function (xhr, status, error) {
+        //lov.getDesignations failed
+        handleError('lov.getDesignations', xhr, status, error);
+    });
+
+    //fill Department 
+    fuLib.lov.getDepartments().success(function (data, status, xhr) {
+        fillCombo('#selDepartment', data);
+
+    }).error(function (xhr, status, error) {
+        //lov.getDepartments failed
+        handleError('lov.getDepartments', xhr, status, error);
+    });
+
+
 
     //ADDRESS COUNTRY dropdown change event
     $('#selCountry').change(function (e) {
@@ -231,9 +251,9 @@ function doSupplier(crPage) {
             address1: $("#txtAddress1").val(),
             address2: $("#txtAddress2").val(),
             geoLoc: null,
-            email: $("#txtEmail").val(),
-            phone: $("#txtPhone").val(),
-            fax: $("#txtFax").val(),
+            email: $("#txtEmailO").val(),
+            phone: $("#txtPhoneO").val(),
+            fax: $("#txtFaxO").val(),
             supplier: selIdSupplier,
             isActive: true,
             flag: 0
@@ -336,7 +356,7 @@ function doSupplier(crPage) {
             isActive: true,
             flag: 0
         };
-       
+
         if (oPerson.name.trim().length == 0 &&
             oPerson.email.trim().length == 0 &&
             oPerson.phone.trim().length == 0 &&
@@ -355,16 +375,15 @@ function doSupplier(crPage) {
                 fuLib.person.add(oPerson).success(function (data, status, xhr) {
 
                     console.log(data);
-                    alert(data.person._id);
-                    debugger
+
 
                     var oOfficePerson = {
                         supplierOffice: selIdOffice,
                         person: data.person._id,
-                        isPrimary: false,
-                        isManager: false,
-                        LovDesignation: null,
-                        LovDepartment: null,
+                        isPrimary: $("#chkPrimary").prop('checked'),
+                        isManager: $("#chkManager").prop('checked'),
+                        LovDesignation: $('#selDesignation').val(),
+                        LovDepartment: $('#selDepartment').val(),
                         isActive: true,
                         flag: 0
                     };
@@ -435,7 +454,7 @@ function fillSupplierOffice(suppId) {
             },
             "columns": [
                 { "data": "title", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "address1", "defaultContent": "<span class='text-muted'>Not set</span>"},
+                { "data": "address1", "defaultContent": "<span class='text-muted'>Not set</span>" },
                 { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
                 { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
             ],
@@ -507,7 +526,7 @@ function fillOfficePerson(offId) {
             "columns": [
                 { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
                 { "data": "isManager", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "LovDesignation", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "LovDesignation.title", "defaultContent": "<span class='text-muted'>Not set</span>" },
             ],
         });
 
@@ -524,7 +543,7 @@ function fillOfficePerson(offId) {
                 $(this).addClass('selected');
 
                 selIdPerson = $(this).attr('id');
-                alert(selIdPerson);
+
             }
         });
 

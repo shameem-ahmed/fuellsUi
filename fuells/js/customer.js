@@ -1,45 +1,71 @@
 "use strict";
 
+var supCrTab = 0;
+var supModeUpdate = 'new';
+
+var selIdCustomers = '';
+var selIdOffice = '';
+var selIdPerson = '';
+
+var tableCustomers;
+var tableOffice;
+var tablePeople;
+
 //CALLED FROM _LAYOUT2
 function doCustomer(crPage) {
-    
-    var crTab = 0;
-    var modeUpdate = 'new';
-    var selId = '';
-    var selAdmin = false;
-   
-    $("#divAccess").hide();
+
     $("#divUpdate").hide();
 
     $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
-    //Configure DataTable
-    $("#tblCustomer").DataTable({
-        "autoWidth": false,
-        "ajax": {
-            "url": apiUrl + "customer/getall",
-            "dataSrc": "",
-            "headers": {
-                "Authorization": "Bearer " + token
-            }
-        },
-        "columns": [
-            { "data": "name", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "code", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "urlWeb", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
-        ]
-    });
+    configCustomerTable();
 
     //fill COUNTRIES
     fuLib.gloc.getCountries().success(function (data, status, xhr) {
-        fillGeoLoc('#selCountry', data);
+        fillCombo('#selCountry', data);
 
     }).error(function (xhr, status, error) {
         //gloc.getCountries failed
         handleError('gloc.getCountries', xhr, status, error);
     });
+
+    //fill PERSON GOVT CODES
+    fuLib.lov.getPersonGovtNos().success(function (data, status, xhr) {
+        fillUl('#ulGovtNo', data);
+
+    }).error(function (xhr, status, error) {
+        //lov.getPersonGovtNos failed
+        handleError('lov.getPersonGovtNos', xhr, status, error);
+    });
+
+    //fill Customer GOVT CODES
+    fuLib.lov.getCompanyGovtNos().success(function (data, status, xhr) {
+        fillUl('#ulSuppGovtNo', data);
+
+    }).error(function (xhr, status, error) {
+        //lov.getCompanyGovtNos failed
+        handleError('lov.getCompanyGovtNos', xhr, status, error);
+    });
+
+    //fill Designation 
+    fuLib.lov.getDesignations().success(function (data, status, xhr) {
+        fillCombo('#selDesignation', data);
+
+    }).error(function (xhr, status, error) {
+        //lov.getDesignations failed
+        handleError('lov.getDesignations', xhr, status, error);
+    });
+
+    //fill Department 
+    fuLib.lov.getDepartments().success(function (data, status, xhr) {
+        fillCombo('#selDepartment', data);
+
+    }).error(function (xhr, status, error) {
+        //lov.getDepartments failed
+        handleError('lov.getDepartments', xhr, status, error);
+    });
+
+
 
     //ADDRESS COUNTRY dropdown change event
     $('#selCountry').change(function (e) {
@@ -52,7 +78,7 @@ function doCustomer(crPage) {
         if (parent != '0') {
             fuLib.gloc.getStates(parent).success(function (data, status, xhr) {
                 //fill STATES
-                fillGeoLoc('#selState', data);
+                fillCombo('#selState', data);
 
             }).error(function (xhr, status, error) {
                 //gloc.getStates failed
@@ -71,7 +97,7 @@ function doCustomer(crPage) {
         if (parent != '0') {
             fuLib.gloc.getCities(parent).success(function (data, status, xhr) {
                 //fill CITIES
-                fillGeoLoc('#selCity', data);
+                fillCombo('#selCity', data);
 
             }).error(function (xhr, status, error) {
                 //gloc.getCities failed
@@ -89,7 +115,7 @@ function doCustomer(crPage) {
         if (parent != '0') {
             fuLib.gloc.getAreas(parent).success(function (data, status, xhr) {
                 //fill AREAS
-                fillGeoLoc('#selArea', data);
+                fillCombo('#selArea', data);
 
             }).error(function (xhr, status, error) {
                 //gloc.getAreas failed
@@ -98,66 +124,13 @@ function doCustomer(crPage) {
         }
     });
 
-    $('#tblCustomer').on('draw.dt', function () {
-        onresize();
-    });
+    //BTN CUSTOMER NEW click event
+    $("#btnCusNew").click(function () {
+        supModeUpdate = 'new';
 
-    //TABLE ROW click event
-    $("#tblCustomer tbody").on('click', 'tr', function () {
-
-        //console.log($(this));
-
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        }
-        else {
-            var table = $('#tblCustomer').DataTable();
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-
-            selId = $(this).find('input[type=hidden]').eq(0).val();
-            selAdmin = $(this).find('input[type=hidden]').eq(1).val();
-
-            $("#btnCustomerAccess").prop('disabled', selAdmin == "true");
-
-
-        }
-    });
-
-    //chkAdmin check event
-    $('#chkAdmin').on('ifChecked', function (event) {
-        $('#chkAdminText').text("Yes");
-    });
-
-    //chkAdmin un-check event
-    $('#chkAdmin').on('ifUnchecked', function (event) {
-        $('#chkAdminText').text("No");
-    });
-
-    //BTN Customer NEW click event
-    $("#btnCustNew").click(function () {
-        modeUpdate = 'new';
-
-        clearEditPanel();
+        customerClearEditPanel();
 
         $("#divEditCustomer").show();
-        $("#divEditCode").hide();
-        $("#divEditOffice").hide();
-        $("#divEditPerson").hide();
-
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
-        $("#divUpdate").show();
-
-    });
-
-    //BTN CODE NEW click event
-    $("#btnCodeNew").click(function () {
-        modeUpdate = 'new';
-
-        clearEditPanel();
-
-        $("#divEditCustomer").hide();
-        $("#divEditCode").show();
         $("#divEditOffice").hide();
         $("#divEditPerson").hide();
 
@@ -168,12 +141,11 @@ function doCustomer(crPage) {
 
     //BTN OFFICE NEW click event
     $("#btnOffNew").click(function () {
-        modeUpdate = 'new';
+        supModeUpdate = 'new';
 
-        clearEditPanel();
+        customerClearEditPanel();
 
         $("#divEditCustomer").hide();
-        $("#divEditCode").hide();
         $("#divEditOffice").show();
         $("#divEditPerson").hide();
 
@@ -184,12 +156,11 @@ function doCustomer(crPage) {
 
     //BTN PERSON NEW click event
     $("#btnPersonNew").click(function () {
-        modeUpdate = 'new';
+        supModeUpdate = 'new';
 
-        clearEditPanel();
+        customerClearEditPanel();
 
         $("#divEditCustomer").hide();
-        $("#divEditCode").hide();
         $("#divEditOffice").hide();
         $("#divEditPerson").show();
 
@@ -198,268 +169,92 @@ function doCustomer(crPage) {
 
     });
 
-    //BTN Customer EDIT click event
-    $("#btnCustomerEdit").click(function () {
-        modeUpdate = 'edit';
-
-        clearEditPanel();
-
-        //load Customer details
-        fuLib.Customer.getOne(selId).success(function (Customer, status, xhr) {
-
-            console.log(Customer);
-
-            $("#txtLogin").val(Customer.name);
-            $("#txtPwd1").val('');
-            $("#txtPwd2").val('');
-
-            if (Customer.isAdmin == true) {
-                $("#chkAdmin").iCheck('check');
-            }
-            else {
-                $("#chkAdmin").iCheck('uncheck');
-            }
-
-            if (Customer.person != null) {
-
-                $("#txtName").val(Customer.person.name);
-                $("#txtEmail").val(Customer.person.email);
-                $("#txtPhone").val(Customer.person.phone);
-                $("#txtFacebook").val(Customer.person.facebook);
-                $("#txtTwitter").val(Customer.person.twitter);
-                $("#txtSkype").val(Customer.person.skype);
-
-                $("#selGovtCode option[value='" + Customer.person.lovGovtNo + "']").prop("selected", true);
-                $("#selGovtCode").selectpicker('refresh');
-
-
-                $("#txtGovtCode").val(Customer.person.govtNo);
-                $("#txtDateBirth").val('');
-                $("#txtDateAnniversary").val('');
-                $("input[name=iradioMStatus]:checked", "#frmPerson").val('0');
-                $("input[name=iradioGender]:checked", "#frmPerson").val('0');
-
-                if (Customer.person.address != null) {
-                    $("#txtAddress1").val(Customer.person.address.address1);
-                    $("#txtAddress2").val(Customer.person.address.address2);
-
-                    alert(Customer.person.address.geoLoc);
-
-                    fuLib.gloc.getLoc(Customer.person.address.geoLoc).success(function (data, status, xhr) {
-
-                        if (data.type == 0) {
-                            //if loc is country
-                            //==================
-                            //fill COUNTRIES
-                            fuLib.gloc.getCountries().success(function (data2, status, xhr) {
-
-                                //debugger
-                                console.log(data2);
-
-                                alert(Customer.person.address.geoLoc);
-
-                                fillGeoLoc('#selCountry', data2);
-
-                                $("#selCountry").val(Customer.person.address.geoLoc);
-                                $($("#selCountry")).selectpicker('refresh');
-
-                            }).error(function (xhr, status, error) {
-                                //gloc.getCountries failed
-                                handleError('gloc.getCountries', xhr, status, error);
-                            });
-
-                        }
-                        else if (data.type == 1) {
-                            //if loc is state
-                            //==================
-                            //fill COUNTRIES
-                            fuLib.gloc.getCountries().success(function (data3, status, xhr) {
-                                fillGeoLoc('#selCountry', data3);
-
-                                $("#selCountry").val(data.parent);
-                                $($("#selCountry")).selectpicker('refresh');
-
-                                //fill STATES
-                                fuLib.gloc.getStates(data.parent).success(function (data4, status, xhr) {
-                                    fillGeoLoc('#selState', data4);
-
-                                    $("#selState").val(Customer.person.address.geoLoc);
-                                    $($("#selState")).selectpicker('refresh');
-
-                                }).error(function (xhr, status, error) {
-                                    //gloc.getStates failed
-                                    handleError('gloc.getStates', xhr, status, error);
-                                });
-
-                            }).error(function (xhr, status, error) {
-                                //gloc.getCountries failed
-                                handleError('gloc.getCountries', xhr, status, error);
-                            });
-
-                        }
-                        else if (data.type == 2) {
-                            //if loc is city
-                            //==================
-                            //fill CITIES
-                            fuLib.gloc.getCities(data.parent).success(function (data5, status, xhr) {
-                                fillGeoLoc('#selCity', data5);
-
-                                $("#selCity").val(Customer.person.address.geoLoc);
-                                $($("#selCity")).selectpicker('refresh');
-
-                                //find STATE loc
-                                fuLib.gloc.getLoc(data.parent).success(function (data6, status, xhr) {
-
-                                    //fill STATES
-                                    fuLib.gloc.getStates(data6.parent).success(function (data7, status, xhr) {
-                                        fillGeoLoc('#selState', data7);
-
-                                        $("#selState").val(data6._id);
-                                        $($("#selState")).selectpicker('refresh');
-
-                                        //fill COUNTRIES
-                                        fuLib.gloc.getCountries().success(function (data2, status, xhr) {
-                                            fillGeoLoc('#selCountry', data2);
-
-                                            $("#selCountry").val(data6.parent);
-                                            $($("#selCountry")).selectpicker('refresh');
-
-                                        }).error(function (xhr, status, error) {
-                                            //gloc.getCountries failed
-                                            handleError('gloc.getCountries', xhr, status, error);
-                                        });
-
-                                    }).error(function (xhr, status, error) {
-                                        //gloc.getStates failed
-                                        handleError('gloc.getStates', xhr, status, error);
-                                    });
-
-                                });
-
-                            }).error(function (xhr, status, error) {
-                                //gloc.getStates failed
-                                handleError('gloc.getStates', xhr, status, error);
-                            });
-                        }
-                        else if (data.type == 3) {
-                            //if loc is area
-                            //==================
-                            //fill AREAS
-                            fuLib.gloc.getAreas(data.parent).success(function (data8, status, xhr) {
-                                fillGeoLoc('#selArea', data8);
-
-                                $("#selArea").val(Customer.person.address.geoLoc);
-                                $($("#selArea")).selectpicker('refresh');
-
-                                //find CITY loc
-                                fuLib.gloc.getLoc(data.parent).success(function (data9, status, xhr) {
-
-                                    //fill CITIES
-                                    fuLib.gloc.getCities(data9.parent).success(function (data10, status, xhr) {
-                                        fillGeoLoc('#selCity', data10);
-
-                                        $("#selCity").val(data9._id);
-                                        $($("#selCity")).selectpicker('refresh');
-
-                                        //find STATE loc
-                                        fuLib.gloc.getLoc(data9.parent).success(function (data11, status, xhr) {
-
-                                            //fill STATES
-                                            fuLib.gloc.getStates(data11.parent).success(function (data12, status, xhr) {
-                                                fillGeoLoc('#selState', data12);
-
-                                                $("#selState").val(data11._id);
-                                                $($("#selState")).selectpicker('refresh');
-
-                                                //fill COUNTRIES
-                                                fuLib.gloc.getCountries().success(function (data13, status, xhr) {
-                                                    fillGeoLoc('#selCountry', data13);
-
-                                                    $("#selCountry").val(data11.parent);
-                                                    $($("#selCountry")).selectpicker('refresh');
-
-                                                }).error(function (xhr, status, error) {
-                                                    //gloc.getCountries failed
-                                                    handleError('gloc.getCountries', xhr, status, error);
-                                                });
-
-                                            }).error(function (xhr, status, error) {
-                                                //gloc.getStates failed
-                                                handleError('gloc.getStates', xhr, status, error);
-                                            });
-                                        });
-                                    }).error(function (xhr, status, error) {
-                                        //gloc.getStates failed
-                                        handleError('gloc.getStates', xhr, status, error);
-                                    });
-                                });
-                            }).error(function (xhr, status, error) {
-                                //gloc.getStates failed
-                                handleError('gloc.getStates', xhr, status, error);
-                            });
-                        }
-                    }).error(function (xhr, status, error) {
-                        //gloc.getLoc failed
-                        handleError('gloc.getLoc', xhr, status, error);
-                    });
-                }
-            }
-
-        }).error(function (xhr, status, error) {
-            //Customer.getOne failed
-            handleError('Customer.getOne', xhr, status, error);
-        });
-
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
-        $("#divUpdate").show();
-
-    });
-
-    //BTN Customer ACCESS click event
-    $("#btnCustomerAccess").click(function () {
-        showAccess(selId);
-    });
-
-    //NEW Customer-SAVE CHANGES click event
-    $("#btnCustomerUpdateSave").click(function () {
+    //NEW CUSTOMER-SAVE CHANGES click event
+    $("#btnCusUpdateSave").click(function () {
 
         var isEmptyCustomer = false;
-        var isEmptyPerson = false;
-        var isEmptyAddress = false;
-
+        debugger;
         var oCustomer = {
-            name: $("#txtLogin").val(),
-            pwd: $("#txtPwd1").val(),
-            person: null,
-            dateExpiry: '31-Dec-2050',
-            isActive: true,
-            flag: 0,
-            isAdmin: $("#chkAdmin").prop('checked'),
-        };
-
-        var oPerson = {
+            code: $("#txtCode").val(),
             name: $("#txtName").val(),
+            urlWeb: $("#txtWebsite").val(),
             email: $("#txtEmail").val(),
             phone: $("#txtPhone").val(),
-            facebook: $("#txtFacebook").val(),
-            twitter: $("#txtTwitter").val(),
-            skype: $("#txtSkype").val(),
-            address: null,
-            lovGovtNo: $("#selGovtCode").val(),
-            govtNo: $("#txtGovtCode").val(),
-            photo: '',
-            dateBirth: $("#txtDateBirth").val(),
-            dateAnniversary: $("#txtDateAnniversary").val(),
-            maritalStatus: $("input[name=iradioMStatus]:checked", "#frmPerson").val(),
-            gender: $("input[name=iradioGender]:checked", "#frmPerson").val(),
+            fax: $("#txtFax").val(),
+            logo: '',
+            lovGovtNo: $("#ulCusGovtNoId").val(),
+            govtNo: $("#txtCusGovtNo").val(),
             isActive: true,
             flag: 0
         };
 
-        var oAddress = {
+        //check if oCustomer is empty
+        if (oCustomer.code.trim().length == 0 &&
+            oCustomer.name.trim().length == 0
+            ) {
+            isEmptyCustomer = true;
+        }
+
+        if (supModeUpdate == 'new') {
+
+            if (isEmptyCustomer == true) {
+                noty({ text: "Please type Customer details", layout: 'topRight', type: 'error', timeout: 2000 });
+                return false;
+            }
+            else {
+
+                fuLib.customer.add(oCustomer).success(function (data, status, xhr) {
+
+                    console.log(data);
+
+                    noty({ text: 'Customer added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                    var table = $("#tblCustomers").DataTable();
+                    table.ajax.reload();
+
+                }).error(function (xhr, status, error) {
+                    //Customer.add failed
+                    handleError('customer.add', xhr, status, error);
+                });
+            }
+
+            $("#divUpdate").hide();
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+
+            return false;
+
+        }
+        else if (supModeUpdate == 'edit') {
+
+        }
+
+        return false;
+
+    });
+
+    //NEW Customer-Cancel click event
+    $("#btnCusUpdateCancel").click(function () {
+
+        $("#divUpdate").hide();
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+        return false;
+
+    });
+
+    //NEW OFFICE-SAVE CHANGES click event
+    $("#btnOfficeUpdateSave").click(function () {
+
+        var isEmptyOffice = false;
+        debugger;
+        var oOffice = {
+            title: $("#txtTitle").val(),
             address1: $("#txtAddress1").val(),
             address2: $("#txtAddress2").val(),
             geoLoc: null,
+            email: $("#txtEmailO").val(),
+            phone: $("#txtPhoneO").val(),
+            fax: $("#txtFaxO").val(),
+            company: selIdCustomers,
             isActive: true,
             flag: 0
         };
@@ -474,170 +269,47 @@ function doCustomer(crPage) {
 
                     }
                     else {
-                        oAddress.geoLoc = $("#selCountry").val();
+                        oOffice.geoLoc = $("#selCountry").val();
                     }
                 }
                 else {
-                    oAddress.geoLoc = $("#selState").val();
+                    oOffice.geoLoc = $("#selState").val();
                 }
             }
             else {
-                oAddress.geoLoc = $("#selCity").val();
+                oOffice.geoLoc = $("#selCity").val();
             }
-        }
+        }   
         else {
-            oAddress.geoLoc = $("#selArea").val();
+            oOffice.geoLoc = $("#selArea").val();
         }
 
-        //console.log(oCustomer);
-        //console.log(oPerson);
-        //console.log(oAddress);
-
-        //return false;
-
-        //check if oCustomer is empty
-        if (oCustomer.name.trim().length == 0 &&
-            oCustomer.pwd.trim().length == 0
-            ) {
-            isEmptyCustomer = true;
+        //check if oOffice is empty
+        if (oOffice.title.trim().length == 0) {
+            isEmptyOffice = true;
         }
 
-        //check if oPerson is empty
-        if (oPerson.name.trim().length == 0 &&
-            oPerson.email.trim().length == 0 &&
-            oPerson.phone.trim().length == 0 &&
-            oPerson.facebook.trim().length == 0 &&
-            oPerson.twitter.trim().length == 0 &&
-            oPerson.skype.trim().length == 0 &&
-            oPerson.govtNo.trim().length == 0 &&
-            oPerson.dateBirth.trim().length == 0 &&
-            oPerson.dateAnniversary.trim().length == 0
-            ) {
-            isEmptyPerson = true;
-        }
+        if (supModeUpdate == 'new') {
 
-        //check if oAddress is empty
-        if (oAddress.address1.trim().length == 0 &&
-            oAddress.address2.trim().length == 0 &&
-            (oAddress.country == '0' || oAddress.country == null) &&
-            (oAddress.state == '0' || oAddress.state == null) &&
-            (oAddress.city == '0' || oAddress.city == null) &&
-            (oAddress.area == '0' || oAddress.area == null) 
-            ) {
-            isEmptyAddress = true;
-        }
-
-        console.log(isEmptyCustomer);
-        console.log(isEmptyPerson);
-        console.log(isEmptyAddress);
-
-        //return false;
-
-        if (modeUpdate == 'new') {
-
-            if (isEmptyCustomer == true) {
-                    noty({ text: "Please type Customer details", layout: 'topRight', type: 'error', timeout: 2000 });
-                    return false;
+            if (isEmptyOffice == true) {
+                noty({ text: "Please type office details", layout: 'topRight', type: 'error', timeout: 2000 });
+                return false;
             }
             else {
-                if (isEmptyPerson == true) {
-                    //save Customer details
 
-                    fuLib.Customer.add(oCustomer).success(function (data, status, xhr) {
+                fuLib.customer.addOffice(oOffice).success(function (data, status, xhr) {
 
-                        console.log(data);
+                    console.log(data);
 
-                        noty({ text: 'Customer added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+                    noty({ text: 'Customer Office added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                        var table = $("#tblCustomer").DataTable();
-                        table.ajax.reload();
+                    tableOffice = $("#tblOffice").DataTable();
+                    tableOffice.ajax.reload();
 
-                    }).error(function (xhr, status, error) {
-                        //Customer.add failed
-                        handleError('Customer.add', xhr, status, error);
-                    });
-                }
-                else {
-                    if (isEmptyAddress == true) {
-                        //save Customer-PERSON details
-
-                        //check if govtNo is blank
-                        if (oPerson.govtNo.trim().length == 0) {
-                            oPerson.lovGovtNo = null;
-                        }
-                        else {
-                            if (oPerson.lovGovtNo == '0') {
-                                noty({ text: "Please select type of govt code", layout: 'topRight', type: 'error', timeout: 2000 });
-                                return false;
-                            }
-                        }
-
-                        //add PERSON
-                        fuLib.person.add(oPerson).success(function (data, status, xhr) {
-
-                            noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                            oCustomer.person = data.person._id;
-
-                            //add Customer
-                            fuLib.Customer.add(oCustomer).success(function (data, status, xhr) {
-
-                                noty({ text: 'Customer added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                                var table = $("#tblCustomer").DataTable();
-                                table.ajax.reload();
-
-                            }).error(function (xhr, status, error) {
-                                //Customer.add failed
-                                handleError('Customer.add', xhr, status, error);
-                            });
-
-                        }).error(function (xhr, status, error) {
-                            //person.add failed
-                            handleError('person.add', xhr, status, error);
-                        });
-                    }
-                    else {
-                        //save Customer-PERSON-ADDRESS details
-
-                        //add ADDRESS
-                        fuLib.address.add(oAddress).success(function (data, status, xhr) {
-
-                            noty({ text: 'Address added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                            oPerson.address = data.address._id;
-
-                            //add PERSON
-                            fuLib.person.add(oPerson).success(function (data, status, xhr) {
-
-                                noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                                oCustomer.person = data.person._id;
-
-                                //add Customer
-                                fuLib.Customer.add(oCustomer).success(function (data, status, xhr) {
-
-                                    noty({ text: 'Customer added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
-
-                                    var table = $("#tblCustomer").DataTable();
-                                    table.ajax.reload();
-
-                                }).error(function (xhr, status, error) {
-                                    //address.add failed
-                                    handleError('address.add', xhr, status, error);
-                                });
-
-                            }).error(function (xhr, status, error) {
-                                //person.add failed
-                                handleError('person.add', xhr, status, error);
-                            });
-
-                        }).error(function (xhr, status, error) {
-                            //Customer.add failed
-                            handleError('Customer.add', xhr, status, error);
-                        });
-                    }
-                }
+                }).error(function (xhr, status, error) {
+                    //supplier.addOffice failed
+                    handleError('Customer.addOffice', xhr, status, error);
+                });
             }
 
             $("#divUpdate").hide();
@@ -646,92 +318,352 @@ function doCustomer(crPage) {
             return false;
 
         }
-        else if (modeUpdate == 'edit') {
+        else if (supModeUpdate == 'edit') {
 
         }
-       
+
         return false;
 
     });
 
-    //NEW Customer-Cancel click event
-    $("#btnCustomerUpdateCancel").click(function () {
-     
+    //NEW OFFICE-Cancel click event
+    $("#btnOfficeUpdateCancel").click(function () {
+
         $("#divUpdate").hide();
         $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         return false;
 
     });
 
-    //BTN ACCESS SAVE click event
-    $("#btnAccessSave").click(function () {
+    //NEW PERSON-SAVE CHANGES click event
+    $("#btnPersonUpdateSave").click(function () {
+        var isEmptyPerson = false;
+        var oPerson = {
+            name: $("#txtNameP").val(),
+            email: $("#txtEmailP").val(),
+            phone: $("#txtPhoneP").val(),
+            facebook: $("#txtFacebook").val(),
+            twitter: $("#txtTwitter").val(),
+            skype: $("#txtSkype").val(),
+            address: null,
+            lovGovtNo: $("#selGovtNo").val(),
+            govtNo: $("#txtGovtNo").val(),
+            photo: '',
+            dateBirth: $("#txtDateBirth").val(),
+            dateAnniversary: $("#txtDateAnniversary").val(),
+            maritalStatus: $("input[name=iradioMStatus]:checked", "#frmPerson").val(),
+            gender: $("input[name=iradioGender]:checked", "#frmPerson").val(),
+            isActive: true,
+            flag: 0
+        };
 
-        var rows = $("tr", $("#tbodyAccess"));
+        if (oPerson.name.trim().length == 0 &&
+            oPerson.email.trim().length == 0 &&
+            oPerson.phone.trim().length == 0 &&
+            oPerson.facebook.trim().length == 0 &&
+            oPerson.twitter.trim().length == 0 &&
+            oPerson.skype.trim().length == 0 &&
+            oPerson.govtNo.trim().length == 0 &&
+            oPerson.dateBirth.trim().length == 0 &&
+            oPerson.dateAnniversary.trim().length == 0) {
+            isPersonEmpty = true;
+        }
+       
+        if (supModeUpdate == 'new') {
+            if (isEmptyPerson == false) {
+                //save USER details
 
-        var aAccess = [];
+                fuLib.person.add(oPerson).success(function (data, status, xhr) {
 
-        $(rows).each(function () {
+                    console.log(data);
+                   
 
-            var acsCode = $(this).find("input[type=hidden]").eq(1).val();
+                    var oOfficePerson = {
+                        companyOffice: selIdOffice,
+                        person: data.person._id,
+                        isPrimary: $("#chkPrimary").prop('checked'),
+                        isManager: $("#chkManager").prop('checked'),
+                        LovDesignation: $('#selDesignation').val(),
+                        LovDepartment: $('#selDepartment').val(),
+                        isActive: true,
+                        flag: 0
+                    };
 
-            var acsAccess = "";
+                    fuLib.customer.addPerson(oOfficePerson).success(function (data, status, xhr) {
 
-            $(this).find("input[type=checkbox]").each(function () {
+                        noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                if ($(this).prop("checked") == true) {
-                    acsAccess = acsAccess + '1';
+                    }).error(function (xhr, status, error) {
+                        //Customer.addPerson failed
+                        handleError('supplier.addPerson', xhr, status, error);
+                    });
+
+                }).error(function (xhr, status, error) {
+                    //person.add failed
+                    handleError('person.add', xhr, status, error);
+                });
+            }
+        }
+
+    });
+
+    //NEW PERSON-Cancel click event
+    $("#btnPersonUpdateCancel").click(function () {
+        $("#divUpdate").hide();
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+        return false;
+    });
+}
+
+function fillCustomerOffice(cusId) {
+
+    if ($.fn.dataTable.isDataTable("#tblOffice")) {
+
+        tableOffice.ajax.url(apiUrl + "customer/office/getall/" + cusId).load();
+    }
+    else {
+        //Configures OFFICE DataTable
+        $("#tblOffice").on('xhr.dt', function (e, settings, data, xhr) {
+            //DataTable AJAX load complete event
+
+            //data will be null is AJAX error
+            if (data) {
+                $('#tblOffice').on('draw.dt', function () {
+                    //DataTable draw complete event
+
+                    tableOffice = $("#tblOffice").DataTable();
+                    //select first row by default
+                    tableOffice.rows(':eq(0)', { page: 'current' }).select();
+
+                    selIdOffice = tableOffice.rows(':eq(0)', { page: 'current' }).ids()[0];
+                    fillOfficePerson(selIdOffice);
+                });
+            }
+        }).DataTable({
+            "autoWidth": false,
+            "select": {
+                style: 'single'
+            },
+            deferRender: true,
+            rowId: "_id",
+            "ajax": {
+                "url": apiUrl + "customer/office/getall/" + cusId,
+                "dataSrc": "",
+                "headers": {
+                    "Authorization": "Bearer " + token
                 }
-                else {
-                    acsAccess = acsAccess + '0';
+            },
+            "columns": [
+                { "data": "title", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "address1", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
+            ],
+        });
+
+
+        //TABLE ROW CLICK EVENT
+        $("#tblOffice tbody").on('click', 'tr', function () {
+
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                tableOffice = $('#tblOffice').DataTable();
+                tableOffice.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+
+                selIdOffice = $(this).attr('id');
+
+                fillOfficePerson(selIdOffice);
+
+            }
+        });
+
+        //TABLE REDRAW EVENT
+        $('#tblOffice').on('draw.dt', function () {
+            onresize();
+        });
+
+
+    }
+}
+
+function fillOfficePerson(offId) {
+
+    if ($.fn.dataTable.isDataTable("#tblPerson")) {
+
+        tablePeople.ajax.url(apiUrl + "customer/person/getall/" + offId).load();
+    }
+    else {
+        //Configures PERSON DataTable
+        $("#tblPerson").on('xhr.dt', function (e, settings, data, xhr) {
+            //DataTable AJAX load complete event
+
+            //data will be null is AJAX error
+            if (data) {
+                $('#tblPerson').on('draw.dt', function () {
+                    //DataTable draw complete event
+
+                    tablePeople = $("#tblPerson").DataTable();
+                    //select first row by default
+                    tablePeople.rows(':eq(0)', { page: 'current' }).select();
+                });
+            }
+        }).DataTable({
+            "autoWidth": false,
+            "select": {
+                style: 'single'
+            },
+            deferRender: true,
+            rowId: "_id",
+            "ajax": {
+                "url": apiUrl + "customer/person/getall/" + offId,
+                "dataSrc": "",
+                "headers": {
+                    "Authorization": "Bearer " + token
                 }
+            },
+            "columns": [
+                { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "isManager", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                { "data": "LovDesignation.title", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            ],
+        });
+
+
+        //TABLE ROW CLICK EVENT
+        $("#tblPerson tbody").on('click', 'tr', function () {
+
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                tablePeople = $('#tblPerson').DataTable();
+                tablePeople.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+
+                selIdPerson = $(this).attr('id');
+
+            }
+        });
+
+        //TABLE REDRAW EVENT
+        $('#tblPerson').on('draw.dt', function () {
+            onresize();
+        });
+    }
+}
+
+function customerClearEditPanel() {
+
+    //customer
+    $("#txtName").val('');
+    $("#txtCode").val('');
+    $("#txtWebsite").val('');
+    $("#txtEmail").val('');
+    $("#txtPhone").val('');
+    $("#txtFax").val('');
+
+    //customer office
+    $("#txtTitle").val('');
+    $("#txtAddress1").val('');
+    $("#txtAddress2").val('');
+    $("#selCountry").val('0');
+    $($("#selCountry")).selectpicker('refresh');
+    $("#selState").val('0');
+    $($("#selState")).selectpicker('refresh');
+    $("#selCity").val('0');
+    $($("#selCity")).selectpicker('refresh');
+    $("#selArea").val('0');
+    $($("#selArea")).selectpicker('refresh');
+    $("#txtEmailO").val('');
+    $("#txtPhoneO").val('');
+    $("#txtFaxO").val('');
+
+    //customer office person
+    $("#txtNameP").val('');
+    $("#txtEmailP").val('');
+    $("#txtPhoneP").val('');
+    $("#txtFacebook").val('');
+    $("#txtTwitter").val('');
+    $("#txtSkype").val('');
+    $("#selGovtNo option[value='0']").prop("selected", true);
+    $("#selGovtNo").selectpicker('refresh');
+    $("#txtGovtNo").val('');
+    $("#txtDateBirth").val('');
+    $("#txtDateAnniversary").val('');
+    $("input[name=iradioMStatus]:checked", "#frmPerson").val('0');
+    $("input[name=iradioGender]:checked", "#frmPerson").val('0');
+}
+
+function configCustomerTable() {
+    //"option strict";
+
+    //DATATABLE AJAX LOAD COMPLETE EVENT
+    $("#tblCustomers").on('xhr.dt', function (e, settings, data, xhr) {
+
+        //data will be null is AJAX error
+        if (data) {
+            //DATATABLE DRAW COMPLETE EVENT
+            $('#tblCustomers').on('draw.dt', function () {
+
+                tableCustomers = $("#tblCustomers").DataTable();
+                //select first row by default
+
+                tableCustomers.rows(':eq(0)', { page: 'current' }).select();
+                selIdCustomers = tableCustomers.rows(':eq(0)', { page: 'current' }).ids()[0];
+
+                console.log(selIdCustomers);
+
+                fillCustomerOffice(selIdCustomers);
+
+
+
             });
-
-            aAccess.push({ id: acsCode, accessCode: acsAccess });
-
-        });
-
-        console.log(aAccess);
-
-        fuLib.access.updateMulti(aAccess).success(function (data, status, xhr) {
-
-            console.log(data);
-
-            noty({ text: data.message, layout: 'topRight', type: 'success', timeout: 2000 });
-
-
-        }).error(function (xhr, status, error) {
-            //access.updateMulti failed
-            handleError('access.updateMulti', xhr, status, error);
-        });
-
-        $("#divAccess").hide(500);
-        $("#divList").show(500);
+        }
+    }).DataTable({
+        "autoWidth": false,
+        "select": {
+            style: 'single'
+        },
+        deferRender: true,
+        rowId: "_id",
+        "ajax": {
+            "url": apiUrl + "customer/getall",
+            "dataSrc": "",
+            "headers": {
+                "Authorization": "Bearer " + token
+            }
+        },
+        "columns": [
+            { "data": "name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "code", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "urlWeb", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
+        ],
     });
 
-    //BTN ACCESS CANCEL click event
-    $("#btnAccessCancel").click(function () {
-        $("#divAccess").hide(500);
-        $("#divList").show(500);
+    //TABLE ROW CLICK EVENT
+    $("#tblCustomers tbody").on('click', 'tr', function () {
+
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            tableCustomers = $('#tblCustomers').DataTable();
+            tableCustomers.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selIdCustomers = $(this).attr("id");
+
+            fillCustomerOffice(selIdCustomers);
+        }
     });
 
-    //BTN ACCESS RESET click event
-    $("#btnAccessReset").click(function () {
-        showAccess($("#hidSelCustomer").val());
+    //TABLE REDRAW EVENT
+    $('#tblCustomers').on('draw.dt', function () {
+        onresize();
     });
-
-    //Customer TAB click event
-    $("#tabCustomer").click(function () {
-        crTab = 0;
-    });
-
-    //PERSON TAB click event
-    $("#tabPerson").click(function () {
-        crTab = 1;
-    });
-
-    //ADDRESS TAB click event
-    $("#tabAddress").click(function () {
-        crTab = 2;
-    });
-
 }

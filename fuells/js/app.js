@@ -17,12 +17,12 @@ var isAdmin = false;
 var fuLib = {
 
     navigation: {
-        load: function(crPage) {
+        load: function (crPage) {
             //alert('in load navigation');
 
             return (
                 //get login user details
-                fuLib.user.getLogin().success(function(user, status, xhr) {
+                fuLib.user.getLogin().success(function (user, status, xhr) {
 
                     if (user) {
 
@@ -44,12 +44,12 @@ var fuLib = {
 
                         }
 
-                        fuLib.user.getAccess().success(function(access, status, xhr) {
-                            access = access.sort(function(a, b){
+                        fuLib.user.getAccess().success(function (access, status, xhr) {
+                            access = access.sort(function (a, b) {
                                 return a.pageIndex - b.pageIndex;
                             });
 
-                            $(access).each(function(index) {
+                            $(access).each(function (index) {
 
                                 $("#ulNav").append('<li id="' + this.pageId + '"><a href="' + this.pageFile + '"><span class="' + this.pageIcon + '"></span><span class="xn-text">' + this.pageTitle + '</span></a></li>');
 
@@ -60,14 +60,14 @@ var fuLib = {
                                 $('#' + crPage).addClass("active");
                             }
 
-                        }).error(function(xhr, status, error) {
+                        }).error(function (xhr, status, error) {
                             //user.getAccess failed
                             handleError('user.getAccess', xhr, status, error);
                         });
 
                     }
 
-                }).error(function(xhr, status, error) {
+                }).error(function (xhr, status, error) {
                     //user.getLogin failed
                     handleError('user.getLogin', xhr, status, error);
                 })
@@ -79,7 +79,7 @@ var fuLib = {
 
         jwtToken: token,
 
-        getAll: function() {
+        getAll: function () {
             return (
                 $.ajax({
                     url: apiUrl + "user/getall",
@@ -91,7 +91,7 @@ var fuLib = {
             );
         },
 
-        getOne: function(id) {
+        getOne: function (id) {
             return (
                 $.ajax({
                     url: apiUrl + "user/getone/" + id,
@@ -103,7 +103,7 @@ var fuLib = {
             );
         },
 
-        getLogin: function() {
+        getLogin: function () {
             return (
                 $.ajax({
                     url: apiUrl + "user/getlogin",
@@ -115,7 +115,7 @@ var fuLib = {
             );
         },
 
-        getAccess: function() {
+        getAccess: function () {
             return (
                 $.ajax({
                     url: apiUrl + "user/getaccess",
@@ -131,7 +131,7 @@ var fuLib = {
             return (
                 $.ajax({
                     url: apiUrl + "user/login",
-                    data: JSON.stringify({ name:name, pwd:pwd }),
+                    data: JSON.stringify({ name: name, pwd: pwd }),
                     type: "POST",
                     contentType: "application/json",
                     dataType: "json"
@@ -271,7 +271,7 @@ var fuLib = {
 
     lov: {
 
-        getAll: function() {
+        getAll: function () {
             return (
                 $.ajax({
                     url: apiUrl + "lov/getall",
@@ -295,7 +295,7 @@ var fuLib = {
             );
         },
 
-        getOne: function(id) {
+        getOne: function (id) {
             return (
                 $.ajax({
                     url: apiUrl + "lov/getone/" + id,
@@ -614,6 +614,102 @@ var fuLib = {
         }
     },
 
+    customer: {
+
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllOffice: function (suppId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/office/getall/" + suppId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllPerson: function (offId) {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/person/getall/" + offId,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (customer) {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/add",
+                    data: JSON.stringify(customer),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        addOffice: function (code) {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/office/add",
+                    data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        addPerson: function (code) {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/person/add",
+                    data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
+    },
+
     company: {
 
         getAll: function () {
@@ -635,7 +731,7 @@ var fuLib = {
                     type: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
-                    }
+                    } 
                 })
             );
         },
@@ -693,6 +789,21 @@ var fuLib = {
                 })
             );
         },
+
+        addPerson: function (code) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/person/add",
+                    data: JSON.stringify(code),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
     },
 
     style: {
@@ -891,7 +1002,7 @@ var fuLib = {
                 })
             );
         }
-      
+
     }
 }
 
