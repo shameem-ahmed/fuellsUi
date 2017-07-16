@@ -173,7 +173,7 @@ function doCompany(crPage) {
     $("#btnCompUpdateSave").click(function () {
 
         var isEmptyCompany = false;
-        debugger;
+
         var oCompany = {
             code: $("#txtCode").val(),
             name: $("#txtName").val(),
@@ -245,7 +245,7 @@ function doCompany(crPage) {
     $("#btnOfficeUpdateSave").click(function () {
 
         var isEmptyOffice = false;
-        debugger;
+        
         var oOffice = {
             title: $("#txtTitle").val(),
             address1: $("#txtAddress1").val(),
@@ -337,7 +337,9 @@ function doCompany(crPage) {
 
     //NEW PERSON-SAVE CHANGES click event
     $("#btnPersonUpdateSave").click(function () {
+        
         var isEmptyPerson = false;
+
         var oPerson = {
             name: $("#txtNameP").val(),
             email: $("#txtEmailP").val(),
@@ -370,7 +372,12 @@ function doCompany(crPage) {
         }
 
         if (supModeUpdate == 'new') {
-            if (isEmptyPerson == false) {
+
+            if (isEmptyPerson == true) {
+                noty({ text: "Please type person details", layout: 'topRight', type: 'error', timeout: 2000 });
+                return false;
+            }
+            else {
                 //save USER details
 
                 fuLib.person.add(oPerson).success(function (data, status, xhr) {
@@ -389,9 +396,20 @@ function doCompany(crPage) {
                         flag: 0
                     };
 
+                    if (oOfficePerson.LovDesignation == "0") {
+                        oOfficePerson.LovDesignation = null;
+                    }
+
+                    if (oOfficePerson.LovDepartment == "0") {
+                        oOfficePerson.LovDepartment = null;
+                    }
+
                     fuLib.company.addPerson(oOfficePerson).success(function (data, status, xhr) {
 
                         noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                        tablePeople = $("#tblPerson").DataTable();
+                        tablePeople.ajax.reload();
 
                     }).error(function (xhr, status, error) {
                         //Company.addPerson failed
@@ -403,6 +421,11 @@ function doCompany(crPage) {
                     handleError('person.add', xhr, status, error);
                 });
             }
+
+            $("#divUpdate").hide();
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+
+            return false;
         }
 
     });
