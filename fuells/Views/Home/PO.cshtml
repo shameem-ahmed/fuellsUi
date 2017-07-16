@@ -11,7 +11,7 @@
 </ul>
 
 <div class="page-content-wrap">
-    <!--USER TABLE -->
+    <!--PO TABLE -->
     <div class="row" id="divList">
         <div class="col-md-6" id="divTable">
             <div class="page-title">
@@ -48,11 +48,191 @@
 
         <!--LOV UPDATE PANEL -->
         <div class="col-md-6">
-            <iframe src="/pos/po.pdf" style="width:100%; height:800px;"></iframe>
+            <iframe src="~/pos/po1.pdf" style="width:100%; height:800px;"></iframe>
         </div>
     </div>
 
-    <div id="divUpdate">
+    <!--UPDATE PANEL -->
+    <div class="row" id="divUpdate">
 
+        <div class="col-md-6">
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> New @ViewBag.Title</h2>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <button id="btnPONewSave" type="button" class="btn btn-primary">Save New PO</button>
+                    <button id="btnPONewCancel" type="button" class="btn btn-danger">Cancel</button>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+
+                    <!-- PO HEADER -->
+                    <table class="tableEdit" border="0">
+                        <tr>
+                            <td class="labelDanger" style="width:34%;">Customer /</td>
+                            <td class="labelDanger" style="width:33%;">Invoice # /</td>
+                            <td class="labelDanger" style="width:33%;">Quantity /</td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <select id="selCustomer" class="form-control select">
+                                    <option value="0" selected="selected">Not Set</option>
+                                    <option value="1">Customer 1</option>
+                                    <option value="2">Customer 2</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="txtInvoiceNo" placeholder="Invoice #" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="txtQty" placeholder="Quantity" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="labelDanger" style="width:34%;">Order date /</td>
+                            <td class="labelDanger" style="width:33%;">Delivery date /</td>
+                            <td class="labelDanger" style="width:33%;">Target date /</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <input type="text" id="txtDateOrder" class="form-control datepicker" placeholder="Order Date" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="text" id="txtDateDelivery" class="form-control datepicker" placeholder="Delivery Date" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="text" id="txtDateTarget" class="form-control datepicker" placeholder="Target Date" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <b><u>Shipping Address</u></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <input type="text" class="form-control" id="txtShipAddress1" placeholder="Address 1" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <input type="text" class="form-control" id="txtShipAddress2" placeholder="Address 2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div id="treeShipGeoLoc"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <b><u>Order Type</u></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <select id="selOrderType" class="form-control select">
+                                    <option value="0" selected="selected">Not Set</option>
+                                    <option value="1">Type 1</option>
+                                    <option value="2">Type 2</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <b><u>Order Styles</u></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <table class="tableEdit" border="1">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:35%;">Style</th>
+                                            <th style="width:15%;">Qty</th>
+                                            <th style="width:35%;">Size</th>
+                                            <th style="width:15%;">Qty</th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <select id="selOrderType" class="form-control select">
+                                                    <option value="0" selected="selected">Not Set</option>
+                                                    <option value="1">Type 1</option>
+                                                    <option value="2">Type 2</option>
+                                                </select>
+                                            </th>
+                                            <th>
+                                                <input type="text" class="form-control" id="txtStyleQty" placeholder="Style Qty" />
+                                            </th>
+                                            <th>
+                                                <select id="selOrderType" class="form-control select">
+                                                    <option value="0" selected="selected">Not Set</option>
+                                                    <option value="1">Type 1</option>
+                                                    <option value="2">Type 2</option>
+                                                </select>
+                                            </th>
+                                            <th>
+                                                <input type="text" class="form-control" id="txtSizeQty" placeholder="Size Qty" />
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblStyle">
+                                        <tr>
+                                            <td rowspan="2"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Style 1</td>
+                                            <td rowspan="2">10</td>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> one</td>
+                                            <td>6</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> two</td>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="3"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Style 2</td>
+                                            <td rowspan="3">18</td>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> one</td>
+                                            <td>6</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> two</td>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> three</td>
+                                            <td>8</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <!--LOV UPDATE PANEL -->
+        <div class="col-md-6">
+            <iframe src="~/pos/po0.pdf" style="width:100%; height:800px;"></iframe>
+        </div>
+
+
+
+
+      
     </div>
 </div>

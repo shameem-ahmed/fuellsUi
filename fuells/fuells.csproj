@@ -995,6 +995,8 @@
     <Content Include="js\general.js" />
     <Content Include="js\plugins\datatables\dataTables.select.min.js" />
     <Content Include="js\lov.js" />
+    <Content Include="js\plugins\treeview\bootstrap-treeview.min.css" />
+    <Content Include="js\plugins\treeview\bootstrap-treeview.min.js" />
     <Content Include="js\po.js" />
     <Content Include="js\supplier.js" />
     <Content Include="js\style.js" />
@@ -1451,8 +1453,8 @@
     <Content Include="Content\css\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\js\plugins\jquery\jquery-2.1.1.min.map" />
     <Content Include="Content\js\plugins\tableexport\simple_html_dom.php" />
-    <Content Include="Content\los\lo.pdf" />
-    <Content Include="Content\pos\po.pdf" />
+    <Content Include="Content\los\lo1.pdf" />
+    <Content Include="Content\pos\po1.pdf" />
     <Content Include="assets\ajax_fullcalendar.php" />
     <Content Include="assets\data.tsv" />
     <Content Include="assets\filetree\jqueryFileTree.cf" />
@@ -1491,6 +1493,8 @@
     <Content Include="js\plugins\tableexport\simple_html_dom.php" />
     <Content Include="los\lo.pdf" />
     <Content Include="pos\po.pdf" />
+    <Content Include="Content\los\lo0.pdf" />
+    <Content Include="Content\pos\po0.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

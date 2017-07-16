@@ -19,11 +19,18 @@ function doPurchaseOrder(crPage) {
 
     $("#divUpdate").hide();
 
+    //treeShipGeoLoc
+
+    $("#treeShipGeoLoc").treeview({ data: getGeoLoc() });
+
     configPOTable();
 
     //BTN PO NEW click event
     $("#btnPONew").click(function () {
+
         poModeUpdate = 'new';
+
+        $(".x-navigation-minimize").trigger("click");
 
         poClearEditPanel();
 
@@ -97,13 +104,62 @@ function doPurchaseOrder(crPage) {
     });
 
     //NEW PO-Cancel click event
-    $("#btnPOUpdateCancel").click(function () {
+    $("#btnPONewCancel").click(function () {
 
         $("#divUpdate").hide();
+
+        $("#divList").show();
+
         $("#divTable").removeClass("col-md-8").addClass("col-md-12");
-        return false;
+
+        $(".x-navigation-minimize").trigger("click");
 
     });
+}
+
+function getGeoLoc() {
+
+    var data = [
+        {
+            text: "India",
+            nodes: [
+                {
+                    text: "Tamilnadu",
+                    nodes: [
+                        {
+                            text: "Chennai",
+                            nodes: [
+                                {
+                                    text: "T Nagar",
+                                    nodes: [
+                                        {
+                                            text: "600017"
+                                        },
+                                        {
+                                            text: "600018"
+                                        }
+                                    ]
+                                },
+                                {
+                                    text: "Broadway",
+                                    nodes: [
+                                        {
+                                            text: "600001"
+                                        },
+                                        {
+                                            text: "600002"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    return data;
 }
 
 function fillSupplierOffice(suppId) {
