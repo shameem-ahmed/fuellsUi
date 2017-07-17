@@ -513,7 +513,10 @@ function fillCompanyOffice(comId) {
 }
 
 function fillCompOfficePerson(offId) {
-    debugger;
+   
+    if (typeof offId === "undefined") {
+        return false;
+    }
     if ($.fn.dataTable.isDataTable("#tblPerson")) {
 
         tablePeople.ajax.url(apiUrl + "company/person/getall/" + offId).load();

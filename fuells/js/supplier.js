@@ -389,6 +389,13 @@ function doSupplier(crPage) {
                         isActive: true,
                         flag: 0
                     };
+                    if (oOfficePerson.LovDesignation == "0") {
+                        oOfficePerson.LovDesignation = null;
+                    }
+
+                    if (oOfficePerson.LovDepartment == "0") {
+                        oOfficePerson.LovDepartment = null;
+                    }
 
                     fuLib.supplier.addPerson(oOfficePerson).success(function (data, status, xhr) {
 
@@ -417,8 +424,8 @@ function doSupplier(crPage) {
 }
 
 function fillSupplierOffice(suppId) {
-
-    if ($.fn.dataTable.isDataTable("#tblOffice")) {
+  
+    if ($.fn.dataTable.isDataTable("#tblOffice")) { 
 
         tableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
     }
@@ -491,7 +498,10 @@ function fillSupplierOffice(suppId) {
 }
 
 function fillOfficePerson(offId) {
-
+    debugger;
+    if (typeof offId === "undefined") {
+        return false;
+    }
     if ($.fn.dataTable.isDataTable("#tblPerson")) {
 
         tablePeople.ajax.url(apiUrl + "supplier/person/getall/" + offId).load();
@@ -648,7 +658,7 @@ function configSupplierTable() {
 
     //TABLE ROW CLICK EVENT
     $("#tblSupplier tbody").on('click', 'tr', function () {
-
+       
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
         }
