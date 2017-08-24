@@ -4,12 +4,12 @@ var supCrTab = 0;
 var supModeUpdate = 'new';
 
 var selIdCompany = '';
-var selIdOffice = '';
-var selIdPerson = '';
+var selIdCompanyOffice = '';
+var selIdCompanyOfficePerson = '';
 
 var tableCompany;
-var tableOffice;
-var tablePeople;
+var tableCompanyOffice;
+var tableCompanyOfficePeople;
 
 //CALLED FROM _LAYOUT2
 function doCompany(crPage) {
@@ -303,8 +303,8 @@ function doCompany(crPage) {
 
                     noty({ text: 'Company Office added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                    tableOffice = $("#tblOffice").DataTable();
-                    tableOffice.ajax.reload();
+                    tableCompanyOffice = $("#tblOffice").DataTable();
+                    tableCompanyOffice.ajax.reload();
 
                 }).error(function (xhr, status, error) {
                     //supplier.addOffice failed
@@ -386,7 +386,7 @@ function doCompany(crPage) {
 
 
                     var oOfficePerson = {
-                        companyOffice: selIdOffice,
+                        companyOffice: selIdCompanyOffice,
                         person: data.person._id,
                         isPrimary: $("#chkPrimary").prop('checked'),
                         isManager: $("#chkManager").prop('checked'),
@@ -408,8 +408,8 @@ function doCompany(crPage) {
 
                         noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                        tablePeople = $("#tblPerson").DataTable();
-                        tablePeople.ajax.reload();
+                        tableCompanyOfficePeople = $("#tblPerson").DataTable();
+                        tableCompanyOfficePeople.ajax.reload();
 
                     }).error(function (xhr, status, error) {
                         //Company.addPerson failed
@@ -442,7 +442,7 @@ function fillCompanyOffice(comId) {
 
     if ($.fn.dataTable.isDataTable("#tblOffice")) {
 
-        tableOffice.ajax.url(apiUrl + "company/office/getall/" + comId).load();
+        tableCompanyOffice.ajax.url(apiUrl + "company/office/getall/" + comId).load();
     }
     else {
         //Configures OFFICE DataTable
@@ -454,12 +454,12 @@ function fillCompanyOffice(comId) {
                 $('#tblOffice').on('draw.dt', function () {
                     //DataTable draw complete event
 
-                    tableOffice = $("#tblOffice").DataTable();
+                    tableCompanyOffice = $("#tblOffice").DataTable();
                     //select first row by default
-                    tableOffice.rows(':eq(0)', { page: 'current' }).select();
+                    tableCompanyOffice.rows(':eq(0)', { page: 'current' }).select();
 
-                    selIdOffice = tableOffice.rows(':eq(0)', { page: 'current' }).ids()[0];
-                    fillCompOfficePerson(selIdOffice);
+                    selIdCompanyOffice = tableCompanyOffice.rows(':eq(0)', { page: 'current' }).ids()[0];
+                    fillCompanyOfficePerson(selIdCompanyOffice);
                 });
             }
         }).DataTable({
@@ -492,13 +492,13 @@ function fillCompanyOffice(comId) {
                 $(this).removeClass('selected');
             }
             else {
-                tableOffice = $('#tblOffice').DataTable();
-                tableOffice.$('tr.selected').removeClass('selected');
+                tableCompanyOffice = $('#tblOffice').DataTable();
+                tableCompanyOffice.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
 
-                selIdOffice = $(this).attr('id');
+                selIdCompanyOffice = $(this).attr('id');
 
-                fillCompOfficePerson(selIdOffice);
+                fillCompanyOfficePerson(selIdCompanyOffice);
 
             }
         });
@@ -512,11 +512,11 @@ function fillCompanyOffice(comId) {
     }
 }
 
-function fillCompOfficePerson(offId) {
+function fillCompanyOfficePerson(offId) {
     debugger;
     if ($.fn.dataTable.isDataTable("#tblPerson")) {
 
-        tablePeople.ajax.url(apiUrl + "company/person/getall/" + offId).load();
+        tableCompanyOfficePeople.ajax.url(apiUrl + "company/person/getall/" + offId).load();
     }
     else {
         //Configures PERSON DataTable
@@ -528,9 +528,9 @@ function fillCompOfficePerson(offId) {
                 $('#tblPerson').on('draw.dt', function () {
                     //DataTable draw complete event
 
-                    tablePeople = $("#tblPerson").DataTable();
+                    tableCompanyOfficePeople = $("#tblPerson").DataTable();
                     //select first row by default
-                    tablePeople.rows(':eq(0)', { page: 'current' }).select();
+                    tableCompanyOfficePeople.rows(':eq(0)', { page: 'current' }).select();
                 });
             }
         }).DataTable({
@@ -562,11 +562,11 @@ function fillCompOfficePerson(offId) {
                 $(this).removeClass('selected');
             }
             else {
-                tablePeople = $('#tblPerson').DataTable();
-                tablePeople.$('tr.selected').removeClass('selected');
+                tableCompanyOfficePeople = $('#tblPerson').DataTable();
+                tableCompanyOfficePeople.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
 
-                selIdPerson = $(this).attr('id');
+                selIdCompanyOfficePerson = $(this).attr('id');
 
             }
         });

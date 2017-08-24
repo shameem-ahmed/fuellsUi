@@ -48,3 +48,28 @@
     background-color: #95b75d;
     color: #fff;
 }
+
+.geoCountry {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.geoState {
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+.geoCity {
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+.geoArea {
+    margin-left: 70px;
+    margin-right: 10px;
+}
+
+.geoZip {
+    margin-left: 90px;
+    margin-right: 10px;
+}

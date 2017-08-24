@@ -993,6 +993,7 @@
     <Content Include="js\company.js" />
     <Content Include="js\customer.js" />
     <Content Include="js\general.js" />
+    <Content Include="js\gloc.js" />
     <Content Include="js\plugins\datatables\dataTables.select.min.js" />
     <Content Include="js\lov.js" />
     <Content Include="js\plugins\treeview\bootstrap-treeview.min.css" />
@@ -1532,6 +1533,8 @@
     <Content Include="Views\Home\LOV.cshtml" />
     <Content Include="Views\Home\User.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\GLOC.cshtml" />
+    <Content Include="Views\Home\Temp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

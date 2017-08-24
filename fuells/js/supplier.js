@@ -4,12 +4,12 @@ var supCrTab = 0;
 var supModeUpdate = 'new';
 
 var selIdSupplier = '';
-var selIdOffice = '';
-var selIdPerson = '';
+var selIdSupplierOffice = '';
+var selIdSupplierOfficePerson = '';
 
 var tableSupplier;
-var tableOffice;
-var tablePeople;
+var tableSupplierOffice;
+var tableSupplierOfficePeople;
 
 //CALLED FROM _LAYOUT2
 function doSupplier(crPage) {
@@ -305,8 +305,8 @@ function doSupplier(crPage) {
 
                     noty({ text: 'Supplier Office added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                    tableOffice = $("#tblOffice").DataTable();
-                    tableOffice.ajax.reload();
+                    tableSupplierOffice = $("#tblOffice").DataTable();
+                    tableSupplierOffice.ajax.reload();
 
                 }).error(function (xhr, status, error) {
                     //supplier.addOffice failed
@@ -339,7 +339,9 @@ function doSupplier(crPage) {
 
     //NEW PERSON-SAVE CHANGES click event
     $("#btnPersonUpdateSave").click(function () {
+
         var isEmptyPerson = false;
+
         var oPerson = {
             name: $("#txtNameP").val(),
             email: $("#txtEmailP").val(),
@@ -380,7 +382,7 @@ function doSupplier(crPage) {
 
 
                     var oOfficePerson = {
-                        supplierOffice: selIdOffice,
+                        supplierOffice: selIdSupplierOffice,
                         person: data.person._id,
                         isPrimary: $("#chkPrimary").prop('checked'),
                         isManager: $("#chkManager").prop('checked'),
@@ -389,6 +391,11 @@ function doSupplier(crPage) {
                         isActive: true,
                         flag: 0
                     };
+
+                    //var elvisLives = Math.PI > 4 ? 'Yep' : 'Nope';
+
+                    oOfficePerson.LovDesignation = oOfficePerson.LovDesignation == '0' ? null : oOfficePerson.LovDesignation;
+                    oOfficePerson.LovDepartment = oOfficePerson.LovDepartment == '0' ? null : oOfficePerson.LovDepartment;
 
                     fuLib.supplier.addPerson(oOfficePerson).success(function (data, status, xhr) {
 
@@ -418,9 +425,16 @@ function doSupplier(crPage) {
 
 function fillSupplierOffice(suppId) {
 
+    alert('fillSupplierOffice / ' + suppId);
+
+
+    if (suppId == undefined) {
+        return false;
+    }
+
     if ($.fn.dataTable.isDataTable("#tblOffice")) {
 
-        tableOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
+        tableSupplierOffice.ajax.url(apiUrl + "supplier/office/getall/" + suppId).load();
     }
     else {
         //Configures OFFICE DataTable
@@ -432,12 +446,12 @@ function fillSupplierOffice(suppId) {
                 $('#tblOffice').on('draw.dt', function () {
                     //DataTable draw complete event
 
-                    tableOffice = $("#tblOffice").DataTable();
+                    tableSupplierOffice = $("#tblOffice").DataTable();
                     //select first row by default
-                    tableOffice.rows(':eq(0)', { page: 'current' }).select();
+                    tableSupplierOffice.rows(':eq(0)', { page: 'current' }).select();
 
-                    selIdOffice = tableOffice.rows(':eq(0)', { page: 'current' }).ids()[0];
-                    fillOfficePerson(selIdOffice);
+                    //selIdSupplierOffice = tableSupplierOffice.rows(':eq(0)', { page: 'current' }).ids()[0];
+                    //fillSupplierOfficePerson(selIdSupplierOffice);
                 });
             }
         }).DataTable({
@@ -463,38 +477,26 @@ function fillSupplierOffice(suppId) {
         });
 
 
-        //TABLE ROW CLICK EVENT
-        $("#tblOffice tbody").on('click', 'tr', function () {
-
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            }
-            else {
-                tableOffice = $('#tblOffice').DataTable();
-                tableOffice.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-
-                selIdOffice = $(this).attr('id');
-
-                fillOfficePerson(selIdOffice);
-
-            }
-        });
-
-        //TABLE REDRAW EVENT
-        $('#tblOffice').on('draw.dt', function () {
-            onresize();
-        });
+       
 
 
     }
 }
 
-function fillOfficePerson(offId) {
+function fillSupplierOfficePerson(offId) {
+
+    alert('fillSupplierOfficePerson / ' + offId);
+
+
+    if (offId == undefined) {
+        return false;
+    }
 
     if ($.fn.dataTable.isDataTable("#tblPerson")) {
 
-        tablePeople.ajax.url(apiUrl + "supplier/person/getall/" + offId).load();
+        if (tableSupplierOfficePeople !== undefined) {
+            tableSupplierOfficePeople.ajax.url(apiUrl + "supplier/person/getall/" + offId).load();
+        }
     }
     else {
         //Configures PERSON DataTable
@@ -506,9 +508,9 @@ function fillOfficePerson(offId) {
                 $('#tblPerson').on('draw.dt', function () {
                     //DataTable draw complete event
 
-                    tablePeople = $("#tblPerson").DataTable();
+                    tableSupplierOfficePeople = $("#tblPerson").DataTable();
                     //select first row by default
-                    tablePeople.rows(':eq(0)', { page: 'current' }).select();
+                    //tableSupplierOfficePeople.rows(':eq(0)', { page: 'current' }).select();
                 });
             }
         }).DataTable({
@@ -533,26 +535,7 @@ function fillOfficePerson(offId) {
         });
 
 
-        //TABLE ROW CLICK EVENT
-        $("#tblPerson tbody").on('click', 'tr', function () {
-
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            }
-            else {
-                tablePeople = $('#tblPerson').DataTable();
-                tablePeople.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-
-                selIdPerson = $(this).attr('id');
-
-            }
-        });
-
-        //TABLE REDRAW EVENT
-        $('#tblPerson').on('draw.dt', function () {
-            onresize();
-        });
+     
     }
 }
 
@@ -613,13 +596,9 @@ function configSupplierTable() {
                 //select first row by default
 
                 tableSupplier.rows(':eq(0)', { page: 'current' }).select();
-                selIdSupplier = tableSupplier.rows(':eq(0)', { page: 'current' }).ids()[0];
+                //selIdSupplier = tableSupplier.rows(':eq(0)', { page: 'current' }).ids()[0];
 
-                console.log(selIdSupplier);
-
-                fillSupplierOffice(selIdSupplier);
-
-
+                //fillSupplierOffice(selIdSupplier);
 
             });
         }
@@ -646,7 +625,7 @@ function configSupplierTable() {
         ],
     });
 
-    //TABLE ROW CLICK EVENT
+    //SUPPLIER TABLE ROW CLICK EVENT
     $("#tblSupplier tbody").on('click', 'tr', function () {
 
         if ($(this).hasClass('selected')) {
@@ -663,8 +642,52 @@ function configSupplierTable() {
         }
     });
 
-    //TABLE REDRAW EVENT
+    //SUPPLIER TABLE REDRAW EVENT
     $('#tblSupplier').on('draw.dt', function () {
+        onresize();
+    });
+
+    //SUPPLIER OFFICE TABLE ROW CLICK EVENT
+    $("#tblOffice tbody").on('click', 'tr', function () {
+
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            tableSupplierOffice = $('#tblOffice').DataTable();
+            tableSupplierOffice.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selIdSupplierOffice = $(this).attr('id');
+
+            fillSupplierOfficePerson(selIdSupplierOffice);
+
+        }
+    });
+
+    //SUPPLIER OFFICE TABLE REDRAW EVENT
+    $('#tblOffice').on('draw.dt', function () {
+        onresize();
+    });
+
+    //SUPPLIER OFFICE PERSON TABLE ROW CLICK EVENT
+    $("#tblPerson tbody").on('click', 'tr', function () {
+
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            tableSupplierOfficePeople = $('#tblPerson').DataTable();
+            tableSupplierOfficePeople.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selIdSupplierOfficePerson = $(this).attr('id');
+
+        }
+    });
+
+    //SUPPLIER OFFICE PERSON TABLE REDRAW EVENT
+    $('#tblPerson').on('draw.dt', function () {
         onresize();
     });
 }

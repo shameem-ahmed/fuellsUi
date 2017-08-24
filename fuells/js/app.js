@@ -469,6 +469,21 @@ var fuLib = {
             );
         },
 
+        add: function (loc) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/add",
+                    data: JSON.stringify(loc),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
         getCountries: function () {
             return (
                 $.ajax({
@@ -509,6 +524,18 @@ var fuLib = {
             return (
                 $.ajax({
                     url: apiUrl + "gloc/getareas/" + parent,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getZips: function (parent) {
+            return (
+                $.ajax({
+                    url: apiUrl + "gloc/getzips/" + parent,
                     type: "GET",
                     headers: {
                         "Authorization": "Bearer " + token

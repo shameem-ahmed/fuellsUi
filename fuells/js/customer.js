@@ -307,7 +307,7 @@ function doCustomer(crPage) {
                     tableOffice.ajax.reload();
 
                 }).error(function (xhr, status, error) {
-                    //supplier.addOffice failed
+                    //Customer.addOffice failed
                     handleError('Customer.addOffice', xhr, status, error);
                 });
             }

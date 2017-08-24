@@ -48,7 +48,7 @@
 
         <!--LOV UPDATE PANEL -->
         <div class="col-md-6">
-            <iframe src="~/pos/po1.pdf" style="width:100%; height:800px;"></iframe>
+            <iframe src="~/Home/GetPo?id=1" style="width:100%; height:800px;"></iframe>
         </div>
     </div>
 
@@ -120,7 +120,7 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <b><u>Shipping Address</u></b>
+                                <h3>Shipping Details</h3>
                             </td>
                         </tr>
                         <tr>
@@ -140,7 +140,7 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <b><u>Order Type</u></b>
+                                <h3>Order Type</h3>
                             </td>
                         </tr>
                         <tr>
@@ -154,20 +154,14 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <b><u>Order Styles</u></b>
+                                <h3>Order Styles</h3>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <table class="tableEdit" border="1">
+                                <table class="table table-hover">
                                     <thead>
-                                        <tr>
-                                            <th style="width:35%;">Style</th>
-                                            <th style="width:15%;">Qty</th>
-                                            <th style="width:35%;">Size</th>
-                                            <th style="width:15%;">Qty</th>
-                                        </tr>
-                                        <tr>
+                                        <tr class="active">
                                             <th>
                                                 <select id="selOrderType" class="form-control select">
                                                     <option value="0" selected="selected">Not Set</option>
@@ -188,6 +182,12 @@
                                             <th>
                                                 <input type="text" class="form-control" id="txtSizeQty" placeholder="Size Qty" />
                                             </th>
+                                        </tr>
+                                        <tr class="warning">
+                                            <th style="width:35%; color:#000;">Style</th>
+                                            <th style="width:15%; color:#000;">Qty</th>
+                                            <th style="width:35%; color:#000;">Size</th>
+                                            <th style="width:15%; color:#000;">Qty</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tblStyle">
@@ -219,6 +219,112 @@
                                 </table>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="3">
+                                <h3>Internal Details</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr class="active">
+                                            <th>
+                                                <select id="selInternalType" class="form-control select">
+                                                    <option value="0" selected="selected">Not Set</option>
+                                                    <option value="1">Internal type 1</option>
+                                                    <option value="2">Internal type 2</option>
+                                                </select>
+                                            </th>
+                                            <th>
+                                                <input type="text" class="form-control" id="txtInternalNotes" placeholder="Notes" />
+                                            </th>
+                                            <th>
+                                                <select id="selInternalPriority" class="form-control select">
+                                                    <option value="0" selected="selected">Not Set</option>
+                                                    <option value="1">High</option>
+                                                    <option value="2">Medium</option>
+                                                    <option value="3">Low</option>
+                                                </select>
+                                            </th>
+                                        </tr>
+                                        <tr class="warning">
+                                            <th style="width:35%; color:#000;">Type</th>
+                                            <th style="width:50%; color:#000;">Notes</th>
+                                            <th style="width:15%; color:#000;">Priority</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblStyle">
+                                        <tr>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Type 1</td>
+                                            <td>notes 1</td>
+                                            <td>High</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Type 2</td>
+                                            <td>notes 2</td>
+                                            <td>Medium</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Type 3</td>
+                                            <td>notes 1</td>
+                                            <td>Low</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <h3>Materials</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr class="active">
+                                            <th>
+                                                <select id="selPOMaterial" class="form-control select">
+                                                    <option value="0" selected="selected">Not Set</option>
+                                                    <option value="1">Internal type 1</option>
+                                                    <option value="2">Internal type 2</option>
+                                                </select>
+                                            </th>
+                                            <th>
+                                                <input type="text" class="form-control" id="txtPOMaterialNotes" placeholder="Notes" />
+                                            </th>
+                                            <th>
+                                                <input type="text" class="form-control" id="txtPOMaterialQty" placeholder="Quantity" />
+                                                
+                                            </th>
+                                        </tr>
+                                        <tr class="warning">
+                                            <th style="width:35%; color:#000;">Material</th>
+                                            <th style="width:50%; color:#000;">Notes</th>
+                                            <th style="width:15%; color:#000;">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblStyle">
+                                        <tr>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Material 1</td>
+                                            <td>notes 1</td>
+                                            <td>23</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Material 2</td>
+                                            <td>notes 2</td>
+                                            <td>34</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Material 3</td>
+                                            <td>notes 1</td>
+                                            <td>45</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
                     </table>
 
                 </div>
@@ -227,7 +333,7 @@
 
         <!--LOV UPDATE PANEL -->
         <div class="col-md-6">
-            <iframe src="~/pos/po0.pdf" style="width:100%; height:800px;"></iframe>
+            <iframe src="~/Home/GetPo?id=1" style="width:100%; height:800px;"></iframe>
         </div>
 
 

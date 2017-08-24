@@ -695,11 +695,7 @@ function doUser(crPage) {
 
         });
 
-        console.log(aAccess);
-
         fuLib.access.updateMulti(aAccess).success(function (data, status, xhr) {
-
-            console.log(data);
 
             noty({ text: data.message, layout: 'topRight', type: 'success', timeout: 2000 });
 
@@ -815,8 +811,8 @@ function userShowAccess(userId) {
         });
 
     }).error(function (xhr, status, error) {
-        //user.getSingle failed
-        handleError('user.getSingle', xhr, status, error);
+        //user.getOne failed
+        handleError('user.getOne', xhr, status, error);
     });
 
     $("#divAccess").show(500);

@@ -59,3 +59,47 @@ function changeUlTitle(ul, lovId, lovTitle) {
     $(ul + 'Span').text(lovTitle + ' ');
     $(ul + 'Id').val(lovId);
 }
+
+(function ($) {
+
+    $.fn.greenify = function () {
+
+        var component = this;
+
+        component.html("loading geo locations...");
+
+
+        //this.css("color", "green");
+        var sHtml = `
+            <table class="table table-hover">
+                <tbody>
+            `;
+
+        fuLib.gloc.getCountries().success(function (data, status, xhr) {
+
+            for (var i = 0; i < data.length; i++) {
+
+                sHtml += `
+                    <tr>
+                        <td style="width:10%;"> ` + data[i]._id + ` </td>
+                        <td style="width:90%;"> ` + data[i].title + ` </td>
+                    </tr>`;
+            }
+
+            sHtml += `</tbody>
+                </table>
+                `;
+
+            component.html(sHtml);
+
+
+        }).error(function (xhr, status, error) {
+            //gloc.getCountries failed
+            handleError('gloc.getCountries', xhr, status, error);
+        });
+
+
+    };
+
+}( jQuery ));
+

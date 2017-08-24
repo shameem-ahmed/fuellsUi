@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "Geo Locations";
+}
+<input type="hidden" id="hidSelMenu" value="liPageLoc" />
+<input type="hidden" id="hidSelUser" value="000" />
+
+<ul class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Company</a></li>
+    <li class="active">Geo Locations</li>
+</ul>
+<div class="page-content-wrap">
+    <!--USER TABLE -->
+    <div class="row" id="divList">
+        <div class="col-md-8" id="divTable">
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <button id="btnLocNew" type="button" class="btn btn-primary">New Location</button>
+                    <button id="btnLocEdit" type="button" class="btn btn-info">Edit</button>
+                    <button id="btnLocDelete" type="button" class="btn btn-danger">Delete</button>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                    </ul>
+                </div>
+
+                <div class="panel-body">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Location
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyCountry">
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <!--GLOC UPDATE PANEL -->
+        <div class="col-md-4" id="divUpdate">
+            <div class="block">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3><span class="fa fa-arrow-circle-o-left"></span> Location details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form" action="#" role="form" id="frmLoc">
+                            <table class="tableEdit">
+                                <tr id="trGeoLabelChilds" style="display:none;">
+                                    <td>Add new <span id="geoLabelChild" style="font-weight:bold;">City</span> or 
+                                                <span id="geoLabelSibling" style="font-weight:bold;">State</span> 
+                                                <span id="geoLabelSelected" class="pull-right" style="font-weight:bold; font-size:large;">Tamilnadu</span>
+                                    
+                                    </td>
+                                </tr>
+                                <tr id="trGeoLabelCountry">
+                                    <td>
+                                        Add new Country
+                                    </td>
+                                </tr>
+                                <tr id="trGeoLabelPincode">
+                                    <td>
+                                        Add new Pincode
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="labelDanger" style="width:150px;">Location name /</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" id="hidId" /> <br />
+                                        <input type="text" id="hidParent" /><br />
+                                        <input type="text" id="hidIndex" /><br />
+                                        <input type="text" id="hidKey" /><br />
+
+                                        <input type="text" id="txtTitle" class="form-control" placeholder="Location Name" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        <button id="btnLocUpdateCancel" class="btn btn-link pull-right">Cancel</button>
+                        <button id="btnLocUpdateSaveChild" class="btn btn-default pull-right">Save <span id="geoLabelChild2">City</span> <span class="fa fa-floppy-o fa-right"></span></button>
+                        <button id="btnLocUpdateSaveSibling" class="btn btn-primary pull-right">Save <span id="geoLabelSibling2">State</span> <span class="fa fa-floppy-o fa-right"></span></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
