@@ -375,9 +375,6 @@ function doCustomer(crPage) {
 
                 fuLib.person.add(oPerson).success(function (data, status, xhr) {
 
-                    console.log(data);
-                   
-
                     var oOfficePerson = {
                         companyOffice: selIdOffice,
                         person: data.person._id,
@@ -388,9 +385,17 @@ function doCustomer(crPage) {
                         isActive: true,
                         flag: 0
                     };
+                    if (oOfficePerson.LovDesignation == "0") {
+                        oOfficePerson.LovDesignation = null;
+                    }
+
+                    if (oOfficePerson.LovDepartment == "0") {
+                        oOfficePerson.LovDepartment = null;
+                    }
+
 
                     fuLib.customer.addPerson(oOfficePerson).success(function (data, status, xhr) {
-
+                        fillOfficePerson(selIdOffice);
                         noty({ text: 'Person added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
                     }).error(function (xhr, status, error) {
