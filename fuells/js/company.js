@@ -3,9 +3,13 @@
 var supCrTab = 0;
 var supModeUpdate = 'new';
 
-var selIdCompany = '';
-var selIdCompanyOffice = '';
-var selIdCompanyOfficePerson = '';
+var selIdCompany = '0';
+var selIdCompanyOffice = '0';
+var selIdCompanyOfficePerson = '0';
+
+var isCompany = false;
+var isCompanyOffice = false;
+var isCompanyOfficePerson = false;
 
 var tableCompany;
 var tableCompanyOffice;
@@ -18,7 +22,7 @@ function doCompany(crPage) {
 
     $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
-    configCompanyTable();
+    configCompanyTables();
 
     //fill COUNTRIES
     fuLib.gloc.getCountries().success(function (data, status, xhr) {
@@ -38,15 +42,6 @@ function doCompany(crPage) {
         handleError('lov.getPersonGovtNos', xhr, status, error);
     });
 
-    //fill Company GOVT CODES
-    fuLib.lov.getCompanyGovtNos().success(function (data, status, xhr) {
-        fillUl('#ulCompGovtNo', data);
-
-    }).error(function (xhr, status, error) {
-        //lov.getCompanyGovtNos failed
-        handleError('lov.getCompanyGovtNos', xhr, status, error);
-    });
-
     //fill Designation 
     fuLib.lov.getDesignations().success(function (data, status, xhr) {
         fillCombo('#selDesignation', data);
@@ -64,8 +59,6 @@ function doCompany(crPage) {
         //lov.getDepartments failed
         handleError('lov.getDepartments', xhr, status, error);
     });
-
-
 
     //ADDRESS COUNTRY dropdown change event
     $('#selCountry').change(function (e) {
@@ -124,11 +117,15 @@ function doCompany(crPage) {
         }
     });
 
-    //BTN Company NEW click event
+    //
+    //Company Events
+    //
+
+    //BTN-Company-NEW click event
     $("#btnCompNew").click(function () {
         supModeUpdate = 'new';
 
-        CompanyClearEditPanel();
+        companyClearEditPanel();
 
         $("#divEditCompany").show();
         $("#divEditOffice").hide();
@@ -139,37 +136,24 @@ function doCompany(crPage) {
 
     });
 
-    //BTN OFFICE NEW click event
-    $("#btnOffNew").click(function () {
-        supModeUpdate = 'new';
+    //BTN-Company-DELETE click event
+    $("#btnCompDelete").click(function () {
 
-        CompanyClearEditPanel();
+        fuLib.company.delete(selIdCompany).success(function (data, status, xhr) {
 
-        $("#divEditCompany").hide();
-        $("#divEditOffice").show();
-        $("#divEditPerson").hide();
+            noty({ text: 'Company deleted successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
-        $("#divUpdate").show();
+            var table = $("#tblCompany").DataTable();
+            table.ajax.reload();
 
-    });
-
-    //BTN PERSON NEW click event
-    $("#btnPersonNew").click(function () {
-        supModeUpdate = 'new';
-
-        CompanyClearEditPanel();
-
-        $("#divEditCompany").hide();
-        $("#divEditOffice").hide();
-        $("#divEditPerson").show();
-
-        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
-        $("#divUpdate").show();
+        }).error(function (xhr, status, error) {
+            //Company.delete failed
+            handleError('Company.delete', xhr, status, error);
+        });
 
     });
 
-    //NEW Company-SAVE CHANGES click event
+    //NEW-Company-SAVE CHANGES click event
     $("#btnCompUpdateSave").click(function () {
 
         var isEmptyCompany = false;
@@ -232,7 +216,7 @@ function doCompany(crPage) {
 
     });
 
-    //NEW Company-Cancel click event
+    //NEW-Company-CANCEL click event
     $("#btnCompUpdateCancel").click(function () {
 
         $("#divUpdate").hide();
@@ -241,11 +225,55 @@ function doCompany(crPage) {
 
     });
 
-    //NEW OFFICE-SAVE CHANGES click event
+    //
+    //Company-OFFICE Events
+    //
+
+    //BTN-OFFICE-NEW click event
+    $("#btnOffNew").click(function () {
+
+        if (isCompany == false) {
+
+            noty({ text: 'Please select a Company first.', layout: 'topRight', type: 'error', timeout: 2000 });
+
+            return false;
+        }
+
+        supModeUpdate = 'new';
+
+        companyClearEditPanel();
+
+        $("#divEditCompany").hide();
+        $("#divEditOffice").show();
+        $("#divEditPerson").hide();
+
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divUpdate").show();
+
+    });
+
+    //BTN-Company-OFFICE-DELETE click event
+    $("#btnOffDelete").click(function () {
+
+        fuLib.company.deleteOffice(selIdCompanyOffice).success(function (data, status, xhr) {
+
+            noty({ text: 'Company office deleted successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+            var table = $("#tblOffice").DataTable();
+            table.ajax.reload();
+
+        }).error(function (xhr, status, error) {
+            //Company.deleteOffice failed
+            handleError('Company.deleteOffice', xhr, status, error);
+        });
+
+    });
+
+    //NEW-OFFICE-SAVE click event
     $("#btnOfficeUpdateSave").click(function () {
 
         var isEmptyOffice = false;
-        
+
         var oOffice = {
             title: $("#txtTitle").val(),
             address1: $("#txtAddress1").val(),
@@ -307,7 +335,7 @@ function doCompany(crPage) {
                     tableCompanyOffice.ajax.reload();
 
                 }).error(function (xhr, status, error) {
-                    //supplier.addOffice failed
+                    //Company.addOffice failed
                     handleError('Company.addOffice', xhr, status, error);
                 });
             }
@@ -335,9 +363,55 @@ function doCompany(crPage) {
 
     });
 
-    //NEW PERSON-SAVE CHANGES click event
+    //
+    //Company-OFFICE-PERSON Events
+    //
+
+    //BTN-Company-OFFICE-PERSON-NEW click event
+    $("#btnPersonNew").click(function () {
+
+        if (isCompanyOffice == false) {
+
+            noty({ text: 'Please select a Company office first.', layout: 'topRight', type: 'error', timeout: 2000 });
+
+            return false;
+        }
+
+        supModeUpdate = 'new';
+
+        companyClearEditPanel();
+
+        $("#divEditCompany").hide();
+        $("#divEditOffice").hide();
+        $("#divEditPerson").show();
+
+        $("#divTable").removeClass("col-md-12").addClass("col-md-8");
+        $("#divUpdate").show();
+
+        onresize();
+
+    });
+
+    //BTN-Company-OFFICE-PERSON-DELETE click event
+    $("#btnPersonDelete").click(function () {
+
+        fuLib.company.deletePerson(selIdCompanyOfficePerson).success(function (data, status, xhr) {
+
+            noty({ text: 'Company office person deleted successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+            var table = $("#tblPerson").DataTable();
+            table.ajax.reload();
+
+        }).error(function (xhr, status, error) {
+            //Company.deletePerson failed
+            handleError('Company.deletePerson', xhr, status, error);
+        });
+
+    });
+
+    //NEW-Company-OFFICE-PERSON-SAVE click event
     $("#btnPersonUpdateSave").click(function () {
-        
+
         var isEmptyPerson = false;
 
         var oPerson = {
@@ -370,21 +444,11 @@ function doCompany(crPage) {
             oPerson.dateAnniversary.trim().length == 0) {
             isPersonEmpty = true;
         }
-
         if (supModeUpdate == 'new') {
-
-            if (isEmptyPerson == true) {
-                noty({ text: "Please type person details", layout: 'topRight', type: 'error', timeout: 2000 });
-                return false;
-            }
-            else {
+            if (isEmptyPerson == false) {
                 //save USER details
-
                 fuLib.person.add(oPerson).success(function (data, status, xhr) {
-
                     console.log(data);
-
-
                     var oOfficePerson = {
                         companyOffice: selIdCompanyOffice,
                         person: data.person._id,
@@ -395,14 +459,8 @@ function doCompany(crPage) {
                         isActive: true,
                         flag: 0
                     };
-
-                    if (oOfficePerson.LovDesignation == "0") {
-                        oOfficePerson.LovDesignation = null;
-                    }
-
-                    if (oOfficePerson.LovDepartment == "0") {
-                        oOfficePerson.LovDepartment = null;
-                    }
+                    oOfficePerson.LovDesignation = oOfficePerson.LovDesignation == '0' ? null : oOfficePerson.LovDesignation;
+                    oOfficePerson.LovDepartment = oOfficePerson.LovDepartment == '0' ? null : oOfficePerson.LovDepartment;
 
                     fuLib.company.addPerson(oOfficePerson).success(function (data, status, xhr) {
 
@@ -413,7 +471,7 @@ function doCompany(crPage) {
 
                     }).error(function (xhr, status, error) {
                         //Company.addPerson failed
-                        handleError('supplier.addPerson', xhr, status, error);
+                        handleError('Company.addPerson', xhr, status, error);
                     });
 
                 }).error(function (xhr, status, error) {
@@ -421,12 +479,16 @@ function doCompany(crPage) {
                     handleError('person.add', xhr, status, error);
                 });
             }
+            else if (supModeUpdate == 'edit') {
 
+            }
             $("#divUpdate").hide();
             $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
             return false;
         }
+
+        return false;
 
     });
 
@@ -438,147 +500,39 @@ function doCompany(crPage) {
     });
 }
 
-function fillCompanyOffice(comId) {
+function fillCompanyOffice(suppId) {
+
+    console.log('fillCompanyOffice / ' + suppId);
+
+    if (suppId == undefined) {
+        //return false;
+        suppId = "0";
+    }
 
     if ($.fn.dataTable.isDataTable("#tblOffice")) {
 
-        tableCompanyOffice.ajax.url(apiUrl + "company/office/getall/" + comId).load();
-    }
-    else {
-        //Configures OFFICE DataTable
-        $("#tblOffice").on('xhr.dt', function (e, settings, data, xhr) {
-            //DataTable AJAX load complete event
-
-            //data will be null is AJAX error
-            if (data) {
-                $('#tblOffice').on('draw.dt', function () {
-                    //DataTable draw complete event
-
-                    tableCompanyOffice = $("#tblOffice").DataTable();
-                    //select first row by default
-                    tableCompanyOffice.rows(':eq(0)', { page: 'current' }).select();
-
-                    selIdCompanyOffice = tableCompanyOffice.rows(':eq(0)', { page: 'current' }).ids()[0];
-                    fillCompanyOfficePerson(selIdCompanyOffice);
-                });
-            }
-        }).DataTable({
-            "autoWidth": false,
-            "select": {
-                style: 'single'
-            },
-            deferRender: true,
-            rowId: "_id",
-            "ajax": {
-                "url": apiUrl + "company/office/getall/" + comId,
-                "dataSrc": "",
-                "headers": {
-                    "Authorization": "Bearer " + token
-                }
-            },
-            "columns": [
-                { "data": "title", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "address1", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
-            ],
-        });
-
-
-        //TABLE ROW CLICK EVENT
-        $("#tblOffice tbody").on('click', 'tr', function () {
-            debugger;
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            }
-            else {
-                tableCompanyOffice = $('#tblOffice').DataTable();
-                tableCompanyOffice.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-
-                selIdCompanyOffice = $(this).attr('id');
-
-                fillCompanyOfficePerson(selIdCompanyOffice);
-
-            }
-        });
-
-        //TABLE REDRAW EVENT
-        $('#tblOffice').on('draw.dt', function () {
-            onresize();
-        });
-
-
+        tableCompanyOffice.ajax.url(apiUrl + "company/office/getall/" + suppId).load();
     }
 }
 
 function fillCompanyOfficePerson(offId) {
-    debugger;
+
+    console.log('fillCompanyOfficePerson / ' + offId);
+
+    if (offId == undefined) {
+        //return false;
+        offId = "0";
+    }
+
     if ($.fn.dataTable.isDataTable("#tblPerson")) {
 
-        tableCompanyOfficePeople.ajax.url(apiUrl + "company/person/getall/" + offId).load();
-    }
-    else {
-        //Configures PERSON DataTable
-        $("#tblPerson").on('xhr.dt', function (e, settings, data, xhr) {
-            //DataTable AJAX load complete event
-
-            //data will be null is AJAX error
-            if (data) {
-                $('#tblPerson').on('draw.dt', function () {
-                    //DataTable draw complete event
-
-                    tableCompanyOfficePeople = $("#tblPerson").DataTable();
-                    //select first row by default
-                    tableCompanyOfficePeople.rows(':eq(0)', { page: 'current' }).select();
-                });
-            }
-        }).DataTable({
-            "autoWidth": false,
-            "select": {
-                style: 'single'
-            },
-            deferRender: true,
-            rowId: "_id",
-            "ajax": {
-                "url": apiUrl + "company/person/getall/" + offId,
-                "dataSrc": "",
-                "headers": {
-                    "Authorization": "Bearer " + token
-                }
-            },
-            "columns": [
-                { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "isManager", "defaultContent": "<span class='text-muted'>Not set</span>" },
-                { "data": "LovDesignation.title", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            ],
-        });
-
-
-        //TABLE ROW CLICK EVENT
-        $("#tblPerson tbody").on('click', 'tr', function () {
-
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            }
-            else {
-                tableCompanyOfficePeople = $('#tblPerson').DataTable();
-                tableCompanyOfficePeople.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-
-                selIdCompanyOfficePerson = $(this).attr('id');
-
-            }
-        });
-
-        //TABLE REDRAW EVENT
-        $('#tblPerson').on('draw.dt', function () {
-            onresize();
-        });
+        if (tableCompanyOfficePeople !== undefined) {
+            tableCompanyOfficePeople.ajax.url(apiUrl + "company/person/getall/" + offId).load();
+        }
     }
 }
 
-function CompanyClearEditPanel() {
+function companyClearEditPanel() {
 
     //Company
     $("#txtName").val('');
@@ -620,32 +574,12 @@ function CompanyClearEditPanel() {
     $("input[name=iradioGender]:checked", "#frmPerson").val('0');
 }
 
-function configCompanyTable() {
+function configCompanyTables() {
     //"option strict";
 
-    //DATATABLE AJAX LOAD COMPLETE EVENT
-    $("#tblCompany").on('xhr.dt', function (e, settings, data, xhr) {
-
-        //data will be null is AJAX error
-        if (data) {
-            //DATATABLE DRAW COMPLETE EVENT
-            $('#tblCompany').on('draw.dt', function () {
-
-                tableCompany = $("#tblCompany").DataTable();
-                //select first row by default
-
-                tableCompany.rows(':eq(0)', { page: 'current' }).select();
-                selIdCompany = tableCompany.rows(':eq(0)', { page: 'current' }).ids()[0];
-
-                console.log(selIdCompany);
-
-                fillCompanyOffice(selIdCompany);
-
-
-
-            });
-        }
-    }).DataTable({
+    //Configures Company DataTable
+    //
+    $("#tblCompany").DataTable({
         "autoWidth": false,
         "select": {
             style: 'single'
@@ -653,7 +587,7 @@ function configCompanyTable() {
         deferRender: true,
         rowId: "_id",
         "ajax": {
-            "url": apiUrl + "Company/getall",
+            "url": apiUrl + "company/getall",
             "dataSrc": "",
             "headers": {
                 "Authorization": "Bearer " + token
@@ -668,7 +602,62 @@ function configCompanyTable() {
         ],
     });
 
-    //TABLE ROW CLICK EVENT
+    //Company table LoadComplete event
+    $("#tblCompany").on('xhr.dt', function (e, settings, data, xhr) {
+        //data will be null is AJAX error
+        if (data) {
+            //Company table DrawComplete event
+            $('#tblCompany').on('draw.dt', function () {
+                //DataTable draw complete event
+                tableCompany = $("#tblCompany").DataTable();
+
+                //select first row by default
+                tableCompany.rows(':eq(0)', { page: 'current' }).select();
+                selIdCompany = tableCompany.rows(':eq(0)', { page: 'current' }).ids()[0];
+                console.log('selIdCompany / ' + selIdCompany);
+
+                if (selIdCompany == undefined) {
+                    selIdCompany = "99a9b999999f9c9c99999999";
+                    isCompany = false;
+                }
+                else {
+                    isCompany = true;
+                }
+
+                //Configures Company OFFICE DataTable
+                //
+                if ($.fn.dataTable.isDataTable("#tblPerson")) {
+
+                    tableCompanyOffice.ajax.url(apiUrl + "company/office/getall/" + selIdCompany).load();
+                }
+                else {
+                    $("#tblOffice").DataTable({
+                        "autoWidth": false,
+                        "select": {
+                            style: 'single'
+                        },
+                        deferRender: true,
+                        rowId: "_id",
+                        "ajax": {
+                            "url": apiUrl + "company/office/getall/" + selIdCompany,
+                            "dataSrc": "",
+                            "headers": {
+                                "Authorization": "Bearer " + token
+                            }
+                        },
+                        "columns": [
+                            { "data": "title", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                            { "data": "address1", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                            { "data": "email", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                            { "data": "phone", "defaultContent": "<span class='text-muted'>Not set</span>" }
+                        ],
+                    });
+                }
+            });
+        }
+    });
+
+    //Company table RowClick event
     $("#tblCompany tbody").on('click', 'tr', function () {
 
         if ($(this).hasClass('selected')) {
@@ -682,11 +671,137 @@ function configCompanyTable() {
             selIdCompany = $(this).attr("id");
 
             fillCompanyOffice(selIdCompany);
+
+            $("#divUpdate").hide();
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
         }
     });
 
-    //TABLE REDRAW EVENT
+    //Company table ReDraw event
     $('#tblCompany').on('draw.dt', function () {
+        onresize();
+    });
+
+    //Company-OFFICE table AJAX LoadComplete event
+    $("#tblOffice").on('xhr.dt', function (e, settings, data, xhr) {
+        //data will be null is AJAX error
+        if (data) {
+            $('#tblOffice').on('draw.dt', function () {
+                //DataTable draw complete event
+                tableCompanyOffice = $("#tblOffice").DataTable();
+
+                //select first row by default
+                tableCompanyOffice.rows(':eq(0)', { page: 'current' }).select();
+                selIdCompanyOffice = tableCompanyOffice.rows(':eq(0)', { page: 'current' }).ids()[0];
+                console.log('selIdCompanyOffice / ' + selIdCompanyOffice);
+
+                if (selIdCompanyOffice == undefined) {
+                    selIdCompanyOffice = "99a9b999999f9c9c99999999";
+                    isCompanyOffice = false;
+                }
+                else {
+                    isCompanyOffice = true;
+                }
+
+                //Configures Company OFFICE PERSON DataTable
+                //
+                if ($.fn.dataTable.isDataTable("#tblPerson")) {
+
+                    tableCompanyOfficePeople.ajax.url(apiUrl + "Company/person/getall/" + selIdCompanyOffice).load();
+                }
+                else {
+                    $("#tblPerson").DataTable({
+                        "autoWidth": false,
+                        "select": {
+                            style: 'single'
+                        },
+                        deferRender: true,
+                        rowId: "_id",
+                        "ajax": {
+                            "url": apiUrl + "Company/person/getall/" + selIdCompanyOffice,
+                            "dataSrc": "",
+                            "headers": {
+                                "Authorization": "Bearer " + token
+                            }
+                        },
+                        "columns": [
+                            { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                            { "data": "isManager", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                            { "data": "LovDesignation.title", "defaultContent": "<span class='text-muted'>Not set</span>" },
+                            { "data": "LovDepartment.title", "defaultContent": "<span class='text-muted'>Not set</span>" },
+
+                        ],
+                    });
+                }
+            });
+        }
+    });
+
+    //Company-OFFICE table RowClick event
+    $("#tblOffice tbody").on('click', 'tr', function () {
+
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            tableCompanyOffice = $('#tblOffice').DataTable();
+            tableCompanyOffice.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selIdCompanyOffice = $(this).attr('id');
+
+            fillCompanyOfficePerson(selIdCompanyOffice);
+
+            $("#divUpdate").hide();
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+
+        }
+    });
+
+    //Company-OFFICE table ReDraw event
+    $('#tblOffice').on('draw.dt', function () {
+        onresize();
+    });
+
+    //Company-OFFICE-PERSON table AJAX LoadComplete event
+    $("#tblPerson").on('xhr.dt', function (e, settings, data, xhr) {
+        //data will be null is AJAX error
+        if (data) {
+            $('#tblPerson').on('draw.dt', function () {
+                //DataTable draw complete event
+                tableCompanyOfficePeople = $("#tblPerson").DataTable();
+
+                //select first row by default
+                tableCompanyOfficePeople.rows(':eq(0)', { page: 'current' }).select();
+                selIdCompanyOfficePerson = tableCompanyOfficePeople.rows(':eq(0)', { page: 'current' }).ids()[0];
+
+                console.log('selIdCompanyOfficePerson / ' + selIdCompanyOfficePerson);
+
+            });
+        }
+    });
+
+    //Company-OFFICE-PERSON table RowClick event
+    $("#tblPerson tbody").on('click', 'tr', function () {
+
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            tableCompanyOfficePeople = $('#tblPerson').DataTable();
+            tableCompanyOfficePeople.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            selIdCompanyOfficePerson = $(this).attr('id');
+
+            $("#divUpdate").hide();
+            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+
+        }
+    });
+
+    //Company-OFFICE-PERSON table ReDraw event
+    $('#tblPerson').on('draw.dt', function () {
         onresize();
     });
 }

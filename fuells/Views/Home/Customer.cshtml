@@ -1,7 +1,6 @@
 ﻿@{
-    ViewBag.Title = "Customer";
+    ViewBag.Title = "Supplier";
 }
-
 <input type="hidden" id="hidSelMenu" value="liPageCustomer" />
 <input type="hidden" id="hidSelCustomer" value="000" />
 
@@ -21,18 +20,19 @@
             </div>
             <div class="panel panel-default tabs">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li id="tabCustomers" class="active"><a href="#tab-Customers" role="tab" data-toggle="tab">Customers</a></li>
+                    <li id="tabSupplier" class="active"><a href="#tab-customers" role="tab" data-toggle="tab">Customers</a></li>
                     <li id="tabOffice"><a href="#tab-office" role="tab" data-toggle="tab">Office</a></li>
                     <li id="tabPeople"><a href="#tab-people" role="tab" data-toggle="tab">People</a></li>
                 </ul>
                 <div class="panel-body tab-content">
-                    <div class="tab-pane active" id="tab-Customers">
+                    <div class="tab-pane active" id="tab-customers">
                         <!--SUPPLIER TABLE-->
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <button id="btnCusNew" type="button" class="btn btn-primary">New Customers</button>
                                 <button id="btnCusEdit" type="button" class="btn btn-info">Edit</button>
-                                <button id="btnCusDelete" type="button" class="btn btn-danger">Delete</button>
+                                <a href="#" class="mb-control btn btn-danger" data-box="#mb-delete-customers">Delete</a>
+
                                 <ul class="panel-controls">
                                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                                     <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="panel-body">
-                                <table class="table DataTable" id="tblCustomers">
+                                <table class="table DataTable" id="tblCustomer">
                                     <thead>
                                         <tr>
                                             <th width="20%">Customers name</th>
@@ -61,7 +61,7 @@
                             <div class="panel-heading">
                                 <button id="btnOffNew" type="button" class="btn btn-primary">New Office</button>
                                 <button id="btnOffEdit" type="button" class="btn btn-info">Edit</button>
-                                <button id="btnOffDelete" type="button" class="btn btn-danger">Delete</button>
+                                <a href="#" class="mb-control btn btn-danger" data-box="#mb-delete-office">Delete</a>
 
                                 <ul class="panel-controls">
                                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
@@ -90,7 +90,7 @@
                             <div class="panel-heading">
                                 <button id="btnPersonNew" type="button" class="btn btn-primary">New Person</button>
                                 <button id="btnPersonEdit" type="button" class="btn btn-info">Edit</button>
-                                <button id="btnPersonDelete" type="button" class="btn btn-danger">Delete</button>
+                                <a href="#" class="mb-control btn btn-danger" data-box="#mb-delete-person">Delete</a>
 
                                 <ul class="panel-controls">
                                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
@@ -104,7 +104,8 @@
                                         <tr>
                                             <th width="20%">Name</th>
                                             <th width="20%">Manager</th>
-                                            <th width="20%">Desig</th>
+                                            <th width="20%">Designation</th>
+                                            <th width="20%">Department</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -118,13 +119,13 @@
 
         <!-- UPDATE PANELS -->
         <div class="col-md-4" id="divUpdate">
-            <!-- SUPPLIER PANEL -->
+            <!-- Customer PANEL -->
             <div class="panel panel-default" id="divEditCustomer">
                 <div class="panel-heading">
                     <h3><span class="fa fa-arrow-circle-o-left"></span> Customer details</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form" action="#" role="form" id="frmSupplier">
+                    <form class="form" action="#" role="form" id="frmCustomer">
                         <table class="tableEdit" border="0">
                             <tr>
                                 <td colspan="2" class="labelDanger">Customer name /</td>
@@ -178,9 +179,9 @@
                                     <div class="input-group" style="width:100%;">
                                         <div class="input-group-btn">
                                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span id="ulSuppGovtNoSpan">Action </span><span class="caret"></span>
+                                                <span id="ulCusGovtNoSpan">Action </span><span class="caret"></span>
                                             </button>
-                                            <ul class="dropdown-menu" id="ulSuppGovtNo"></ul>
+                                            <ul class="dropdown-menu" id="ulCusGovtNo"></ul>
                                         </div>
                                         <input type="text" class="form-control" placeholder="Govt Code" id="txtCusGovtNo">
                                     </div>
@@ -401,5 +402,59 @@
         </div>
     </div>
     <!-- PAGE CONTENT - ENDS -->
+</div>
+
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-delete-customers">
+    <div class="mb-container">
+        <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-sign-out"></span> Delete <strong>Customers</strong> ?</div>
+            <div class="mb-content">
+                <p>Are you sure you want to delete?</p>
+                <p>Press No if you want to continue work. Press Yes to delete selected Customers.</p>
+            </div>
+            <div class="mb-footer">
+                <div class="pull-right">
+                    <button id="btnCusDelete" class="btn btn-success btn-lg mb-control-close">Yes</button>
+                    <button class="btn btn-default btn-lg mb-control-close">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-delete-office">
+    <div class="mb-container">
+        <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-sign-out"></span> Delete <strong>Office</strong> ?</div>
+            <div class="mb-content">
+                <p>Are you sure you want to delete?</p>
+                <p>Press No if you want to continue work. Press Yes to delete selected office.</p>
+            </div>
+            <div class="mb-footer">
+                <div class="pull-right">
+                    <button id="btnOffDelete" class="btn btn-success btn-lg mb-control-close">Yes</button>
+                    <button class="btn btn-default btn-lg mb-control-close">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-delete-person">
+    <div class="mb-container">
+        <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-sign-out"></span> Delete <strong>Person</strong> ?</div>
+            <div class="mb-content">
+                <p>Are you sure you want to delete?</p>
+                <p>Press No if you want to continue work. Press Yes to delete selected person.</p>
+            </div>
+            <div class="mb-footer">
+                <div class="pull-right">
+                    <button id="btnPersonDelete" class="btn btn-success btn-lg mb-control-close">Yes</button>
+                    <button class="btn btn-default btn-lg mb-control-close">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

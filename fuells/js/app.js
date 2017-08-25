@@ -771,6 +771,41 @@ var fuLib = {
                     }
                 })
             );
+        },
+        delete: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/delete/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        deleteOffice: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/office/delete/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        deletePerson: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "customer/person/delete/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
         }
     },
 
@@ -795,7 +830,7 @@ var fuLib = {
                     type: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
-                    } 
+                    }
                 })
             );
         },
@@ -867,7 +902,42 @@ var fuLib = {
                     }
                 })
             );
-        }
+        },
+          delete: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/delete/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        deleteOffice: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/office/delete/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        deletePerson: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "company/person/delete/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
     },
 
     style: {
