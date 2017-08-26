@@ -47,27 +47,6 @@ function doPurchaseOrder(crPage) {
         handleError('style.getAll', xhr, status, error);
     });
 
-    //STYLE dropdown change event
-    $('#selStyle').change(function (e) {
-        var parent = $('#selStyle').val();
-
-        clearCombo($("#selSize"));
-
-        if (parent != '0') {
-            fuLib.style.getOne(parent).success(function (data, status, xhr) {
-                //fill STYLE SIZE
-                fillCombo('#selSize', data.sizes);
-
-                //fill STYLE MATERIAL
-                fillCombo('#selPOMaterial', data.materials);
-
-
-            }).error(function (xhr, status, error) {
-                handleError('style.getOne', xhr, status, error);
-            });
-        }
-    });
-
     //fill INTERNAL-TYPE
     fuLib.lov.getLov(7).success(function (data, status, xhr) {
         fillCombo('#selInternalType', data);
@@ -297,4 +276,115 @@ function configPOTable() {
     $('#tblPO').on('draw.dt', function () {
         onresize();
     });
+}
+
+function addPoStyle() {
+
+    var styleId = $('#selStyle').val();
+
+
+    if (styleId == '0') {
+        
+        noty({ text: 'Please select a STYLE.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+
+        return false;
+
+    }
+
+    //check if STYLE is already added
+    var s1 = $('#tblPoStyle').find('input[value="' + styleId + '"]');
+
+    if (s1.length > 0) {
+        noty({ text: 'Style already added.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+
+    fuLib.style.getOne(styleId).success(function (data, status, xhr) {
+
+        //add STYLE and SIZES
+        var sizeCount = data.sizes.length + 1;
+
+        var row = '<tr>';
+        row += '<td rowspan="' + sizeCount + '">' + data.title + '<input type="hidden" value="' + data._id + '" /></td>';
+        row += '<td rowspan="' + sizeCount + '"><input type="number" class="form-control" value="0" /></td>';
+        row += '</tr>';
+
+        $("#tblPoStyle").append(row);
+
+        data.sizes.forEach(function (size, index) {
+
+            row = '<tr>';
+            row += '<td>' + size.title + '</td>';
+            row += '<td><input type="number" class="form-control" value="0" /></td>';
+            row += '</tr>';
+
+            $("#tblPoStyle").append(row);
+
+        });
+
+        //add STYLE and MATERIALS
+        var matCount = data.materials.length + 1;
+
+        var row = '<tr>';
+        row += '<td rowspan="' + matCount + '">' + data.title + '<input type="hidden" value="' + data._id + '" /></td>';
+        row += '</tr>';
+
+        $("#tblPoMaterial").append(row);
+
+        data.materials.forEach(function (mat, index) {
+
+            row = '<tr>';
+            row += '<td>' + mat.title + '</td>';
+            row += '<td><input type="text" class="form-control" placeholder="Notes" /></td>';
+            row += '<td><input type="number" class="form-control" value="0" /></td>';
+            row += '</tr>';
+
+            $("#tblPoMaterial").append(row);
+
+        });
+
+
+
+    }).error(function (xhr, status, error) {
+        handleError('style.getOne', xhr, status, error);
+    });
+
+
+
+}
+
+function addPoInternal() {
+
+    var internalId = $('#selInternalType').val();
+
+    if (internalId == '0') {
+        noty({ text: 'Please select an INTERNAL-DETAIL.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var txtInternal = $('#selInternalType').find('option[value="' + internalId + '"]').text();
+    var txtNotes = $('#txtInternalNotes').val();
+    var txtPriority = $('#selInternalPriority').val();
+
+    //check if INTERNAL-DETAIL is already added
+    var s1 = $('#tblPoInternal').find('input[value="' + internalId + '"]');
+
+    if (s1.length > 0) {
+        noty({ text: 'Internal detail already added.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var row = '<tr>';
+    row += '<td>' + txtInternal + '<input type="hidden" value="' + internalId + '" /></td>';
+    row += '<td>' + txtNotes + '</td>';
+    row += '<td>' + txtPriority + '</td>';
+
+    row += '</tr>';
+
+    $("#tblPoInternal").append(row);
+
+
+
+
 }

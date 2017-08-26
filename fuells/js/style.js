@@ -13,8 +13,6 @@ var selSizeId = '';
 //CALLED FROM _LAYOUT2
 function doStyle(crPage) {
 
-  
-
     $("#divUpdate").hide();
 
     $("#divTable").removeClass("col-md-8").addClass("col-md-12");
@@ -172,46 +170,24 @@ function doStyle(crPage) {
         };
 
         $("#lstStyleMaterial").find("a").each(function () {
-            //var oMaterial = {
-            //    id: ''
-            //};
-            //oMaterial.id = $(this).find("p").text();
-
             var mat1 = $(this).find("p").text();
             oStyle.materials.push(mat1);
         });
 
         $("#lstStyleLeather").find("a").each(function () {
-            //var oLeather = {
-            //    id: ''
-            //};
-            //oLeather.id = $(this).find("p").text();
-
             var lea1 = $(this).find("p").text();
             oStyle.leathers.push(lea1);
         });
 
         $("#lstStyleColor").find("a").each(function () {
-            //var oColor = {
-            //    id: ''
-            //};
-            //oColor.id = $(this).find("p").text();
-
             var col1 = $(this).find("p").text();
             oStyle.colors.push(col1);
         });
 
         $("#lstStyleSize").find("a").each(function () {
-            //var oSize = {
-            //    id: ''
-            //};
-            //oSize.id = $(this).find("p").text();
-
             var siz1 = $(this).find("p").text();
             oStyle.sizes.push(siz1);
         });
-
-        console.log(oStyle);
 
         //check if oStyle is empty
         if (oStyle.title.trim().length == 0 ||
