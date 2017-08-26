@@ -1496,6 +1496,7 @@
     <Content Include="pos\po.pdf" />
     <Content Include="Content\los\lo0.pdf" />
     <Content Include="Content\pos\po0.pdf" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -638,7 +638,44 @@ var fuLib = {
                     }
                 })
             );
-        }
+        },
+
+        delete: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/delete/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        deleteOffice: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/office/delete/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        deletePerson: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "supplier/person/delete/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
     },
 
     customer: {
