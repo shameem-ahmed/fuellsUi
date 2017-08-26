@@ -31,7 +31,8 @@
                             <div class="panel-heading">
                                 <button id="btnSuppNew" type="button" class="btn btn-primary">New Supplier</button>
                                 <button id="btnSuppEdit" type="button" class="btn btn-info">Edit</button>
-                                <button id="btnSuppDelete" type="button" class="btn btn-danger">Delete</button>
+                                <a href="#" class="mb-control btn btn-danger" data-box="#mb-delete-supplier">Delete</a>
+
                                 <ul class="panel-controls">
                                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                                     <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
@@ -60,7 +61,7 @@
                             <div class="panel-heading">
                                 <button id="btnOffNew" type="button" class="btn btn-primary">New Office</button>
                                 <button id="btnOffEdit" type="button" class="btn btn-info">Edit</button>
-                                <button id="btnOffDelete" type="button" class="btn btn-danger">Delete</button>
+                                <a href="#" class="mb-control btn btn-danger" data-box="#mb-delete-office">Delete</a>
                              
                                 <ul class="panel-controls">
                                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
@@ -89,7 +90,7 @@
                             <div class="panel-heading">
                                 <button id="btnPersonNew" type="button" class="btn btn-primary">New Person</button>
                                 <button id="btnPersonEdit" type="button" class="btn btn-info">Edit</button>
-                                <button id="btnPersonDelete" type="button" class="btn btn-danger">Delete</button>
+                                <a href="#" class="mb-control btn btn-danger" data-box="#mb-delete-person">Delete</a>
                           
                                 <ul class="panel-controls">
                                     <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
@@ -403,5 +404,59 @@
         </div>
     </div>
     <!-- PAGE CONTENT - ENDS -->
+</div>
+
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-delete-supplier">
+    <div class="mb-container">
+        <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-sign-out"></span> Delete <strong>Supplier</strong> ?</div>
+            <div class="mb-content">
+                <p>Are you sure you want to delete?</p>
+                <p>Press No if you want to continue work. Press Yes to delete selected supplier.</p>
+            </div>
+            <div class="mb-footer">
+                <div class="pull-right">
+                    <button id="btnSuppDelete" class="btn btn-success btn-lg mb-control-close">Yes</button>
+                    <button class="btn btn-default btn-lg mb-control-close">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-delete-office">
+    <div class="mb-container">
+        <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-sign-out"></span> Delete <strong>Office</strong> ?</div>
+            <div class="mb-content">
+                <p>Are you sure you want to delete?</p>
+                <p>Press No if you want to continue work. Press Yes to delete selected office.</p>
+            </div>
+            <div class="mb-footer">
+                <div class="pull-right">
+                    <button id="btnOffDelete" class="btn btn-success btn-lg mb-control-close">Yes</button>
+                    <button class="btn btn-default btn-lg mb-control-close">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-delete-person">
+    <div class="mb-container">
+        <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-sign-out"></span> Delete <strong>Person</strong> ?</div>
+            <div class="mb-content">
+                <p>Are you sure you want to delete?</p>
+                <p>Press No if you want to continue work. Press Yes to delete selected person.</p>
+            </div>
+            <div class="mb-footer">
+                <div class="pull-right">
+                    <button id="btnPersonDelete" class="btn btn-success btn-lg mb-control-close">Yes</button>
+                    <button class="btn btn-default btn-lg mb-control-close">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

@@ -139,22 +139,18 @@ function doSupplier(crPage) {
     //BTN-SUPPLIER-DELETE click event
     $("#btnSuppDelete").click(function () {
 
-        var confirm1 = confirm("Sure to delete this supplier?");
+        fuLib.supplier.delete(selIdSupplier).success(function (data, status, xhr) {
 
-        if (confirm1 == true) {
+            noty({ text: 'Supplier deleted successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-            fuLib.supplier.delete(selIdSupplier).success(function (data, status, xhr) {
+            var table = $("#tblSupplier").DataTable();
+            table.ajax.reload();
 
-                noty({ text: 'Supplier deleted successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+        }).error(function (xhr, status, error) {
+            //supplier.delete failed
+            handleError('supplier.delete', xhr, status, error);
+        });
 
-                var table = $("#tblSupplier").DataTable();
-                table.ajax.reload();
-
-            }).error(function (xhr, status, error) {
-                //supplier.delete failed
-                handleError('supplier.delete', xhr, status, error);
-            });
-        }
     });
 
     //NEW-SUPPLIER-SAVE CHANGES click event
@@ -259,22 +255,18 @@ function doSupplier(crPage) {
     //BTN-SUPPLIER-OFFICE-DELETE click event
     $("#btnOffDelete").click(function () {
 
-        var confirm1 = confirm("Sure to delete this supplier office?");
+        fuLib.supplier.deleteOffice(selIdSupplierOffice).success(function (data, status, xhr) {
 
-        if (confirm1 == true) {
+            noty({ text: 'Supplier office deleted successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-            fuLib.supplier.deleteOffice(selIdSupplierOffice).success(function (data, status, xhr) {
+            var table = $("#tblOffice").DataTable();
+            table.ajax.reload();
 
-                noty({ text: 'Supplier office deleted successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+        }).error(function (xhr, status, error) {
+            //supplier.deleteOffice failed
+            handleError('supplier.deleteOffice', xhr, status, error);
+        });
 
-                var table = $("#tblOffice").DataTable();
-                table.ajax.reload();
-
-            }).error(function (xhr, status, error) {
-                //supplier.deleteOffice failed
-                handleError('supplier.deleteOffice', xhr, status, error);
-            });
-        }
     });
 
     //NEW-OFFICE-SAVE click event
@@ -403,22 +395,18 @@ function doSupplier(crPage) {
     //BTN-SUPPLIER-OFFICE-PERSON-DELETE click event
     $("#btnPersonDelete").click(function () {
 
-        var confirm1 = confirm("Sure to delete this supplier office person?");
+        fuLib.supplier.deletePerson(selIdSupplierOfficePerson).success(function (data, status, xhr) {
 
-        if (confirm1 == true) {
+            noty({ text: 'Supplier office person deleted successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-            fuLib.supplier.deletePerson(selIdSupplierOfficePerson).success(function (data, status, xhr) {
+            var table = $("#tblPerson").DataTable();
+            table.ajax.reload();
 
-                noty({ text: 'Supplier office person deleted successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+        }).error(function (xhr, status, error) {
+            //supplier.deletePerson failed
+            handleError('supplier.deletePerson', xhr, status, error);
+        });
 
-                var table = $("#tblPerson").DataTable();
-                table.ajax.reload();
-
-            }).error(function (xhr, status, error) {
-                //supplier.deletePerson failed
-                handleError('supplier.deletePerson', xhr, status, error);
-            });
-        }
     });
 
     //NEW-SUPPLIER-OFFICE-PERSON-SAVE click event
