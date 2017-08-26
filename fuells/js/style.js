@@ -2,16 +2,18 @@
 
 var userToggleRow = true;
 
+var crTab = 0;
+var modeUpdate = 'newStyle';
+var selStyleId = '';
+var selMaterialId = '';
+var selLeatherId = '';
+var selColorId = '';
+var selSizeId = '';
+
 //CALLED FROM _LAYOUT2
 function doStyle(crPage) {
 
-    var crTab = 0;
-    var modeUpdate = 'newStyle';
-    var selStyleId = '';
-    var selMaterialId = '';
-    var selLeatherId = '';
-    var selColorId = '';
-    var selSizeId = '';
+  
 
     $("#divUpdate").hide();
 
@@ -827,7 +829,7 @@ function configSizeTable() {
             table.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
 
-            selColorId = $(this).find('input[type=hidden]').eq(0).val();
+            selSizeId = $(this).find('input[type=hidden]').eq(0).val();
         }
     });
 

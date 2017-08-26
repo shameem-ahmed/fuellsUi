@@ -500,18 +500,18 @@ function doCompany(crPage) {
     });
 }
 
-function fillCompanyOffice(suppId) {
+function fillCompanyOffice(compId) {
 
-    console.log('fillCompanyOffice / ' + suppId);
+    console.log('fillCompanyOffice / ' + compId);
 
-    if (suppId == undefined) {
+    if (compId == undefined) {
         //return false;
-        suppId = "0";
+        compId = "0";
     }
 
     if ($.fn.dataTable.isDataTable("#tblOffice")) {
 
-        tableCompanyOffice.ajax.url(apiUrl + "company/office/getall/" + suppId).load();
+        tableCompanyOffice.ajax.url(apiUrl + "company/office/getall/" + compId).load();
     }
 }
 

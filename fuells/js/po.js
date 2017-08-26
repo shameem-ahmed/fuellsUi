@@ -19,11 +19,62 @@ function doPurchaseOrder(crPage) {
 
     $("#divUpdate").hide();
 
-    //treeShipGeoLoc
-
-    $("#treeShipGeoLoc").treeview({ data: getGeoLoc() });
+    //$("#treeShipGeoLoc").treeview({ data: getGeoLoc() });
 
     configPOTable();
+
+    //fill CUSTOMER
+    fuLib.customer.getAll().success(function (data, status, xhr) {
+        fillComboName('#selCustomer', data);
+
+    }).error(function (xhr, status, error) {
+        handleError('customer.getAll', xhr, status, error);
+    });
+
+    //fill ORDER-TYPE
+    fuLib.lov.getLov(5).success(function (data, status, xhr) {
+        fillCombo('#selOrderType', data);
+
+    }).error(function (xhr, status, error) {
+        handleError('lov.getLov', xhr, status, error);
+    });
+
+    //fill STYLE
+    fuLib.style.getAll().success(function (data, status, xhr) {
+        fillCombo('#selStyle', data);
+
+    }).error(function (xhr, status, error) {
+        handleError('style.getAll', xhr, status, error);
+    });
+
+    //STYLE dropdown change event
+    $('#selStyle').change(function (e) {
+        var parent = $('#selStyle').val();
+
+        clearCombo($("#selSize"));
+
+        if (parent != '0') {
+            fuLib.style.getOne(parent).success(function (data, status, xhr) {
+                //fill STYLE SIZE
+                fillCombo('#selSize', data.sizes);
+
+                //fill STYLE MATERIAL
+                fillCombo('#selPOMaterial', data.materials);
+
+
+            }).error(function (xhr, status, error) {
+                handleError('style.getOne', xhr, status, error);
+            });
+        }
+    });
+
+    //fill INTERNAL-TYPE
+    fuLib.lov.getLov(7).success(function (data, status, xhr) {
+        fillCombo('#selInternalType', data);
+
+    }).error(function (xhr, status, error) {
+        handleError('lov.getLov', xhr, status, error);
+    });
 
     //BTN PO NEW click event
     $("#btnPONew").click(function () {

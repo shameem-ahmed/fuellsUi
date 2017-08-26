@@ -3,12 +3,23 @@
 // FILL COMBOBOX
 function fillCombo(combo, data) {
 
-    //alert('fillCombo');
-
     var items = '<option value="0">--select--</option>';
 
     for (var i = 0; i < data.length; i++) {
         items += '<option value="' + data[i]._id + '">' + data[i].title + '</option>';
+    }
+
+    $(combo).html(items);
+    $(combo).selectpicker('refresh');
+}
+
+// FILL COMBOBOX
+function fillComboName(combo, data) {
+
+    var items = '<option value="0">--select--</option>';
+
+    for (var i = 0; i < data.length; i++) {
+        items += '<option value="' + data[i]._id + '">' + data[i].name + '</option>';
     }
 
     $(combo).html(items);
