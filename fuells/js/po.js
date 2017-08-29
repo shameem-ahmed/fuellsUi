@@ -71,23 +71,43 @@ function doPurchaseOrder(crPage) {
     });
 
     //NEW PO-SAVE CHANGES click event
-    $("#btnPOUpdateSave").click(function () {
+    $("#btnPONewSave, #btnPONewSave2").click(function () {
 
-        var isEmptySupplier = false;
+        var isEmptyPO = false;
 
-        var oSupplier = {
-            code: $("#txtCode").val(),
-            name: $("#txtName").val(),
-            urlWeb: $("#txtWebsite").val(),
-            email: $("#txtEmail").val(),
-            phone: $("#txtPhone").val(),
-            fax: $("#txtFax").val(),
-            logo: '',
-            lovGovtNo: $("#ulSuppGovtNoId").val(),
-            govtNo: $("#txtSuppGovtNo").val(),
+        var oPO = {
+            customer: $("#selCustomer").val(),
+            invoiceNo: $("#txtInvoiceNo").val(),
+            qty: $("#txtQty").val(),
+            dateOrder: $("#txtDateOrder").val(),
+            dateDelivery: $("#txtDateDelivery").val(),
+            dateTarget: $("#txtDateTarget").val(),
+            shipAddress1: $("#txtShipAddress1").val(),
+            shipAddress2: $("#txtShipAddress2").val(),
+            orderType: $("#selOrderType").val(),
+            styles: [],
+            materials: [],
+            internal: [],
             isActive: true,
             flag: 0
         };
+
+        $("#tblPoStyle").find("tr").each(function () {
+
+            var nCols = $(this).find("td");
+
+            console.log(nCols.length);
+
+
+            //var oPoStyle = {
+            //    style: oStyle,
+            //    qty: nQty
+            //};
+
+        });
+
+        return false;
+
 
         //check if oSupplier is empty
         if (oSupplier.code.trim().length == 0 &&
@@ -134,7 +154,7 @@ function doPurchaseOrder(crPage) {
     });
 
     //NEW PO-Cancel click event
-    $("#btnPONewCancel").click(function () {
+    $("#btnPONewCancel, #btnPONewCancel2").click(function () {
 
         $("#divUpdate").hide();
 
@@ -306,7 +326,7 @@ function addPoStyle() {
         var sizeCount = data.sizes.length + 1;
 
         var row = '<tr>';
-        row += '<td rowspan="' + sizeCount + '">' + data.title + '<input type="hidden" value="' + data._id + '" /></td>';
+        row += '<td rowspan="' + sizeCount + '">' + data.title + '<input class="clsPoStyle" type="hidden" value="' + data._id + '" /></td>';
         row += '<td rowspan="' + sizeCount + '"><input type="number" class="form-control" value="0" /></td>';
         row += '</tr>';
 
@@ -315,7 +335,7 @@ function addPoStyle() {
         data.sizes.forEach(function (size, index) {
 
             row = '<tr>';
-            row += '<td>' + size.title + '</td>';
+            row += '<td>' + size.title + '<input class="clsPoStyle2" type="hidden" value="' + data._id + '" /><input class="clsPoSize" type="hidden" value="' + size._id + '" /></td>';
             row += '<td><input type="number" class="form-control" value="0" /></td>';
             row += '</tr>';
 
