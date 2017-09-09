@@ -80,17 +80,22 @@
                         </tr>
                         <tr>
                             <td>
-                                <select id="selCustomer" class="form-control select">
-                                    <option value="0" selected="selected">Not Set</option>
-                                    <option value="1">Customer 1</option>
-                                    <option value="2">Customer 2</option>
-                                </select>
+                                <div id="fgCustomer" class="form-group">
+                                    <span class="help-block">Select Customer.</span>
+                                    <select id="selCustomer" class="form-control select"></select>
+                                </div>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="txtInvoiceNo" placeholder="Invoice #" />
+                                <div id="fgInvoiceNo" class="form-group">
+                                    <span class="help-block">Type Invoice #.</span>
+                                    <input type="text" class="form-control" id="txtInvoiceNo" placeholder="Invoice #" />
+                                </div>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="txtQty" placeholder="Quantity" />
+                                <div id="fgQty" class="form-group has-error">
+                                    <span class="help-block">Type Quantity.</span>
+                                    <input type="number" class="form-control" id="txtQty" placeholder="Quantity" />
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -100,20 +105,20 @@
                         </tr>
                         <tr>
                             <td>
-                                <div class="input-group">
-                                    <input type="text" id="txtDateOrder" class="form-control datepicker" placeholder="Order Date" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                <div class="input-group">  
+                                    <input type="text" id="txtDateOrder" class="form-control datepicker" placeholder="Order Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group">
-                                    <input type="text" id="txtDateDelivery" class="form-control datepicker" placeholder="Delivery Date" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                    <input type="text" id="txtDateDelivery" class="form-control datepicker" placeholder="Delivery Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </td>
                             <td>
                                 <div class="input-group">
-                                    <input type="text" id="txtDateTarget" class="form-control datepicker" placeholder="Target Date" value="" data-date="" data-date-format="dd-mm-yyyy" />
+                                    <input type="text" id="txtDateTarget" class="form-control datepicker" placeholder="Target Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </td>

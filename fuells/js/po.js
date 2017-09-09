@@ -55,116 +55,197 @@ function doPurchaseOrder(crPage) {
         handleError('lov.getLov', xhr, status, error);
     });
 
-    //BTN PO NEW click event
-    $("#btnPONew").click(function () {
+    //WIRE EVENTS
+    //
+    $("#btnPONew").click(click_btnPONew);
+    $("#btnPONewSave, #btnPONewSave2").click(click_btnPONewSave);
+    $("#btnPONewCancel, #btnPONewCancel2").click(click_btnPONewCancel);
 
-        poModeUpdate = 'new';
+}
 
-        $(".x-navigation-minimize").trigger("click");
+function click_btnPONewCancel () {
 
-        poClearEditPanel();
+    $("#divUpdate").hide();
+    $("#divList").show();
+    $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+    $(".x-navigation-minimize").trigger("click");
 
-        $("#divList").hide();
+}
 
-        $("#divUpdate").show();
+function click_btnPONew () {
+
+    poModeUpdate = 'new';
+    $(".x-navigation-minimize").trigger("click");
+    poClearEditPanel();
+    $("#divList").hide();
+    $("#divUpdate").show();
+
+}
+
+function click_btnPONewSave() {
+
+    var isValidPO = true;
+
+    var oPO = {
+        customer: $("#selCustomer").val(),
+        invoiceNo: $("#txtInvoiceNo").val(),
+        qty: parseInt($("#txtQty").val()),
+        dateOrder: $("#txtDateOrder").val(),
+        dateDelivery: $("#txtDateDelivery").val(),
+        dateTarget: $("#txtDateTarget").val(),
+        shipAddress1: $("#txtShipAddress1").val(),
+        shipAddress2: $("#txtShipAddress2").val(),
+        orderType: $("#selOrderType").val(),
+        styles: [],
+        materials: [],
+        internal: [],
+        isActive: true,
+        flag: 0
+    };
+
+    var poStyles = [];
+    var poStyleSizes = [];
+
+    $("#tblPoStyle").find("tr").each(function () {
+
+        var s1 = $(this).find("input[class=clsPoStyle]").val();
+        var s1Qty = $(this).find("input[class='form-control clsPoStyleQty']").val();
+
+        if (s1 !== undefined) {
+            poStyles.push({ style: s1, qty: parseInt(s1Qty), sizes: [] });
+        }
+
+        var s2 = $(this).find("input[class=clsPoStyle2]").val();
+        var s3 = $(this).find("input[class=clsPoSize]").val();
+        var s3Qty = $(this).find("input[class='form-control clsPoSizeQty']").val();
+
+        if (s2 !== undefined) {
+            poStyleSizes.push({ style: s2, size: s3, qty: parseInt(s3Qty) });
+        }
 
     });
 
-    //NEW PO-SAVE CHANGES click event
-    $("#btnPONewSave, #btnPONewSave2").click(function () {
-
-        var isEmptyPO = false;
-
-        var oPO = {
-            customer: $("#selCustomer").val(),
-            invoiceNo: $("#txtInvoiceNo").val(),
-            qty: $("#txtQty").val(),
-            dateOrder: $("#txtDateOrder").val(),
-            dateDelivery: $("#txtDateDelivery").val(),
-            dateTarget: $("#txtDateTarget").val(),
-            shipAddress1: $("#txtShipAddress1").val(),
-            shipAddress2: $("#txtShipAddress2").val(),
-            orderType: $("#selOrderType").val(),
-            styles: [],
-            materials: [],
-            internal: [],
-            isActive: true,
-            flag: 0
-        };
-
-        $("#tblPoStyle").find("tr").each(function () {
-
-            var nCols = $(this).find("td");
-
-            console.log(nCols.length);
-
-
-            //var oPoStyle = {
-            //    style: oStyle,
-            //    qty: nQty
-            //};
-
+    poStyles.forEach(function (style, index) {
+        poStyleSizes.forEach(function (size, index) {
+            if (size.style == style.style) {
+                style.sizes.push({ size: size.size, qty: size.qty });
+            }
         });
+    });
 
-        return false;
+    oPO.styles = poStyles;
 
+    var poMaterials = [];
 
-        //check if oSupplier is empty
-        if (oSupplier.code.trim().length == 0 &&
-            oSupplier.name.trim().length == 0
-            ) {
-            isEmptySupplier = true;
+    $("#tblPoMaterial").find("tr").each(function () {
+
+        var m1 = $(this).find("input[class=clsPoMat]").val();
+        var m1Note = $(this).find("input[class='form-control clsPoMatNote']").val();
+        var m1Qty = $(this).find("input[class='form-control clsPoMatQty']").val();
+
+        if (m1 !== undefined) {
+            poMaterials.push({ material: m1, notes: m1Note, qty: m1Qty });
         }
+    });
 
-        if (supModeUpdate == 'new') {
+    oPO.materials = poMaterials;
 
-            if (isEmptySupplier == true) {
-                noty({ text: "Please type supplier details", layout: 'topRight', type: 'error', timeout: 2000 });
-                return false;
-            }
-            else {
+    //clsInternalPriority
 
-                fuLib.supplier.add(oSupplier).success(function (data, status, xhr) {
+    var poInternals = [];
 
-                    console.log(data);
+    $("#tblPoInternal").find("tr").each(function () {
 
-                    noty({ text: 'Supplier added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+        var i1 = $(this).find("input[class=clsInternalId]").val();
+        var i1Note = $(this).find("td[class=clsInternalNote]").text();
+        var i1Priority = $(this).find("td[class='clsInternalPriority']").text();
 
-                    var table = $("#tblSupplier").DataTable();
-                    table.ajax.reload();
+        if (i1 !== undefined) {
+            poInternals.push({ internal: i1, notes: i1Note, priority: i1Priority });
+        }
+    });
 
-                }).error(function (xhr, status, error) {
-                    //supplier.add failed
-                    handleError('supplier.add', xhr, status, error);
+    oPO.internal = poInternals;
+
+    console.log(oPO);
+
+    //check if oPO is empty
+    if (oPO.customer == "0" ||
+        oPO.invoiceNo.trim().length == 0 ||
+        isNaN(oPO.qty) == true ||
+        oPO.dateOrder.trim().length == 0 ||
+        oPO.dateTarget.trim().length == 0 ||
+        oPO.dateDelivery.trim().length == 0 ||
+        oPO.shipAddress1.trim().length == 0
+        ) {
+        isValidPO = false;
+    }
+
+    if (isValidPO == true) {
+        //check style, internal details and materials
+
+        if (oPO.styles.length > 0) {
+
+            oPO.styles.forEach(function (style, index) {
+
+                if (isNaN(style.qty) == true) {
+                    noty({ text: "Style quantity should be numeric.", layout: 'topRight', type: 'error', timeout: 2000 });
+                    isValidPO = false;
+                    return false;
+                }
+
+                style.sizes.forEach(function (size, index) {
+
+                    if (isNaN(size.qty) == true) {
+                        noty({ text: "Size quantity should be numeric.", layout: 'topRight', type: 'error', timeout: 2000 });
+                        isValidPO = false;
+                        return false;
+                    }
+
                 });
-            }
 
-            $("#divUpdate").hide();
-            $("#divTable").removeClass("col-md-8").addClass("col-md-12");
+            });
+        }
+    }
 
+
+    if (poModeUpdate == 'new') {
+
+        if (isValidPO == false) {
+            noty({ text: "Please type PO details", layout: 'topRight', type: 'error', timeout: 2000 });
+            return false;
+        }
+        else {
+
+            noty({ text: "data is ready to submit", layout: 'topRight', type: 'success', timeout: 2000 });
             return false;
 
-        }
-        else if (supModeUpdate == 'edit') {
+            fuLib.supplier.add(oSupplier).success(function (data, status, xhr) {
 
+                console.log(data);
+
+                noty({ text: 'Supplier added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+                var table = $("#tblSupplier").DataTable();
+                table.ajax.reload();
+
+            }).error(function (xhr, status, error) {
+                //supplier.add failed
+                handleError('supplier.add', xhr, status, error);
+            });
         }
+
+        $("#divUpdate").hide();
+        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
         return false;
 
-    });
+    }
+    else if (supModeUpdate == 'edit') {
 
-    //NEW PO-Cancel click event
-    $("#btnPONewCancel, #btnPONewCancel2").click(function () {
+    }
 
-        $("#divUpdate").hide();
-
-        $("#divList").show();
-
-        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
-
-        $(".x-navigation-minimize").trigger("click");
-
-    });
+    return false;
 }
 
 function getGeoLoc() {
@@ -241,10 +322,10 @@ function configPOTable() {
                 tablePO.rows(':eq(0)', { page: 'current' }).select();
                 selIdPO = tablePO.rows(':eq(0)', { page: 'current' }).ids()[0];
 
-                fillPOStyle(selIdPO);
+                //fillPOStyle(selIdPO);
                 //fillPOStyleSize(selIdPO);
-                fillPOStyleMaterial(selIdPO);
-                fillPOStyleInternal(selIdPO);
+                //fillPOStyleMaterial(selIdPO);
+                //fillPOStyleInternal(selIdPO);
             });
         }
     }).DataTable({
@@ -327,7 +408,7 @@ function addPoStyle() {
 
         var row = '<tr>';
         row += '<td rowspan="' + sizeCount + '">' + data.title + '<input class="clsPoStyle" type="hidden" value="' + data._id + '" /></td>';
-        row += '<td rowspan="' + sizeCount + '"><input type="number" class="form-control" value="0" /></td>';
+        row += '<td rowspan="' + sizeCount + '"><input type="number" class="form-control clsPoStyleQty" value="0" /></td>';
         row += '</tr>';
 
         $("#tblPoStyle").append(row);
@@ -336,7 +417,7 @@ function addPoStyle() {
 
             row = '<tr>';
             row += '<td>' + size.title + '<input class="clsPoStyle2" type="hidden" value="' + data._id + '" /><input class="clsPoSize" type="hidden" value="' + size._id + '" /></td>';
-            row += '<td><input type="number" class="form-control" value="0" /></td>';
+            row += '<td><input type="number" class="form-control clsPoSizeQty" value="0" /></td>';
             row += '</tr>';
 
             $("#tblPoStyle").append(row);
@@ -355,23 +436,18 @@ function addPoStyle() {
         data.materials.forEach(function (mat, index) {
 
             row = '<tr>';
-            row += '<td>' + mat.title + '</td>';
-            row += '<td><input type="text" class="form-control" placeholder="Notes" /></td>';
-            row += '<td><input type="number" class="form-control" value="0" /></td>';
+            row += '<td>' + mat.title + '<input class="clsPoMat" type="hidden" value="' + mat._id + '" /></td>';
+            row += '<td><input type="text" class="form-control clsPoMatNote" placeholder="Notes" /></td>';
+            row += '<td><input type="number" class="form-control clsPoMatQty" value="0" /></td>';
             row += '</tr>';
 
             $("#tblPoMaterial").append(row);
 
         });
 
-
-
     }).error(function (xhr, status, error) {
         handleError('style.getOne', xhr, status, error);
     });
-
-
-
 }
 
 function addPoInternal() {
@@ -396,9 +472,9 @@ function addPoInternal() {
     }
 
     var row = '<tr>';
-    row += '<td>' + txtInternal + '<input type="hidden" value="' + internalId + '" /></td>';
-    row += '<td>' + txtNotes + '</td>';
-    row += '<td>' + txtPriority + '</td>';
+    row += '<td>' + txtInternal + '<input type="hidden" class="clsInternalId" value="' + internalId + '" /></td>';
+    row += '<td class="clsInternalNote">' + txtNotes + '</td>';
+    row += '<td class="clsInternalPriority">' + txtPriority + '</td>';
 
     row += '</tr>';
 
