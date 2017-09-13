@@ -994,6 +994,7 @@
     <Content Include="js\customer.js" />
     <Content Include="js\general.js" />
     <Content Include="js\gloc.js" />
+    <Content Include="js\lo.js" />
     <Content Include="js\plugins\datatables\dataTables.select.min.js" />
     <Content Include="js\lov.js" />
     <Content Include="js\plugins\treeview\bootstrap-treeview.min.css" />

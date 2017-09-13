@@ -262,11 +262,11 @@ function saveGeoLoc(type, parentType) {
                 sHtml += '  <td>';
                 sHtml += '    <span class="fa fa-plus-square-o ' + geoClass + '" onClick="javascript:doGeoOpen(`' + gloc._id + '`);"></span>';
                 sHtml += '    <label><input type="radio" name="radioGeoSelected" id="radioGeoSelected" />&nbsp;' + gloc.title + '</label>';
-                sHtml += '    <input type="text" class="treeExpanded" value="0" />';
-                sHtml += '    <input type="text" class="treeLoaded" value="0" />';
-                sHtml += '    <input type="text" class="treeLevel" value="' + gloc.type + '" />';
-                sHtml += '    <input type="text" class="treeParent" value="' + gloc.parent + '" />';
-                sHtml += '    <input type="text" class="treeKey" value="' + gloc.parent + '" />';
+                sHtml += '    <input type="hidden" class="treeExpanded" value="0" />';
+                sHtml += '    <input type="hidden" class="treeLoaded" value="0" />';
+                sHtml += '    <input type="hidden" class="treeLevel" value="' + gloc.type + '" />';
+                sHtml += '    <input type="hidden" class="treeParent" value="' + gloc.parent + '" />';
+                sHtml += '    <input type="hidden" class="treeKey" value="' + gloc.parent + '" />';
                 sHtml += '    <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display:none;"></span>';
                 sHtml += '  </td>';
                 sHtml += '</tr>';
@@ -364,19 +364,19 @@ function addGeoData(data, parentId, level, key) {
             sHtml += '    <span class="fa fa-plus-square-o ' + geoClass + '" onClick="javascript:doGeoOpen(`' + data[i]._id + '`);"></span>';
         }
         sHtml += '    <label><input type="radio" name="radioGeoSelected" id="radioGeoSelected" />&nbsp;' + data[i].title + '</label>';
-        sHtml += '    <input type="text" class="treeExpanded" value="0" />';
-        sHtml += '    <input type="text" class="treeLoaded" value="0" />';
-        sHtml += '    <input type="text" class="treeLevel" value="' + level + '" />';
-        sHtml += '    <input type="text" class="treeParent" value="' + data[i].parent + '" />';
+        sHtml += '    <input type="hidden" class="treeExpanded" value="0" />';
+        sHtml += '    <input type="hidden" class="treeLoaded" value="0" />';
+        sHtml += '    <input type="hidden" class="treeLevel" value="' + level + '" />';
+        sHtml += '    <input type="hidden" class="treeParent" value="' + data[i].parent + '" />';
 
         if (key == 'X') {
-            sHtml += '    <input type="text" class="treeKey" value="' + (i + 1) + '" />';
+            sHtml += '    <input type="hidden" class="treeKey" value="' + (i + 1) + '" />';
         }
         else {
-            sHtml += '    <input type="text" class="treeKey" value="' + key + '.' + (i + 1) + '" />';
+            sHtml += '    <input type="hidden" class="treeKey" value="' + key + '.' + (i + 1) + '" />';
         }
 
-        sHtml += '    <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display:none;"></span>';
+        sHtml += '    <span class="glyphicon glyphicon-trash     aria-hidden="true" style="display:none;"></span>';
         sHtml += '  </td>';
         sHtml += '</tr>';
 

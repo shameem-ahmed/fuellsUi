@@ -144,13 +144,11 @@ function click_btnPONewSave() {
         var m1Qty = $(this).find("input[class='form-control clsPoMatQty']").val();
 
         if (m1 !== undefined) {
-            poMaterials.push({ material: m1, notes: m1Note, qty: m1Qty });
+            poMaterials.push({ material: m1, notes: m1Note, qty: parseInt(m1Qty) });
         }
     });
 
     oPO.materials = poMaterials;
-
-    //clsInternalPriority
 
     var poInternals = [];
 
@@ -182,13 +180,13 @@ function click_btnPONewSave() {
     }
 
     if (isValidPO == true) {
-        //check style, internal details and materials
 
+        //check styles
         if (oPO.styles.length > 0) {
 
             oPO.styles.forEach(function (style, index) {
 
-                if (isNaN(style.qty) == true) {
+                if (isNaN(style.qty) == true || style.qty == 0) {
                     noty({ text: "Style quantity should be numeric.", layout: 'topRight', type: 'error', timeout: 2000 });
                     isValidPO = false;
                     return false;
@@ -196,7 +194,7 @@ function click_btnPONewSave() {
 
                 style.sizes.forEach(function (size, index) {
 
-                    if (isNaN(size.qty) == true) {
+                    if (isNaN(size.qty) == true || size.qty == 0) {
                         noty({ text: "Size quantity should be numeric.", layout: 'topRight', type: 'error', timeout: 2000 });
                         isValidPO = false;
                         return false;
@@ -206,8 +204,20 @@ function click_btnPONewSave() {
 
             });
         }
-    }
 
+        //check materials
+        if (oPO.materials.length > 0) {
+
+            oPO.materials.forEach(function (mat, index) {
+
+                if (isNaN(mat.qty) == true || mat.qty == 0) {
+                    noty({ text: "Material quantity should be numeric.", layout: 'topRight', type: 'error', timeout: 2000 });
+                    isValidPO = false;
+                    return false;
+                }
+            });
+        }
+    }
 
     if (poModeUpdate == 'new') {
 
@@ -217,26 +227,24 @@ function click_btnPONewSave() {
         }
         else {
 
-            noty({ text: "data is ready to submit", layout: 'topRight', type: 'success', timeout: 2000 });
-            return false;
-
-            fuLib.supplier.add(oSupplier).success(function (data, status, xhr) {
+            fuLib.po.add(oPO).success(function (data, status, xhr) {
 
                 console.log(data);
 
-                noty({ text: 'Supplier added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+                noty({ text: 'PO added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-                var table = $("#tblSupplier").DataTable();
+                var table = $("#tblPO").DataTable();
                 table.ajax.reload();
 
+                $(".x-navigation-minimize").trigger("click");
+                $("#divList").show();
+                $("#divUpdate").hide();
+
             }).error(function (xhr, status, error) {
-                //supplier.add failed
-                handleError('supplier.add', xhr, status, error);
+                //po.add failed
+                handleError('po.add', xhr, status, error);
             });
         }
-
-        $("#divUpdate").hide();
-        $("#divTable").removeClass("col-md-8").addClass("col-md-12");
 
         return false;
 
@@ -345,10 +353,26 @@ function configPOTable() {
         "columns": [
             { "data": "LovStatus", "defaultContent": "<span class='text-muted'>Not set</span>" },
             { "data": "invoiceNo", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "customer", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "dateOrder", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "dateDelivery", "defaultContent": "<span class='text-muted'>Not set</span>" },
-            { "data": "LovType", "defaultContent": "<span class='text-muted'>Not set</span>" }
+            { "data": "customer.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            {
+                "render": function (data, type, row) {
+
+                    var d1 = new Date(row.dateOrder);
+
+                    return '<b>' + d1.getDate() + '-' + (d1.getMonth() + 1) + '-' + d1.getFullYear() + '</b>';
+
+                }
+            },
+            {
+                "render": function (data, type, row) {
+
+                    var d1 = new Date(row.dateDelivery);
+
+                    return '<b>' + d1.getDate() + '-' + (d1.getMonth() + 1) + '-' + d1.getFullYear() + '</b>';
+
+                }
+            },
+            { "data": "LovType.title", "defaultContent": "<span class='text-muted'>Not set</span>" }
 
         ],
     });
@@ -456,6 +480,13 @@ function addPoInternal() {
 
     if (internalId == '0') {
         noty({ text: 'Please select an INTERNAL-DETAIL.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    var internalPriority = $('#selInternalPriority').val();
+
+    if (internalPriority == '0') {
+        noty({ text: 'Please select an INTERNAL-DETAIL priority.', layout: 'topCenter', type: 'warning', timeout: 2000 });
         return false;
     }
 
