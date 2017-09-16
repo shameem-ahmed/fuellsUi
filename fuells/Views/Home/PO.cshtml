@@ -46,240 +46,382 @@
             </div>
         </div>
 
-        <!--LOV UPDATE PANEL -->
+        <!--PO DETAILS & DOCUMENT PANEL -->
         <div class="col-md-6">
-            <iframe src="~/Home/GetPo?id=1" style="width:100%; height:800px;"></iframe>
+
+            <div class="panel panel-default tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li id="tabDetails" class="active"><a href="#tab-details" role="tab" data-toggle="tab">Details</a></li>
+                    <li id="tabDocument"><a href="#tab-document" role="tab" data-toggle="tab">Document</a></li>
+                </ul>
+                <div class="panel-body tab-content">
+                    <div class="tab-pane active" id="tab-details">
+                        <!--PO DETAILS TAB-->
+                        <div class="panel panel-primary" id="panelPOEdit">
+                            <div class="panel-heading">
+                                <button id="btnPONewSave" type="button" class="btn btn-primary">Save New PO</button>
+                                <button id="btnPONewCancel" type="button" class="btn btn-danger">Cancel</button>
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+                                <!-- PO HEADER -->
+                                <table class="tableEdit" border="0">
+                                    <tr>
+                                        <td class="labelDanger" style="width:34%;">Customer /</td>
+                                        <td class="labelDanger" style="width:33%;">Invoice # /</td>
+                                        <td class="labelDanger" style="width:33%;">Quantity /</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div id="fgCustomer" class="form-group">
+                                                <span class="help-block">Select Customer.</span>
+                                                <select id="selCustomer" class="form-control select"></select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="fgInvoiceNo" class="form-group">
+                                                <span class="help-block">Type Invoice #.</span>
+                                                <input type="text" class="form-control" id="txtInvoiceNo" placeholder="Invoice #" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="fgQty" class="form-group has-error">
+                                                <span class="help-block">Type Quantity.</span>
+                                                <input type="number" class="form-control" id="txtQty" placeholder="Quantity" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labelDanger" style="width:34%;">Order date /</td>
+                                        <td class="labelDanger" style="width:33%;">Delivery date /</td>
+                                        <td class="labelDanger" style="width:33%;">Target date /</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" id="txtDateOrder" class="form-control datepicker" placeholder="Order Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" id="txtDateDelivery" class="form-control datepicker" placeholder="Delivery Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" id="txtDateTarget" class="form-control datepicker" placeholder="Target Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Shipping Details</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <input type="text" class="form-control" id="txtShipAddress1" placeholder="Address 1" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <input type="text" class="form-control" id="txtShipAddress2" placeholder="Address 2" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div id="treeShipGeoLoc"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Order Type</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <select id="selOrderType" class="form-control select">
+                                                <option value="0" selected="selected">Not Set</option>
+                                                <option value="1">Type 1</option>
+                                                <option value="2">Type 2</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Order Styles</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr class="active">
+                                                        <th colspan="3">
+                                                            <select id="selStyle" class="form-control select"></select>
+                                                        </th>
+
+                                                        <th>
+                                                            <ul class="panel-controls">
+                                                                <li><a href="javascript:addPoStyle();" class="control-primary"><span class="fa fa-plus"></span></a></li>
+                                                            </ul>
+                                                        </th>
+                                                    </tr>
+                                                    <tr class="warning">
+                                                        <th style="width:35%; color:#000;">Style</th>
+                                                        <th style="width:15%; color:#000;">Qty</th>
+                                                        <th style="width:35%; color:#000;">Size</th>
+                                                        <th style="width:15%; color:#000;">Qty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblPoStyle"></tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Materials</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr class="warning">
+                                                        <th style="width:25%; color:#000;">Style</th>
+                                                        <th style="width:25%; color:#000;">Material</th>
+                                                        <th style="width:35%; color:#000;">Notes</th>
+                                                        <th style="width:15%; color:#000;">Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblPoMaterial"></tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Internal Details</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr class="active">
+                                                        <th colspan="3">
+                                                            <table style="width:100%;">
+                                                                <tr>
+                                                                    <td>
+                                                                        <select id="selInternalType" class="form-control select"></select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="txtInternalNotes" placeholder="Notes" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <select id="selInternalPriority" class="form-control select">
+                                                                            <option value="High">High</option>
+                                                                            <option value="Medium">Medium</option>
+                                                                            <option value="Low" selected="selected">Low</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <ul class="panel-controls">
+                                                                            <li><a href="javascript:addPoInternal();" class="control-primary"><span class="fa fa-plus"></span></a></li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+
+                                                        </th>
+                                                    </tr>
+                                                    <tr class="warning">
+                                                        <th style="width:35%; color:#000;">Type</th>
+                                                        <th style="width:50%; color:#000;">Notes</th>
+                                                        <th style="width:15%; color:#000;">Priority</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblPoInternal"></tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            </div>
+
+                            <div class="panel-footer">
+                                <button id="btnPONewSave2" type="button" class="btn btn-primary">Save New PO</button>
+                                <button id="btnPONewCancel2" type="button" class="btn btn-danger">Cancel</button>
+                            </div>
+
+                        </div>
+
+                        <div class="panel panel-primary" id="panelPOView">
+                            <div class="panel-heading">
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+                                <!-- PO HEADER -->
+                                <table class="tableEdit" border="0">
+                                    <tr>
+                                        <td class="labelDanger2" style="width:34%;">Customer /</td>
+                                        <td class="labelDanger2" style="width:33%;">Invoice # /</td>
+                                        <td class="labelDanger2" style="width:33%;">Quantity /</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 id="h4PoCustomer">Microsoft</h4>
+                                        </td>
+                                        <td>
+                                            <h4 id="h4PoInvoiceNo">12345678</h4>
+                                        </td>
+                                        <td>
+                                            <h4 id="h4PoQty">120</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labelDanger2" style="width:34%;">Order date /</td>
+                                        <td class="labelDanger2" style="width:33%;">Delivery date /</td>
+                                        <td class="labelDanger2" style="width:33%;">Target date /</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 id="h4PoDateOrder">12-Sep-2017</h4>
+                                        </td>
+                                        <td>
+                                            <h4 id="h4PoDateDelivery">12-Sep-2017</h4>
+                                        </td>
+                                        <td>
+                                            <h4 id="h4PoDateTarget">12-Sep-2017</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Shipping Details</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h4 id="h4PoShippingAddress1"></h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h4 id="h4PoShippingAddress2"></h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Order Type</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h4 id="h4PoOrderType">Production order</h4>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Order Styles</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr class="active">
+                                                        <th style="width:35%; color:#000;">Style</th>
+                                                        <th style="width:15%; color:#000;">Qty</th>
+                                                        <th style="width:35%; color:#000;">Size</th>
+                                                        <th style="width:15%; color:#000;">Qty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblPoStyle2">
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Materials</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr class="active">
+                                                        <th style="width:25%; color:#000;">Material</th>
+                                                        <th style="width:35%; color:#000;">Notes</th>
+                                                        <th style="width:15%; color:#000;">Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblPoMaterial2">
+                                                  
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3 class="labelDanger2">Internal Details</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr class="active">
+                                                        <th style="width:35%; color:#000;">Type</th>
+                                                        <th style="width:50%; color:#000;">Notes</th>
+                                                        <th style="width:15%; color:#000;">Priority</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblPoInternal2">
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-document">
+                        <!--PO DETAILS TAB-->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button id="btnSuppNew" type="button" class="btn btn-primary">New Supplier</button>
+                                <button id="btnSuppEdit" type="button" class="btn btn-info">Edit</button>
+                                <a href="#" class="mb-control btn btn-danger" data-box="#mb-delete-supplier">Delete</a>
+
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="panel-body">
+
+                                <iframe src="~/Home/GetPo?id=1" style="width:100%; height:800px;"></iframe>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!--UPDATE PANEL -->
-    <div class="row" id="divUpdate">
-
-        <div class="col-md-6">
-            <div class="page-title">
-                <h2><span class="fa fa-arrow-circle-o-left"></span> New @ViewBag.Title</h2>
-            </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <button id="btnPONewSave" type="button" class="btn btn-primary">Save New PO</button>
-                    <button id="btnPONewCancel" type="button" class="btn btn-danger">Cancel</button>
-                    <ul class="panel-controls">
-                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                    </ul>
-                </div>
-                <div class="panel-body">
-
-                    <!-- PO HEADER -->
-                    <table class="tableEdit" border="0">
-                        <tr>
-                            <td class="labelDanger" style="width:34%;">Customer /</td>
-                            <td class="labelDanger" style="width:33%;">Invoice # /</td>
-                            <td class="labelDanger" style="width:33%;">Quantity /</td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <div id="fgCustomer" class="form-group">
-                                    <span class="help-block">Select Customer.</span>
-                                    <select id="selCustomer" class="form-control select"></select>
-                                </div>
-                            </td>
-                            <td>
-                                <div id="fgInvoiceNo" class="form-group">
-                                    <span class="help-block">Type Invoice #.</span>
-                                    <input type="text" class="form-control" id="txtInvoiceNo" placeholder="Invoice #" />
-                                </div>
-                            </td>
-                            <td>
-                                <div id="fgQty" class="form-group has-error">
-                                    <span class="help-block">Type Quantity.</span>
-                                    <input type="number" class="form-control" id="txtQty" placeholder="Quantity" />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="labelDanger" style="width:34%;">Order date /</td>
-                            <td class="labelDanger" style="width:33%;">Delivery date /</td>
-                            <td class="labelDanger" style="width:33%;">Target date /</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="input-group">  
-                                    <input type="text" id="txtDateOrder" class="form-control datepicker" placeholder="Order Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group">
-                                    <input type="text" id="txtDateDelivery" class="form-control datepicker" placeholder="Delivery Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group">
-                                    <input type="text" id="txtDateTarget" class="form-control datepicker" placeholder="Target Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <h3>Shipping Details</h3>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <input type="text" class="form-control" id="txtShipAddress1" placeholder="Address 1" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <input type="text" class="form-control" id="txtShipAddress2" placeholder="Address 2" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div id="treeShipGeoLoc"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <h3>Order Type</h3>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <select id="selOrderType" class="form-control select">
-                                    <option value="0" selected="selected">Not Set</option>
-                                    <option value="1">Type 1</option>
-                                    <option value="2">Type 2</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <h3>Order Styles</h3>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr class="active">
-                                            <th colspan="3">
-                                                <select id="selStyle" class="form-control select">
-                                                </select>
-                                            </th>
-                                          
-                                            <th>
-                                                <ul class="panel-controls">
-                                                    <li><a href="javascript:addPoStyle();" class="control-primary"><span class="fa fa-plus"></span></a></li>
-                                                </ul>
-                                            </th>
-                                        </tr>
-                                        <tr class="warning">
-                                            <th style="width:35%; color:#000;">Style</th>
-                                            <th style="width:15%; color:#000;">Qty</th>
-                                            <th style="width:35%; color:#000;">Size</th>
-                                            <th style="width:15%; color:#000;">Qty</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblPoStyle">
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <h3>Materials</h3>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr class="warning">
-                                            <th style="width:25%; color:#000;">Style</th>
-                                            <th style="width:25%; color:#000;">Material</th>
-                                            <th style="width:35%; color:#000;">Notes</th>
-                                            <th style="width:15%; color:#000;">Quantity</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblPoMaterial">
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <h3>Internal Details</h3>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr class="active">
-                                            <th colspan="3">
-                                              <table style="width:100%;">
-                                                  <tr>
-                                                      <td>
-                                                          <select id="selInternalType" class="form-control select"></select>
-                                                      </td>
-                                                      <td>
-                                                          <input type="text" class="form-control" id="txtInternalNotes" placeholder="Notes" />
-                                                      </td>
-                                                      <td>
-                                                          <select id="selInternalPriority" class="form-control select">
-                                                              <option value="0" selected="selected">Not Set</option>
-                                                              <option value="High">High</option>
-                                                              <option value="Medium">Medium</option>
-                                                              <option value="Low">Low</option>
-                                                          </select>
-                                                      </td>
-                                                      <td>
-                                                          <ul class="panel-controls">
-                                                              <li><a href="javascript:addPoInternal();" class="control-primary"><span class="fa fa-plus"></span></a></li>
-                                                          </ul>
-                                                      </td>
-                                                  </tr>
-                                              </table>
-                                               
-                                            </th>
-                                        </tr>
-                                        <tr class="warning">
-                                            <th style="width:35%; color:#000;">Type</th>
-                                            <th style="width:50%; color:#000;">Notes</th>
-                                            <th style="width:15%; color:#000;">Priority</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblPoInternal">
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                   
-                    </table>
-
-                </div>
-            
-                <div class="panel-footer">
-                    <button id="btnPONewSave2" type="button" class="btn btn-primary">Save New PO</button>
-                    <button id="btnPONewCancel2" type="button" class="btn btn-danger">Cancel</button>
-                </div>
-
-            </div>
-        </div>
-
-        <!--LOV UPDATE PANEL -->
-        <div class="col-md-6">
-            <iframe src="~/Home/GetPo?id=1" style="width:100%; height:800px;"></iframe>
-        </div>
-
-
-
-
-      
-    </div>
+ 
 </div>

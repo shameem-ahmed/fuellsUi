@@ -17,7 +17,9 @@ var tablePOMaterial;
 //CALLED FROM _LAYOUT2
 function doPurchaseOrder(crPage) {
 
-    $("#divUpdate").hide();
+    //$("#divUpdate").hide();
+
+    $("#panelPOEdit").hide();
 
     //$("#treeShipGeoLoc").treeview({ data: getGeoLoc() });
 
@@ -65,20 +67,21 @@ function doPurchaseOrder(crPage) {
 
 function click_btnPONewCancel () {
 
-    $("#divUpdate").hide();
-    $("#divList").show();
-    $("#divTable").removeClass("col-md-8").addClass("col-md-12");
-    $(".x-navigation-minimize").trigger("click");
+    $("#panelPOView").show();
+    $("#panelPOEdit").hide();
+
+    //$("#divTable").removeClass("col-md-8").addClass("col-md-12");
+    //$(".x-navigation-minimize").trigger("click");
 
 }
 
 function click_btnPONew () {
 
     poModeUpdate = 'new';
-    $(".x-navigation-minimize").trigger("click");
+    //$(".x-navigation-minimize").trigger("click");
     poClearEditPanel();
-    $("#divList").hide();
-    $("#divUpdate").show();
+    $("#panelPOView").hide();
+    $("#panelPOEdit").show();
 
 }
 
@@ -98,7 +101,7 @@ function click_btnPONewSave() {
         orderType: $("#selOrderType").val(),
         styles: [],
         materials: [],
-        internal: [],
+        internals: [],
         isActive: true,
         flag: 0
     };
@@ -158,12 +161,22 @@ function click_btnPONewSave() {
         var i1Note = $(this).find("td[class=clsInternalNote]").text();
         var i1Priority = $(this).find("td[class='clsInternalPriority']").text();
 
+        if (i1Priority == "Low") {
+            i1Priority = 0;
+        }
+        else if (i1Priority == "Medium") {
+            i1Priority = 1;
+        }
+        else if (i1Priority == "High") {
+            i1Priority = 2;
+        }
+
         if (i1 !== undefined) {
-            poInternals.push({ internal: i1, notes: i1Note, priority: i1Priority });
+            poInternals.push({ internal: i1, notes: i1Note, priority: parseInt(i1Priority) });
         }
     });
 
-    oPO.internal = poInternals;
+    oPO.internals = poInternals;
 
     console.log(oPO);
 
@@ -236,9 +249,8 @@ function click_btnPONewSave() {
                 var table = $("#tblPO").DataTable();
                 table.ajax.reload();
 
-                $(".x-navigation-minimize").trigger("click");
-                $("#divList").show();
-                $("#divUpdate").hide();
+                $("#panelPOView").show();
+                $("#panelPOEdit").hide();
 
             }).error(function (xhr, status, error) {
                 //po.add failed
@@ -330,10 +342,7 @@ function configPOTable() {
                 tablePO.rows(':eq(0)', { page: 'current' }).select();
                 selIdPO = tablePO.rows(':eq(0)', { page: 'current' }).ids()[0];
 
-                //fillPOStyle(selIdPO);
-                //fillPOStyleSize(selIdPO);
-                //fillPOStyleMaterial(selIdPO);
-                //fillPOStyleInternal(selIdPO);
+                fillPO(selIdPO);
             });
         }
     }).DataTable({
@@ -351,7 +360,34 @@ function configPOTable() {
             }
         },
         "columns": [
-            { "data": "LovStatus", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            {
+                "render": function (data, type, row) {
+
+                    if (row.LovStatus == 0) {
+                        return "New";
+                    }
+                    else if (row.LovStatus == 1) {
+                        return "Production";
+                    }
+                    else if (row.LovStatus == 2) {
+                        return "Complete";
+                    }
+                    else if (row.LovStatus == 3) {
+                        return "Hold";
+                    }
+                    else if (row.LovStatus == 4) {
+                        return "Dispute";
+                    }
+                    else if (row.LovStatus == 5) {
+                        return "Cancel";
+                    }
+
+                    var d1 = new Date(row.dateOrder);
+
+                    return '<b>' + d1.getDate() + '-' + (d1.getMonth() + 1) + '-' + d1.getFullYear() + '</b>';
+
+                }
+            },
             { "data": "invoiceNo", "defaultContent": "<span class='text-muted'>Not set</span>" },
             { "data": "customer.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
             {
@@ -390,10 +426,10 @@ function configPOTable() {
 
             selIdPO = $(this).attr("id");
 
-            fillPOStyle(selIdPO);
-            //fillPOStyleSize(selIdPO);
-            fillPOStyleMaterial(selIdPO);
-            fillPOStyleInternal(selIdPO);
+            fillPO(selIdPO);
+
+            $("#panelPOView").show();
+            $("#panelPOEdit").hide();
         }
     });
 
@@ -401,6 +437,117 @@ function configPOTable() {
     $('#tblPO').on('draw.dt', function () {
         onresize();
     });
+}
+
+function fillPO(poId) {
+
+    fuLib.po.getOne(poId).success(function (data, status, xhr) {
+
+        console.log(data[0]);
+
+        $("#h4PoCustomer").text(data[0].customer.name);
+        $("#h4PoInvoiceNo").text(data[0].invoiceNo);
+        $("#h4PoQty").text(data[0].qty);
+
+        var d1 = new Date(data[0].dateOrder);
+        var d2 = new Date(data[0].dateTarget);
+        var d3 = new Date(data[0].dateDelivery);
+
+
+        var d1a = d1.getDate() + '-' + (d1.getMonth() + 1) + '-' + d1.getFullYear();
+        var d2a = d2.getDate() + '-' + (d2.getMonth() + 1) + '-' + d2.getFullYear();
+        var d3a = d3.getDate() + '-' + (d3.getMonth() + 1) + '-' + d3.getFullYear();
+
+        $("#h4PoDateOrder").text(d1a);
+        $("#h4PoDateTarget").text(d2a);
+        $("#h4PoDateDelivery").text(d3a);
+
+        $("#h4PoShippingAddress1").text(data[0].shippingAddress.address1);
+        $("#h4PoShippingAddress2").text(data[0].shippingAddress.address2);
+
+        $("#h4PoOrderType").text(data[0].LovType.title);
+
+        fuLib.po.getStyles(poId).success(function (data, status, xhr) {
+
+            console.log(data);
+
+            $("#tblPoStyle2").html("");
+
+            data.forEach(function (style, index) {
+
+                fuLib.po.getStyleSizes(style._id).success(function (data2, status, xhr) {
+
+                    console.log(data2);
+
+                    var row = '<tr>';
+                    row += '<td rowspan="' + (data2.length + 1) + '">' + style.style.title + '</td>';
+                    row += '<td rowspan="' + (data2.length + 1) + '">' + style.qty + '</td>';
+                    row += '</tr>';
+
+                    $("#tblPoStyle2").append(row);
+
+                    data2.forEach(function (size, index) {
+
+                        row = '<tr>';
+
+                        row += '<td>' + size.styleSize.title + '</td>';
+                        row += '<td>' + size.qty + '</td>';
+
+                        row += '</tr>';
+
+                        $("#tblPoStyle2").append(row);
+
+                    });
+
+                });
+            });
+        });
+
+        fuLib.po.getMaterials(poId).success(function (data, status, xhr) {
+
+            console.log(data);
+
+            $("#tblPoMaterial2").html("");
+
+            data.forEach(function (mat, index) {
+
+                var row = '<tr>';
+
+                row += '<td>' + mat.styleMaterial.title + '</td>';
+                row += '<td>' + mat.notes + '</td>';
+                row += '<td>' + mat.qty + '</td>';
+
+                row += '</tr>';
+
+                $("#tblPoMaterial2").append(row);
+            });
+        });
+
+        fuLib.po.getInternals(poId).success(function (data, status, xhr) {
+
+            console.log(data);
+
+            $("#tblPoInternal2").html("");
+
+            data.forEach(function (int, index) {
+
+                var row = '<tr>';
+
+                row += '<td>' + int.LovDetailType.title + '</td>';
+                row += '<td>' + int.notes + '</td>';
+                row += '<td>' + int.priority + '</td>';
+
+                row += '</tr>';
+
+                $("#tblPoInternal2").append(row);
+
+            });
+        });
+
+        onresize();
+
+    });
+
 }
 
 function addPoStyle() {
@@ -413,7 +560,6 @@ function addPoStyle() {
         noty({ text: 'Please select a STYLE.', layout: 'topCenter', type: 'warning', timeout: 2000 });
 
         return false;
-
     }
 
     //check if STYLE is already added
@@ -424,9 +570,7 @@ function addPoStyle() {
         return false;
     }
 
-
     fuLib.style.getOne(styleId).success(function (data, status, xhr) {
-
         //add STYLE and SIZES
         var sizeCount = data.sizes.length + 1;
 
@@ -484,11 +628,6 @@ function addPoInternal() {
     }
 
     var internalPriority = $('#selInternalPriority').val();
-
-    if (internalPriority == '0') {
-        noty({ text: 'Please select an INTERNAL-DETAIL priority.', layout: 'topCenter', type: 'warning', timeout: 2000 });
-        return false;
-    }
 
     var txtInternal = $('#selInternalType').find('option[value="' + internalId + '"]').text();
     var txtNotes = $('#txtInternalNotes').val();

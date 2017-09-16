@@ -1178,7 +1178,56 @@ var fuLib = {
                     }
                 })
             );
+        },
+
+        getStyles: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/style/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getStyleSizes: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/size/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getMaterials: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/material/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getInternals: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/internal/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
         }
+
     }
 }
 
