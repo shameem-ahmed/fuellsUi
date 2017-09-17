@@ -251,9 +251,16 @@
                                             </table>
                                         </td>
                                     </tr>
-
+                                
                                 </table>
-
+                                <form ref='uploadForm'
+                                      id='uploadForm'
+                                      action='http://localhost:5000/po/upload/po001'
+                                      method='post'
+                                      encType="multipart/form-data">
+                                    <input type="file" name="pdf1" />
+                                    <input type='submit' value='Upload!' />
+                                </form>  
                             </div>
 
                             <div class="panel-footer">
@@ -398,24 +405,21 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab-document">
-                        <!--PO DETAILS TAB-->
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <button id="btnSuppNew" type="button" class="btn btn-primary">New Supplier</button>
-                                <button id="btnSuppEdit" type="button" class="btn btn-info">Edit</button>
-                                <a href="#" class="mb-control btn btn-danger" data-box="#mb-delete-supplier">Delete</a>
+                        <div id="divNoPdf">
+                            <h3 class="labelDanger2">Upload PO File (PDF)</h3>
 
-                                <ul class="panel-controls">
-                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                </ul>
-                            </div>
+                            <form enctype="multipart/form-data" class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label>Default</label>
+                                        <input type="file" multiple class="file" data-preview-file-type="any" />
+                                    </div>
+                                </div>
+                            </form>
 
-                            <div class="panel-body">
-
-                                <iframe src="~/Home/GetPo?id=1" style="width:100%; height:800px;"></iframe>
-
-                            </div>
+                        </div>
+                        <div id="divPdf">
+                            <iframe id="iframeDoc" src="~/Home/GetPo?id=1" style="width:100%; height:800px;"></iframe>
                         </div>
                     </div>
                 </div>

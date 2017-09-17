@@ -1226,6 +1226,18 @@ var fuLib = {
                     }
                 })
             );
+        },
+
+        PdfExists: function (id) {
+            return (
+                $.ajax({
+                    url: "/Home/POFileExists?id=" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
         }
 
     }

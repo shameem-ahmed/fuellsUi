@@ -178,7 +178,7 @@ function click_btnPONewSave() {
 
     oPO.internals = poInternals;
 
-    console.log(oPO);
+    //console.log(oPO);
 
     //check if oPO is empty
     if (oPO.customer == "0" ||
@@ -242,7 +242,7 @@ function click_btnPONewSave() {
 
             fuLib.po.add(oPO).success(function (data, status, xhr) {
 
-                console.log(data);
+                //console.log(data);
 
                 noty({ text: 'PO added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
@@ -414,24 +414,7 @@ function configPOTable() {
     });
 
     //TABLE ROW CLICK EVENT
-    $("#tblPO tbody").on('click', 'tr', function () {
-
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        }
-        else {
-            tablePO = $('#tblPO').DataTable();
-            tablePO.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-
-            selIdPO = $(this).attr("id");
-
-            fillPO(selIdPO);
-
-            $("#panelPOView").show();
-            $("#panelPOEdit").hide();
-        }
-    });
+    $("#tblPO tbody").on('click', 'tr', tblPO_RowClick);
 
     //TABLE REDRAW EVENT
     $('#tblPO').on('draw.dt', function () {
@@ -439,11 +422,31 @@ function configPOTable() {
     });
 }
 
+function tblPO_RowClick() {
+
+    if ($(this).hasClass('selected')) {
+        $(this).removeClass('selected');
+    }
+    else {
+        tablePO = $('#tblPO').DataTable();
+        tablePO.$('tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+
+        selIdPO = $(this).attr("id");
+
+        fillPO(selIdPO);
+
+
+        $("#panelPOView").show();
+        $("#panelPOEdit").hide();
+    }
+}
+
 function fillPO(poId) {
 
     fuLib.po.getOne(poId).success(function (data, status, xhr) {
 
-        console.log(data[0]);
+        //console.log(data[0]);
 
         $("#h4PoCustomer").text(data[0].customer.name);
         $("#h4PoInvoiceNo").text(data[0].invoiceNo);
@@ -469,7 +472,7 @@ function fillPO(poId) {
 
         fuLib.po.getStyles(poId).success(function (data, status, xhr) {
 
-            console.log(data);
+            //console.log(data);
 
             $("#tblPoStyle2").html("");
 
@@ -477,7 +480,7 @@ function fillPO(poId) {
 
                 fuLib.po.getStyleSizes(style._id).success(function (data2, status, xhr) {
 
-                    console.log(data2);
+                    //console.log(data2);
 
                     var row = '<tr>';
                     row += '<td rowspan="' + (data2.length + 1) + '">' + style.style.title + '</td>';
@@ -505,7 +508,7 @@ function fillPO(poId) {
 
         fuLib.po.getMaterials(poId).success(function (data, status, xhr) {
 
-            console.log(data);
+            //console.log(data);
 
             $("#tblPoMaterial2").html("");
 
@@ -525,7 +528,7 @@ function fillPO(poId) {
 
         fuLib.po.getInternals(poId).success(function (data, status, xhr) {
 
-            console.log(data);
+            //console.log(data);
 
             $("#tblPoInternal2").html("");
 
@@ -542,6 +545,51 @@ function fillPO(poId) {
                 $("#tblPoInternal2").append(row);
 
             });
+        });
+
+        //load pdf
+        fuLib.po.PdfExists(poId).success(function (data, status, xhr) {
+
+            $("#divPdf").hide();
+            $("#divNoPdf").hide();
+
+            if (data == "Y") {
+                $("#divPdf").show();
+                $("#iframeDoc").prop("src", "/Home/GetPo?id=" + poId);
+            }
+            else {
+
+                //var token = localStorage.getItem("fuelUser");
+
+
+                //$("#divFormUploadPOTemplate").html('<div id="divFormUploadTo"><h2>' + poId + '</h2></div>');
+
+
+                //$("#divFormUploadTo").dropzone({ url: "http://localhost:5000/po/upload/" + poId });
+
+
+                //$("#divFormUploadTo").dropzone({
+                //    url: "http://localhost:5000/po/upload/" + poId,
+                //    paramName: "pdf1",
+                //    maxFilesize: 2, //mb
+                //    accept: function (file, done) {
+                //        if (file.name == "justine.pdf") {
+                //            done("Naha, you don't.");
+                //        }
+                //        else {
+                //            done();
+                //        }
+                //    },
+                //    headers: {
+                //        "Authorization": "Bearer " + token,
+                //        "Cache-Control": null,
+                //        "X-Requested-With": null
+                //    }
+                //});
+
+                $("#divNoPdf").show();
+
+            }
         });
 
         onresize();
