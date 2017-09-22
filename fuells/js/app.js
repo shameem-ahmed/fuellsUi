@@ -1240,6 +1240,47 @@ var fuLib = {
             );
         }
 
+    },
+
+    jc: {
+
+        getAll: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        generate: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/generate/" + id,
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
     }
 }
 

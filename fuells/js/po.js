@@ -23,6 +23,9 @@ function doPurchaseOrder(crPage) {
 
     //$("#treeShipGeoLoc").treeview({ data: getGeoLoc() });
 
+    //$("#uploadFormInput").fileinput();
+    $("#uploadFormInput").fileinput({ 'showUpload': false, 'previewFileType': 'any' });
+
     configPOTable();
 
     //fill CUSTOMER
@@ -62,6 +65,39 @@ function doPurchaseOrder(crPage) {
     $("#btnPONew").click(click_btnPONew);
     $("#btnPONewSave, #btnPONewSave2").click(click_btnPONewSave);
     $("#btnPONewCancel, #btnPONewCancel2").click(click_btnPONewCancel);
+    $("#btnGenerateJCs").click(click_btnGenerateJCs);
+
+}
+
+function click_btnGenerateJCs() {
+
+    fuLib.jc.generate(selIdPO).success(function (data, status, xhr) {
+
+        console.log(data);
+
+        $("#tblJCs").html("");
+
+        data.forEach(function (jc, index) {
+
+            var row = '<tr><td><div class="btn-toolbar" role="toolbar" aria-label="..." style="margin:5px;">';
+            row += '       <button type="button" class="btn btn-default">' + jc.jobCardNo + '</button>';
+            row += '       <button type="button" class="btn btn-default">' + jc.purchaseOrderStyle.style.title + '</button>';
+            row += '       <button type="button" class="btn btn-default">' + jc.purchaseOrderSize.styleSize.title + '</button>';
+            row += '       <button type="button" class="btn btn-danger">' + jc.cuttingDone + '</button>';
+            row += '       <button type="button" class="btn btn-danger">' + jc.inspectionDone + '</button>';
+            row += '       <button type="button" class="btn btn-danger">' + jc.liningDone + '</button>';
+            row += '       <button type="button" class="btn btn-danger">' + jc.packingDone + '</button>';
+            row += '       <button type="button" class="btn btn-danger">' + jc.storeDone + '</button>';
+            row += '       <button type="button" class="btn btn-danger">' + jc.tailoringDone + '</button>';
+            row += '  </div></td></tr>';
+
+            $("#tblJCs").append(row);
+
+        });
+
+    }).error(function (xhr, status, error) {
+        handleError('jc.generate', xhr, status, error);
+    });
 
 }
 
@@ -83,6 +119,12 @@ function click_btnPONew () {
     $("#panelPOView").hide();
     $("#panelPOEdit").show();
 
+    //$("#tabDetails").trigger("click");
+    $("#tabDocument").removeClass("active");
+    $("#tabDetails").addClass("active");
+
+    $("#tab-document").removeClass("active");
+    $("#tab-details").addClass("active");
 }
 
 function click_btnPONewSave() {
@@ -435,8 +477,7 @@ function tblPO_RowClick() {
         selIdPO = $(this).attr("id");
 
         fillPO(selIdPO);
-
-
+        
         $("#panelPOView").show();
         $("#panelPOEdit").hide();
     }
@@ -559,38 +600,51 @@ function fillPO(poId) {
             }
             else {
 
-                //var token = localStorage.getItem("fuelUser");
+                $("#uploadFormInput").fileinput("refresh");
 
-
-                //$("#divFormUploadPOTemplate").html('<div id="divFormUploadTo"><h2>' + poId + '</h2></div>');
-
-
-                //$("#divFormUploadTo").dropzone({ url: "http://localhost:5000/po/upload/" + poId });
-
-
-                //$("#divFormUploadTo").dropzone({
-                //    url: "http://localhost:5000/po/upload/" + poId,
-                //    paramName: "pdf1",
-                //    maxFilesize: 2, //mb
-                //    accept: function (file, done) {
-                //        if (file.name == "justine.pdf") {
-                //            done("Naha, you don't.");
-                //        }
-                //        else {
-                //            done();
-                //        }
-                //    },
-                //    headers: {
-                //        "Authorization": "Bearer " + token,
-                //        "Cache-Control": null,
-                //        "X-Requested-With": null
-                //    }
-                //});
+                $("#uploadForm").prop("action", "http://localhost:5000/po/upload/" + poId);
 
                 $("#divNoPdf").show();
 
             }
         });
+
+        $("#btnGenerateJCs").show();
+
+        //fill job cards
+        fuLib.jc.getAll(poId).success(function (data, status, xhr) {
+
+            $("#tblJCs").html("");
+
+            if (data.length > 0) {
+
+                $("#btnGenerateJCs").hide();
+
+                data.forEach(function (jc, index) {
+
+                    var row = '<tr><td><div class="btn-toolbar" role="toolbar" aria-label="..." style="margin:5px;">';
+                    row += '       <button type="button" class="btn btn-default">' + jc.jobCardNo + '</button>';
+                    row += '       <button type="button" class="btn btn-default">' + jc.purchaseOrderStyle.style.title + '</button>';
+                    row += '       <button type="button" class="btn btn-default">' + jc.purchaseOrderSize.styleSize.title + '</button>';
+                    row += '       <button type="button" class="btn btn-danger">' + jc.cuttingDone + '</button>';
+                    row += '       <button type="button" class="btn btn-danger">' + jc.inspectionDone + '</button>';
+                    row += '       <button type="button" class="btn btn-danger">' + jc.liningDone + '</button>';
+                    row += '       <button type="button" class="btn btn-danger">' + jc.packingDone + '</button>';
+                    row += '       <button type="button" class="btn btn-danger">' + jc.storeDone + '</button>';
+                    row += '       <button type="button" class="btn btn-danger">' + jc.tailoringDone + '</button>';
+                    row += '  </div></td></tr>';
+
+                    $("#tblJCs").append(row);
+
+                });
+            }
+
+         
+
+        }).error(function (xhr, status, error) {
+            handleError('jc.generate', xhr, status, error);
+        });
+
 
         onresize();
 
@@ -602,11 +656,8 @@ function addPoStyle() {
 
     var styleId = $('#selStyle').val();
 
-
     if (styleId == '0') {
-        
         noty({ text: 'Please select a STYLE.', layout: 'topCenter', type: 'warning', timeout: 2000 });
-
         return false;
     }
 
@@ -623,8 +674,8 @@ function addPoStyle() {
         var sizeCount = data.sizes.length + 1;
 
         var row = '<tr>';
-        row += '<td rowspan="' + sizeCount + '">' + data.title + '<input class="clsPoStyle" type="hidden" value="' + data._id + '" /></td>';
-        row += '<td rowspan="' + sizeCount + '"><input type="number" class="form-control clsPoStyleQty" value="0" /></td>';
+        row += '<td class="styleRow" rowspan="' + sizeCount + '">' + data.title + '<input class="clsPoStyle" type="hidden" value="' + data._id + '" /></td>';
+        row += '<td class="styleRow" rowspan="' + sizeCount + '"><input type="number" readonly="readonly" class="form-control clsPoStyleQty" value="0" /></td>';
         row += '</tr>';
 
         $("#tblPoStyle").append(row);
@@ -632,12 +683,40 @@ function addPoStyle() {
         data.sizes.forEach(function (size, index) {
 
             row = '<tr>';
-            row += '<td>' + size.title + '<input class="clsPoStyle2" type="hidden" value="' + data._id + '" /><input class="clsPoSize" type="hidden" value="' + size._id + '" /></td>';
-            row += '<td><input type="number" class="form-control clsPoSizeQty" value="0" /></td>';
+            row += '<td class="sizeRow">' + size.title + '<input class="clsPoStyle2" type="hidden" value="' + data._id + '" /><input class="clsPoSize" type="hidden" value="' + size._id + '" /></td>';
+            row += '<td class="sizeRow"><input type="number" class="form-control clsPoSizeQty" value="0" /></td>';
             row += '</tr>';
 
             $("#tblPoStyle").append(row);
 
+
+            $(".clsPoSizeQty").off("focusout").focusout(function () {
+
+                //console.log($(this).val());
+
+                var total = 0;
+
+                var txtStyleQty;
+
+                $("#tblPoStyle").find("tr").each(function () {
+
+                    var tdCount = $(this).find("td[class='sizeRow']").length;
+
+                    if (tdCount == 0) {
+                        //style row
+
+                        txtStyleQty = $(this).find("input[class='form-control clsPoStyleQty']");
+                        total = 0;
+                    }
+                    else if (tdCount > 0) {
+                        //size row
+                        var txtSizeQty = $(this).find("input[class='form-control clsPoSizeQty']");
+                        var sizeQty = $(txtSizeQty).val();
+                        total += parseInt(sizeQty);
+                        $(txtStyleQty).val(total);
+                    }
+                });
+            });
         });
 
         //add STYLE and MATERIALS

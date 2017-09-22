@@ -53,6 +53,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li id="tabDetails" class="active"><a href="#tab-details" role="tab" data-toggle="tab">Details</a></li>
                     <li id="tabDocument"><a href="#tab-document" role="tab" data-toggle="tab">Document</a></li>
+                    <li id="tabJc"><a href="#tab-jc" role="tab" data-toggle="tab">Job Cards</a></li>
                 </ul>
                 <div class="panel-body tab-content">
                     <div class="tab-pane active" id="tab-details">
@@ -91,7 +92,7 @@
                                         <td>
                                             <div id="fgQty" class="form-group has-error">
                                                 <span class="help-block">Type Quantity.</span>
-                                                <input type="number" class="form-control" id="txtQty" placeholder="Quantity" />
+                                                <input type="number" readonly="readonly" class="form-control" id="txtQty" placeholder="Quantity" />
                                             </div>
                                         </td>
                                     </tr>
@@ -251,23 +252,13 @@
                                             </table>
                                         </td>
                                     </tr>
-                                
                                 </table>
-                                <form ref='uploadForm'
-                                      id='uploadForm'
-                                      action='http://localhost:5000/po/upload/po001'
-                                      method='post'
-                                      encType="multipart/form-data">
-                                    <input type="file" name="pdf1" />
-                                    <input type='submit' value='Upload!' />
-                                </form>  
                             </div>
 
                             <div class="panel-footer">
                                 <button id="btnPONewSave2" type="button" class="btn btn-primary">Save New PO</button>
                                 <button id="btnPONewCancel2" type="button" class="btn btn-danger">Cancel</button>
                             </div>
-
                         </div>
 
                         <div class="panel panel-primary" id="panelPOView">
@@ -404,15 +395,21 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="tab-pane" id="tab-document">
                         <div id="divNoPdf">
                             <h3 class="labelDanger2">Upload PO File (PDF)</h3>
 
-                            <form enctype="multipart/form-data" class="form-horizontal">
+                            <form enctype="multipart/form-data" 
+                                  class="form-horizontal"
+                                  id="uploadForm"
+                                  action="http://localhost:5000/po/upload/po001"
+                                  method="post">
+
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <label>Default</label>
-                                        <input type="file" multiple class="file" data-preview-file-type="any" />
+                                        <input id="uploadFormInput" type="file" multiple class="file" name="pdf1" />
                                     </div>
                                 </div>
                             </form>
@@ -421,6 +418,24 @@
                         <div id="divPdf">
                             <iframe id="iframeDoc" src="~/Home/GetPo?id=1" style="width:100%; height:800px;"></iframe>
                         </div>
+                    </div>
+
+                    <div class="tab-pane" id="tab-jc">
+                       <table border="0" style="width:100%;">
+                           <tr>
+                               <td>
+                                   <button id="btnGenerateJCs" type="button" class="btn btn-warning" style="width:100%;">Generate Job Cards</button>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <table style="width:100%;" border="0">
+                                       <tbody id="tblJCs">
+                                       </tbody>
+                                   </table>
+                               </td>
+                           </tr>
+                       </table>
                     </div>
                 </div>
             </div>
