@@ -622,17 +622,49 @@ function fillPO(poId) {
 
                 data.forEach(function (jc, index) {
 
-                    var row = '<tr><td><div class="btn-toolbar" role="toolbar" aria-label="..." style="margin:5px;">';
-                    row += '       <button type="button" class="btn btn-default">' + jc.jobCardNo + '</button>';
-                    row += '       <button type="button" class="btn btn-default">' + jc.purchaseOrderStyle.style.title + '</button>';
-                    row += '       <button type="button" class="btn btn-default">' + jc.purchaseOrderSize.styleSize.title + '</button>';
-                    row += '       <button type="button" class="btn btn-danger">' + jc.cuttingDone + '</button>';
-                    row += '       <button type="button" class="btn btn-danger">' + jc.inspectionDone + '</button>';
-                    row += '       <button type="button" class="btn btn-danger">' + jc.liningDone + '</button>';
-                    row += '       <button type="button" class="btn btn-danger">' + jc.packingDone + '</button>';
-                    row += '       <button type="button" class="btn btn-danger">' + jc.storeDone + '</button>';
-                    row += '       <button type="button" class="btn btn-danger">' + jc.tailoringDone + '</button>';
-                    row += '  </div></td></tr>';
+                    var row = '<tr><td>';
+                    row += '    <div class="btn-group btn-group-lg" role="group" aria-label="..." style="margin:5px; width:100%;">';
+                    row += '       <button type="button" class="btn btn-default" style="width:100px; font-size:xx-small;"><span class="label label-info">' + jc.jobCardNo + '</span></button>';
+                    row += '       <button type="button" class="btn btn-default" style="width:100px; font-size:xx-small;">' + jc.purchaseOrderStyle.style.title + '</button>';
+                    row += '       <button type="button" class="btn btn-default" style="width:50px; font-size:xx-small;">' + jc.purchaseOrderSize.styleSize.title + '</button>';
+                    if (jc.cuttingDone == true) {
+                        row += '       <button type="button" class="btn btn-success" style="width:75px; font-size:xx-small;">CUTTING</button>';
+                    }
+                    else {
+                        row += '       <button type="button" class="btn btn-danger" style="width:75px; font-size:xx-small;">CUTTING</button>';
+                    }
+                    if (jc.inspectionDone == true) {
+                        row += '       <button type="button" class="btn btn-success" style="width:100px; font-size:xx-small;">INSPECTION</button>';
+                    }
+                    else {
+                        row += '       <button type="button" class="btn btn-danger" style="width:100px; font-size:xx-small;">INSPECTION</button>';
+                    }
+                    if (jc.liningDone == true) {
+                        row += '       <button type="button" class="btn btn-success" style="width:75px; font-size:xx-small;">LINING</button>';
+                    }
+                    else {
+                        row += '       <button type="button" class="btn btn-danger" style="width:75px; font-size:xx-small;">LINING</button>';
+                    }
+                    if (jc.packingDone == true) {
+                        row += '       <button type="button" class="btn btn-success" style="width:75px; font-size:xx-small;">PACKING</button>';
+                    }
+                    else {
+                        row += '       <button type="button" class="btn btn-danger" style="width:75px; font-size:xx-small;">PACKING</button>';
+                    }
+                    if (jc.storeDone == true) {
+                        row += '       <button type="button" class="btn btn-success" style="width:75px; font-size:xx-small;">STORE</button>';
+                    }
+                    else {
+                        row += '       <button type="button" class="btn btn-danger" style="width:75px; font-size:xx-small;">STORE</button>';
+                    }
+                    if (jc.tailoringDone == true) {
+                        row += '       <button type="button" class="btn btn-success" style="width:100px; font-size:xx-small;">TAILORING</button>';
+                    }
+                    else {
+                        row += '       <button type="button" class="btn btn-danger" style="width:100px; font-size:xx-small;">TAILORING</button>';
+                    }
+                    row += '  </div>';
+                    row += '</td></tr>';
 
                     $("#tblJCs").append(row);
 
