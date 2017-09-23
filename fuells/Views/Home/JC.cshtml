@@ -1,5 +1,54 @@
 ﻿@{
     ViewBag.Title = "Job Card";
 }
-
 <input type="hidden" id="hidSelMenu" value="liPageJC" />
+<input type="hidden" id="hidSelUser" value="000" />
+
+<ul class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Company</a></li>
+    <li class="active">Job Card</li>
+</ul>
+<div class="page-content-wrap">
+    <div class="row" id="divList">
+        <div class="col-md-12" id="divTable">
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+
+                    <table border="0" style="width:100%; color:red;">
+                        <tr>
+                            <td style="width:25%;">Purchase Order /</td>
+                            <td style="width:25%;">Style /</td>
+                            <td style="width:25%;">Size /</td>
+                            <td style="width:25%;">Job Card /</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select id="selPO" class="form-control select"></select>
+                            </td>
+                            <td>
+                                <select id="selPOStyle" class="form-control select"></select>
+                            </td>
+                            <td>
+                                <select id="selPOSize" class="form-control select"></select>
+                            </td>
+                            <td>
+                                <select id="selJC" class="form-control select"></select>
+
+                                <button id="btnGenerateJC" type="button" class="btn btn-primary">New Item</button>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="panel-body">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

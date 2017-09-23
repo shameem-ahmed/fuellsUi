@@ -1256,6 +1256,30 @@ var fuLib = {
             );
         },
 
+        getPOStyle: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/getpostyle/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getPOSize: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/getposize/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
         getOne: function (id) {
             return (
                 $.ajax({

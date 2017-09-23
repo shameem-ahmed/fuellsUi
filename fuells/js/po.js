@@ -95,6 +95,8 @@ function click_btnGenerateJCs() {
 
         });
 
+        onresize();
+
     }).error(function (xhr, status, error) {
         handleError('jc.generate', xhr, status, error);
     });
@@ -623,47 +625,119 @@ function fillPO(poId) {
                 data.forEach(function (jc, index) {
 
                     var row = '<tr><td>';
-                    row += '    <div class="btn-group btn-group-lg" role="group" aria-label="..." style="margin:5px; width:100%;">';
-                    row += '       <button type="button" class="btn btn-default" style="width:100px; font-size:xx-small;"><span class="label label-info">' + jc.jobCardNo + '</span></button>';
-                    row += '       <button type="button" class="btn btn-default" style="width:100px; font-size:xx-small;">' + jc.purchaseOrderStyle.style.title + '</button>';
-                    row += '       <button type="button" class="btn btn-default" style="width:50px; font-size:xx-small;">' + jc.purchaseOrderSize.styleSize.title + '</button>';
+
+                    if (jc.cuttingDone == true && jc.inspectionDone == true && jc.liningDone == true && jc.packingDone == true && jc.storeDone == true && jc.tailoringDone == true) {
+
+                        row += '<table style="background-color: #b9f6ca; border: 1px dashed #00c853; width:100%; margin:5px;">';
+
+                    }
+                    else if (jc.cuttingDone == false && jc.inspectionDone == false && jc.liningDone == false && jc.packingDone == false && jc.storeDone == false && jc.tailoringDone == false) {
+
+                        row += '<table style="background-color: #ff8a80; border: 1px dashed #d50000; width:100%; margin:5px;">';
+
+                    }
+                    else {
+                        row += '<table style="background-color: #ffff8d; border: 1px dashed #ffd600; width:100%; margin:5px;">';
+
+                    }
+
+                    row += '  <tr>';
+                    row += '    <td colspan="2">';
+                    row += '      <strong>' + jc.jobCardNo + '</strong>';
+                    row += '    </td>';
+
                     if (jc.cuttingDone == true) {
-                        row += '       <button type="button" class="btn btn-success" style="width:75px; font-size:xx-small;">CUTTING</button>';
+                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
                     }
                     else {
-                        row += '       <button type="button" class="btn btn-danger" style="width:75px; font-size:xx-small;">CUTTING</button>';
+                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
                     }
+
                     if (jc.inspectionDone == true) {
-                        row += '       <button type="button" class="btn btn-success" style="width:100px; font-size:xx-small;">INSPECTION</button>';
+                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
                     }
                     else {
-                        row += '       <button type="button" class="btn btn-danger" style="width:100px; font-size:xx-small;">INSPECTION</button>';
+                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
                     }
+
                     if (jc.liningDone == true) {
-                        row += '       <button type="button" class="btn btn-success" style="width:75px; font-size:xx-small;">LINING</button>';
+                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
                     }
                     else {
-                        row += '       <button type="button" class="btn btn-danger" style="width:75px; font-size:xx-small;">LINING</button>';
+                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
                     }
+
                     if (jc.packingDone == true) {
-                        row += '       <button type="button" class="btn btn-success" style="width:75px; font-size:xx-small;">PACKING</button>';
+                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
                     }
                     else {
-                        row += '       <button type="button" class="btn btn-danger" style="width:75px; font-size:xx-small;">PACKING</button>';
+                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
                     }
+
                     if (jc.storeDone == true) {
-                        row += '       <button type="button" class="btn btn-success" style="width:75px; font-size:xx-small;">STORE</button>';
+                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
                     }
                     else {
-                        row += '       <button type="button" class="btn btn-danger" style="width:75px; font-size:xx-small;">STORE</button>';
+                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
                     }
+
                     if (jc.tailoringDone == true) {
-                        row += '       <button type="button" class="btn btn-success" style="width:100px; font-size:xx-small;">TAILORING</button>';
+                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
                     }
                     else {
-                        row += '       <button type="button" class="btn btn-danger" style="width:100px; font-size:xx-small;">TAILORING</button>';
+                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
                     }
-                    row += '  </div>';
+
+                    row += '</tr>';
+                    row += '<tr>';
+                    row += '  <td>' + jc.purchaseOrderStyle.style.title + '</td>';
+                    row += '  <td>' + jc.purchaseOrderSize.styleSize.title + '</td>';
+
+                    if (jc.cuttingDone == true) {
+                        row += '  <td style="text-align:center; color:green;">CUTTING</td>';
+                    }
+                    else {
+                        row += '  <td style="text-align:center; color:#d50000;">CUTTING</td>';
+                    }
+
+                    if (jc.inspectionDone == true) {
+                        row += '  <td style="text-align:center; color:green;">INSPECTION</td>';
+                    }
+                    else {
+                        row += '  <td style="text-align:center; color:#d50000;">INSPECTION</td>';
+                    }
+
+                    if (jc.liningDone == true) {
+                        row += '  <td style="text-align:center; color:green;">LINING</td>';
+                    }
+                    else {
+                        row += '  <td style="text-align:center; color:#d50000;">LINING</td>';
+                    }
+
+                    if (jc.packingDone == true) {
+                        row += '  <td style="text-align:center; color:green;">PACKING</td>';
+                    }
+                    else {
+                        row += '  <td style="text-align:center; color:#d50000;">PACKING</td>';
+                    }
+
+                    if (jc.storeDone == true) {
+                        row += '  <td style="text-align:center; color:green;">STORE</td>';
+                    }
+                    else {
+                        row += '  <td style="text-align:center; color:#d50000;">STORE</td>';
+                    }
+
+                    if (jc.tailoringDone == true) {
+                        row += '  <td style="text-align:center; color:green;">TAILORING</td>';
+                    }
+                    else {
+                        row += '  <td style="text-align:center; color:#d50000;">TAILORING</td>';
+                    }
+
+                    row += '</tr>';
+                    row += '</table>';
+
                     row += '</td></tr>';
 
                     $("#tblJCs").append(row);
