@@ -1137,6 +1137,150 @@ var fuLib = {
             );
         }
 
+    },
+
+    po: {
+
+        getAll: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/getall",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        add: function (po) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/add",
+                    data: JSON.stringify(po),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getStyles: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/style/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getStyleSizes: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/size/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getMaterials: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/material/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getInternals: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "po/internal/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        PdfExists: function (id) {
+            return (
+                $.ajax({
+                    url: "/Home/POFileExists?id=" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
+
+    },
+
+    jc: {
+
+        getAll: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/getall/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getOne: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/getone/" + id,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        generate: function (id) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/generate/" + id,
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        }
     }
 }
 

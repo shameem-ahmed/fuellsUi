@@ -87,14 +87,40 @@ namespace fuells.Controllers
             return View();
         }
 
+        public string POFileExists(string id)
+        {
+            string sFolder = ConfigurationManager.AppSettings["FuellsFolder"];
+
+            sFolder += @"\PO\" + id + ".pdf";
+
+            return FileExists(sFolder);
+
+        }
+
+        private string FileExists(string file)
+        {
+            string res = "N";
+
+            if (System.IO.File.Exists(file))
+            {
+                res = "Y";
+            }
+
+            return res;
+        }
+
         public FileResult GetPO(string id)
         {
-            id = "0.pdf";
             string sFolder = ConfigurationManager.AppSettings["FuellsFolder"];
-            byte[] fileBytes = System.IO.File.ReadAllBytes(sFolder + @"\PO\" + id);
+
+            if (POFileExists(id) == "N")
+            {
+                id = "0";
+            }
+       
+            byte[] fileBytes = System.IO.File.ReadAllBytes(sFolder + @"\PO\" + id + ".pdf");
             Response.AppendHeader("Content-Disposition", "inline;test.pdf");
             return File(fileBytes, "application/pdf");
-
         }
 
         public FileResult GetLO(string id)

@@ -19,8 +19,16 @@
     color: #1caf9a;
 }
 
+.labelInfo2 {
+    color: #1caf9a;
+}
+
 .labelDanger {
     text-align: right;
+    color: #e04b4a;
+}
+
+.labelDanger2 {
     color: #e04b4a;
 }
 

@@ -1,6 +1,4 @@
-﻿
-
-function doLeatherOrder(crPage) {
+﻿function doLeatherOrder(crPage) {
 
     $("#divUpdate").hide();
 
