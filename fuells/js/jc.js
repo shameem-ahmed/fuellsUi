@@ -25,6 +25,114 @@ function doJobCard(crPage) {
         handleError('po.getAll', xhr, status, error);
     });
 
+    //fill cutting users
+    fuLib.user.getAllCutting().success(function (data, status, xhr) {
+
+        var items = '<option value="0">--select--</option>';
+
+        for (var i = 0; i < data.length; i++) {
+            items += '<option value="' + data[i]._id + '">' + data[i].fullName + '</option>';
+        }
+
+        $('#selCuttingFuser').html(items);
+        $('#selCuttingFuser').selectpicker('refresh');
+
+        $('#selCuttingCutter').html(items);
+        $('#selCuttingCutter').selectpicker('refresh');
+
+        $('#selCuttingMatcher').html(items);
+        $('#selCuttingMatcher').selectpicker('refresh');
+
+    }).error(function (xhr, status, error) {
+        handleError('po.getAllCutting', xhr, status, error);
+    });
+
+    //fill lining users
+    fuLib.user.getAllLining().success(function (data, status, xhr) {
+
+        var items = '<option value="0">--select--</option>';
+
+        for (var i = 0; i < data.length; i++) {
+            items += '<option value="' + data[i]._id + '">' + data[i].fullName + '</option>';
+        }
+
+        $('#selLiningCutter').html(items);
+        $('#selLiningCutter').selectpicker('refresh');
+
+    }).error(function (xhr, status, error) {
+        handleError('po.getAllLining', xhr, status, error);
+    });
+
+    //fill store users
+    fuLib.user.getAllStore().success(function (data, status, xhr) {
+
+        var items = '<option value="0">--select--</option>';
+
+        for (var i = 0; i < data.length; i++) {
+            items += '<option value="' + data[i]._id + '">' + data[i].fullName + '</option>';
+        }
+
+        $('#selStoreReceivedBy').html(items);
+        $('#selStoreReceivedBy').selectpicker('refresh');
+
+        $('#selStoreIssuedBy').html(items);
+        $('#selStoreIssuedBy').selectpicker('refresh');
+
+    }).error(function (xhr, status, error) {
+        handleError('po.getAllStore', xhr, status, error);
+    });
+
+    //fill tailoring users
+    fuLib.user.getAllTailoring().success(function (data, status, xhr) {
+
+        var items = '<option value="0">--select--</option>';
+
+        for (var i = 0; i < data.length; i++) {
+            items += '<option value="' + data[i]._id + '">' + data[i].fullName + '</option>';
+        }
+
+        $('#selTailoringQc').html(items);
+        $('#selTailoringQc').selectpicker('refresh');
+
+        $('#selTailoringTailor').html(items);
+        $('#selTailoringTailor').selectpicker('refresh');
+
+    }).error(function (xhr, status, error) {
+        handleError('po.getAllTailoring', xhr, status, error);
+    });
+
+    //fill inspection users
+    fuLib.user.getAllInspection().success(function (data, status, xhr) {
+
+        var items = '<option value="0">--select--</option>';
+
+        for (var i = 0; i < data.length; i++) {
+            items += '<option value="' + data[i]._id + '">' + data[i].fullName + '</option>';
+        }
+
+        $('#selInspectionQc').html(items);
+        $('#selInspectionQc').selectpicker('refresh');
+
+    }).error(function (xhr, status, error) {
+        handleError('po.getAllInspection', xhr, status, error);
+    });
+
+    //fill packing users
+    fuLib.user.getAllPacking().success(function (data, status, xhr) {
+
+        var items = '<option value="0">--select--</option>';
+
+        for (var i = 0; i < data.length; i++) {
+            items += '<option value="' + data[i]._id + '">' + data[i].fullName + '</option>';
+        }
+
+        $('#selPackingPackedBy').html(items);
+        $('#selPackingPackedBy').selectpicker('refresh');
+
+    }).error(function (xhr, status, error) {
+        handleError('po.getAllInspection', xhr, status, error);
+    });
+
 
     //WIRE EVENTS
     //

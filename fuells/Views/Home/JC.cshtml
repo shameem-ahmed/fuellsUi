@@ -37,16 +37,284 @@
                             </td>
                             <td>
                                 <select id="selJC" class="form-control select"></select>
-
                                 <button id="btnGenerateJC" type="button" class="btn btn-primary">New Item</button>
-
                             </td>
                         </tr>
                     </table>
                 </div>
-
                 <div class="panel-body">
-                    
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <table class="tableEdit">
+                                <tr>
+                                    <td>Job Card # /</td>
+                                </tr>
+                                <tr>
+                                    <td><h3>112.1</h3></td>
+                                </tr>
+                                <tr>
+                                    <td>Start Date /</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" id="txtDateStart" class="form-control datepicker" placeholder="Start Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>End Date /</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" id="txtDateEnd" class="form-control datepicker" placeholder="End Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4>Purchase Order</h4> 
+                                </div>
+                                <div class="panel-body">
+                                    <table class="tableEdit" border="0">
+                                        <tr>
+                                            <td>
+                                                <table class="tableEdit" border="0">
+                                                    <tr>
+                                                        <td>Customer /</td>
+                                                        <td>Invoice # /</td>
+                                                        <td>Quantity /</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><h3>CUSTOMER</h3></td>
+                                                        <td><h3>112</h3></td>
+                                                        <td><h3>150</h3></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Order Date /</td>
+                                                        <td>Delivery Date /</td>
+                                                        <td>Target Date /</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><h3>12-Oct-2017</h3></td>
+                                                        <td><h3>22-Oct-2017</h3></td>
+                                                        <td><h3>19-Oct-2017</h3></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3"><h3>Production<small>Order Type</small></h3></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td>
+                                                <table border="1" style="width:100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="2">Internal Details /</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Notes</th>
+                                                            <th>Priority</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Body Lining<br />This is a sample internal details</td>
+                                                            <td>Normal</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Body Lining<br />This is a sample internal details</td>
+                                                            <td>Normal</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Body Lining<br />This is a sample internal details</td>
+                                                            <td>Normal</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <div id="divCutting" class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                    <h3 class="panel-title" style="color:#fff;">Cutting &amp; Fusing</h3>
+                </div>
+                <div class="panel-body">
+                    <label>Date:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        <input type="text" class="form-control datepicker" id="txtCuttingDate" value="2017-05-22">
+                    </div>
+                    <label>Matcher:</label>
+                    <select id="selCuttingMatcher" class="form-control select"></select>
+                    <label>Cutter:</label>
+                    <select id="selCuttingCutter" class="form-control select"></select>
+                    <label>Fuser:</label>
+                    <select id="selCuttingFuser" class="form-control select"></select>
+                    <label>Remarks:</label>
+                    <textarea class="form-control" id="txtCuttingNotes" rows="5"></textarea>
+                    <span class="help-block">Worker remarks</span>
+
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-warning" id="btnCuttingReset">Reset</button>
+                    <button class="btn btn-primary pull-right" id="btnCuttingSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div id="divLining" class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                    <h3 class="panel-title" style="color:#fff;">Lining Cutting</h3>
+                </div>
+                <div class="panel-body">
+                    <label>Date:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        <input type="text" class="form-control datepicker" id="txtLiningDate" value="2017-05-22">
+                    </div>
+                    <label>Cutter:</label>
+                    <select id="selLiningCutter" class="form-control select"></select>
+                    <label>Remarks:</label>
+                    <textarea class="form-control" id="txtLiningNotes" rows="5"></textarea>
+                    <span class="help-block">Worker remarks</span>
+
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-warning" id="btnLiningReset">Reset</button>
+                    <button class="btn btn-primary pull-right" id="btnLiningSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div id="divStore" class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                    <h3 class="panel-title" style="color:#fff;">Store</h3>
+                </div>
+                <div class="panel-body">
+                    <label>Date:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        <input type="text" class="form-control datepicker" id="txtStoreDate" value="2017-05-22">
+                    </div>
+                    <label>Issued by:</label>
+                    <select id="selStoreIssuedBy" class="form-control select"></select>
+                    <label>Received by:</label>
+                    <select id="selStoreReceivedBy" class="form-control select"></select>
+                    <label>Remarks:</label>
+                    <textarea class="form-control" id="txtStoreNotes" rows="5"></textarea>
+                    <span class="help-block">Worker remarks</span>
+
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-warning" id="btnStoreReset">Reset</button>
+                    <button class="btn btn-primary pull-right" id="btnStoreSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div id="divTailoring" class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                    <h3 class="panel-title" style="color:#fff;">Tailoring</h3>
+                </div>
+                <div class="panel-body">
+                    <label>Date:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        <input type="text" class="form-control datepicker" id="txtTailoringDate" value="2017-05-22">
+                    </div>
+                    <label>Tailor:</label>
+                    <select id="selTailoringTailor" class="form-control select"></select>
+                    <label>Lice QC:</label>
+                    <select id="selTailoringQc" class="form-control select"></select>
+                    <label>Status:</label>
+                    <select id="selTailoringStatus" class="form-control select">
+                        <option value="ok">OK</option>
+                        <option value="alter">Alteration</option>
+                    </select>
+
+                    <label>Remarks:</label>
+                    <textarea class="form-control" id="txtTailoringeNotes" rows="5"></textarea>
+                    <span class="help-block">Worker remarks</span>
+
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-warning" id="btnTailoringReset">Reset</button>
+                    <button class="btn btn-primary pull-right" id="btnTailoringSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div id="divInspection" class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                    <h3 class="panel-title" style="color:#fff;">Inspection</h3>
+                </div>
+                <div class="panel-body">
+                    <label>Date:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        <input type="text" class="form-control datepicker" id="txtInspectionDate" value="2017-05-22">
+                    </div>
+                    <label>QC done by:</label>
+                    <select id="selInspectionQc" class="form-control select"></select>
+                    <label>Status:</label>
+                    <select id="selInspectionStatus" class="form-control select">
+                        <option value="ok">OK</option>
+                        <option value="alter">Alteration</option>
+                    </select>
+                    <label>Remarks:</label>
+                    <textarea class="form-control" id="txtInspectionNotes" rows="5"></textarea>
+                    <span class="help-block">Worker remarks</span>
+
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-warning" id="btnInspectionReset">Reset</button>
+                    <button class="btn btn-primary pull-right" id="btnInspectionSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div id="divPacking" class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                    <h3 class="panel-title" style="color:#fff;">Packing</h3>
+                </div>
+                <div class="panel-body">
+                    <label>Date:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        <input type="text" class="form-control datepicker" id="txtPackingDate" value="2017-05-22">
+                    </div>
+                    <label>Packed by:</label>
+                    <select id="selPackingPackedBy" class="form-control select"></select>
+                    <label>Status:</label>
+                    <select id="selPackingStatus" class="form-control select">
+                        <option value="ok">OK</option>
+                        <option value="alter">Alteration</option>
+                    </select>
+                    <label>Remarks:</label>
+                    <textarea class="form-control" id="txtPackingNotes" rows="5"></textarea>
+                    <span class="help-block">Worker remarks</span>
+
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-warning" id="btnPackingReset">Reset</button>
+                    <button class="btn btn-primary pull-right" id="btnPackingSubmit">Submit</button>
                 </div>
             </div>
         </div>

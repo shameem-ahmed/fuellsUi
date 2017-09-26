@@ -39,7 +39,8 @@
                             <tr>
                                 <th width="20%">Login</th>
                                 <th width="30%">Name</th>
-                                <th width="30%">Email</th>
+                                <th width="30%">Department</th>
+                                <th width="20%">Email</th>
                                 <th width="20%">Phone</th>
                             </tr>
                         </thead>
@@ -77,6 +78,14 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td class="labelDanger" style="width:150px;">Full name /</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" id="txtFullName" class="form-control" placeholder="Full Name" data-toggle="tooltip" data-placement="left" title="Full Name" />
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td class="labelDanger">Password /</td>
                                             </tr>
                                             <tr>
@@ -90,6 +99,22 @@
                                             <tr>
                                                 <td>
                                                     <input type="password" id="txtPwd2" class="form-control" placeholder="Confirm Password" data-toggle="tooltip" data-placement="left" title="Confirm Password" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="labelDanger">Department /</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <select id="selDept" class="form-control select">
+                                                        <option value="0" selected="selected">Not Set</option>
+                                                        <option value="1">Cutting</option>
+                                                        <option value="2">Lining</option>
+                                                        <option value="3">Store</option>
+                                                        <option value="4">Tailoring</option>
+                                                        <option value="5">Inspection</option>
+                                                        <option value="6">Packing</option>
+                                                    </select>
                                                 </td>
                                             </tr>
                                             <tr>

@@ -48,7 +48,32 @@ function doUser(crPage) {
                     return '<input type="hidden" value="' + row._id + '"/><input type="hidden" value="' + row.isAdmin + '"/>' + row.name;
                 }
             },
-            { "data": "person.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "fullName", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            {
+                "render": function (data, type, row) {
+                    var dept = "NA";
+                    if (row.dept == 1) {
+                        dept = "Cutting";
+                    }
+                    else if (row.dept == 2) {
+                        dept = "Lining";
+                    }
+                    else if (row.dept == 3) {
+                        dept = "Store";
+                    }
+                    else if (row.dept == 4) {
+                        dept = "Tailoring";
+                    }
+                    else if (row.dept == 5) {
+                        dept = "Inspection";
+                    }
+                    else if (row.dept == 6) {
+                        dept = "Packing";
+                    }
+
+                    return dept;
+                }
+            },
             { "data": "person.email", "defaultContent": "<span class='text-muted'>Not set</span>" },
             { "data": "person.phone", "defaultContent": "<span class='text-muted'>Not set</span>" },
         ],
@@ -432,7 +457,9 @@ function doUser(crPage) {
 
         var oUser = {
             name: $("#txtLogin").val(),
+            fullName: $("#txtFullName").val(),
             pwd: $("#txtPwd1").val(),
+            dept: $("#selDept").val(),
             person: null,
             dateExpiry: '31-Dec-2050',
             isActive: true,
@@ -838,6 +865,10 @@ function userClearEditPanel() {
     $("#txtPwd2").val('');
 
     $("#chkAdmin").iCheck('uncheck');
+
+    $("#txtFullName").val('');
+    $("#selDept").val('0');
+    $($("#selDept")).selectpicker('refresh');
 
     $("#txtName").val('');
     $("#txtEmail").val('');

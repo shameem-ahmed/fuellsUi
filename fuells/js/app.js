@@ -91,6 +91,78 @@ var fuLib = {
             );
         },
 
+        getAllCutting: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "user/getall/1",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllLining: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "user/getall/2",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllStore: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "user/getall/3",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllTailoring: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "user/getall/4",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllInspection: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "user/getall/5",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        getAllPacking: function () {
+            return (
+                $.ajax({
+                    url: apiUrl + "user/getall/6",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
         getOne: function (id) {
             return (
                 $.ajax({
