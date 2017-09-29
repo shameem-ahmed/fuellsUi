@@ -71,34 +71,18 @@ function doPurchaseOrder(crPage) {
 
 function click_btnGenerateJCs() {
 
+    $("#btnGenerateJCs").prop('disabled', true);
+
     fuLib.jc.generate(selIdPO).success(function (data, status, xhr) {
 
-        console.log(data);
+        $("#btnGenerateJCs").prop('disabled', false);
 
-        $("#tblJCs").html("");
-
-        data.forEach(function (jc, index) {
-
-            var row = '<tr><td><div class="btn-toolbar" role="toolbar" aria-label="..." style="margin:5px;">';
-            row += '       <button type="button" class="btn btn-default">' + jc.jobCardNo + '</button>';
-            row += '       <button type="button" class="btn btn-default">' + jc.purchaseOrderStyle.style.title + '</button>';
-            row += '       <button type="button" class="btn btn-default">' + jc.purchaseOrderSize.styleSize.title + '</button>';
-            row += '       <button type="button" class="btn btn-danger">' + jc.cuttingDone + '</button>';
-            row += '       <button type="button" class="btn btn-danger">' + jc.inspectionDone + '</button>';
-            row += '       <button type="button" class="btn btn-danger">' + jc.liningDone + '</button>';
-            row += '       <button type="button" class="btn btn-danger">' + jc.packingDone + '</button>';
-            row += '       <button type="button" class="btn btn-danger">' + jc.storeDone + '</button>';
-            row += '       <button type="button" class="btn btn-danger">' + jc.tailoringDone + '</button>';
-            row += '  </div></td></tr>';
-
-            $("#tblJCs").append(row);
-
-        });
-
-        onresize();
+        fillJobCards(selIdPO);
 
     }).error(function (xhr, status, error) {
+        $("#btnGenerateJCs").prop('disabled', false);
         handleError('jc.generate', xhr, status, error);
+
     });
 
 }
@@ -434,6 +418,8 @@ function configPOTable() {
             },
             { "data": "invoiceNo", "defaultContent": "<span class='text-muted'>Not set</span>" },
             { "data": "customer.name", "defaultContent": "<span class='text-muted'>Not set</span>" },
+            { "data": "qty", "defaultContent": "<span class='text-muted'>Not set</span>" },
+
             {
                 "render": function (data, type, row) {
 
@@ -613,149 +599,150 @@ function fillPO(poId) {
 
         $("#btnGenerateJCs").show();
 
-        //fill job cards
-        fuLib.jc.getAll(poId).success(function (data, status, xhr) {
-
-            $("#tblJCs").html("");
-
-            if (data.length > 0) {
-
-                $("#btnGenerateJCs").hide();
-
-                data.forEach(function (jc, index) {
-
-                    var row = '<tr><td>';
-
-                    if (jc.cuttingDone == true && jc.inspectionDone == true && jc.liningDone == true && jc.packingDone == true && jc.storeDone == true && jc.tailoringDone == true) {
-
-                        row += '<table style="background-color: #b9f6ca; border: 1px dashed #00c853; width:100%; margin:5px;">';
-
-                    }
-                    else if (jc.cuttingDone == false && jc.inspectionDone == false && jc.liningDone == false && jc.packingDone == false && jc.storeDone == false && jc.tailoringDone == false) {
-
-                        row += '<table style="background-color: #ff8a80; border: 1px dashed #d50000; width:100%; margin:5px;">';
-
-                    }
-                    else {
-                        row += '<table style="background-color: #ffff8d; border: 1px dashed #ffd600; width:100%; margin:5px;">';
-
-                    }
-
-                    row += '  <tr>';
-                    row += '    <td colspan="2">';
-                    row += '      <strong>' + jc.jobCardNo + '</strong>';
-                    row += '    </td>';
-
-                    if (jc.cuttingDone == true) {
-                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
-                    }
-                    else {
-                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
-                    }
-
-                    if (jc.inspectionDone == true) {
-                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
-                    }
-                    else {
-                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
-                    }
-
-                    if (jc.liningDone == true) {
-                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
-                    }
-                    else {
-                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
-                    }
-
-                    if (jc.packingDone == true) {
-                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
-                    }
-                    else {
-                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
-                    }
-
-                    if (jc.storeDone == true) {
-                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
-                    }
-                    else {
-                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
-                    }
-
-                    if (jc.tailoringDone == true) {
-                        row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
-                    }
-                    else {
-                        row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
-                    }
-
-                    row += '</tr>';
-                    row += '<tr>';
-                    row += '  <td>' + jc.purchaseOrderStyle.style.title + '</td>';
-                    row += '  <td>' + jc.purchaseOrderSize.styleSize.title + '</td>';
-
-                    if (jc.cuttingDone == true) {
-                        row += '  <td style="text-align:center; color:green;">CUTTING</td>';
-                    }
-                    else {
-                        row += '  <td style="text-align:center; color:#d50000;">CUTTING</td>';
-                    }
-
-                    if (jc.inspectionDone == true) {
-                        row += '  <td style="text-align:center; color:green;">INSPECTION</td>';
-                    }
-                    else {
-                        row += '  <td style="text-align:center; color:#d50000;">INSPECTION</td>';
-                    }
-
-                    if (jc.liningDone == true) {
-                        row += '  <td style="text-align:center; color:green;">LINING</td>';
-                    }
-                    else {
-                        row += '  <td style="text-align:center; color:#d50000;">LINING</td>';
-                    }
-
-                    if (jc.packingDone == true) {
-                        row += '  <td style="text-align:center; color:green;">PACKING</td>';
-                    }
-                    else {
-                        row += '  <td style="text-align:center; color:#d50000;">PACKING</td>';
-                    }
-
-                    if (jc.storeDone == true) {
-                        row += '  <td style="text-align:center; color:green;">STORE</td>';
-                    }
-                    else {
-                        row += '  <td style="text-align:center; color:#d50000;">STORE</td>';
-                    }
-
-                    if (jc.tailoringDone == true) {
-                        row += '  <td style="text-align:center; color:green;">TAILORING</td>';
-                    }
-                    else {
-                        row += '  <td style="text-align:center; color:#d50000;">TAILORING</td>';
-                    }
-
-                    row += '</tr>';
-                    row += '</table>';
-
-                    row += '</td></tr>';
-
-                    $("#tblJCs").append(row);
-
-                });
-            }
-
-         
-
-        }).error(function (xhr, status, error) {
-            handleError('jc.generate', xhr, status, error);
-        });
-
-
-        onresize();
+        fillJobCards(poId);
 
     });
 
+}
+
+function fillJobCards(poId) {
+    //fill job cards
+    fuLib.jc.getAll(poId).success(function (data, status, xhr) {
+
+        $("#tblJCs").html("");
+
+        if (data.length > 0) {
+
+            $("#btnGenerateJCs").hide();
+
+            var idx = 0;
+
+            data.forEach(function (jc, index) {
+
+                idx++;
+
+                var row = '<tr><td>';
+
+                if (jc.cuttingDone == true && jc.inspectionDone == true && jc.liningDone == true && jc.packingDone == true && jc.storeDone == true && jc.tailoringDone == true) {
+                    row += '<table style="background-color: #b9f6ca; border: 1px dashed #00c853; width:100%; margin:5px;">';
+                }
+                else if (jc.cuttingDone == false && jc.inspectionDone == false && jc.liningDone == false && jc.packingDone == false && jc.storeDone == false && jc.tailoringDone == false) {
+                    row += '<table style="background-color: #ff8a80; border: 1px dashed #d50000; width:100%; margin:5px;">';
+                }
+                else {
+                    row += '<table style="background-color: #ffff8d; border: 1px dashed #ffd600; width:100%; margin:5px;">';
+                }
+
+                row += '  <tr>';
+                row += '    <td rowspan="2">' + idx + '</td>';
+                row += '    <td colspan="2">';
+                row += '      <strong>' + jc.jobCardNo + '</strong>';
+                row += '    </td>';
+
+                if (jc.cuttingDone == true) {
+                    row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
+                }
+                else {
+                    row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
+                }
+
+                if (jc.inspectionDone == true) {
+                    row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
+                }
+                else {
+                    row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
+                }
+
+                if (jc.liningDone == true) {
+                    row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
+                }
+                else {
+                    row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
+                }
+
+                if (jc.packingDone == true) {
+                    row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
+                }
+                else {
+                    row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
+                }
+
+                if (jc.storeDone == true) {
+                    row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
+                }
+                else {
+                    row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
+                }
+
+                if (jc.tailoringDone == true) {
+                    row += '<td style="text-align:center; color:green;"><span class="fa fa-check-square-o"></span></td>';
+                }
+                else {
+                    row += '<td style="text-align:center; color:#d50000;"><span class="fa fa-square-o"></span></td>';
+                }
+
+                row += '</tr>';
+                row += '<tr>';
+                row += '  <td>' + jc.purchaseOrderStyle.style.title + '</td>';
+                row += '  <td>' + jc.purchaseOrderSize.styleSize.title + '</td>';
+
+                if (jc.cuttingDone == true) {
+                    row += '  <td style="text-align:center; color:green;">CUTTING</td>';
+                }
+                else {
+                    row += '  <td style="text-align:center; color:#d50000;">CUTTING</td>';
+                }
+
+                if (jc.inspectionDone == true) {
+                    row += '  <td style="text-align:center; color:green;">INSPECTION</td>';
+                }
+                else {
+                    row += '  <td style="text-align:center; color:#d50000;">INSPECTION</td>';
+                }
+
+                if (jc.liningDone == true) {
+                    row += '  <td style="text-align:center; color:green;">LINING</td>';
+                }
+                else {
+                    row += '  <td style="text-align:center; color:#d50000;">LINING</td>';
+                }
+
+                if (jc.packingDone == true) {
+                    row += '  <td style="text-align:center; color:green;">PACKING</td>';
+                }
+                else {
+                    row += '  <td style="text-align:center; color:#d50000;">PACKING</td>';
+                }
+
+                if (jc.storeDone == true) {
+                    row += '  <td style="text-align:center; color:green;">STORE</td>';
+                }
+                else {
+                    row += '  <td style="text-align:center; color:#d50000;">STORE</td>';
+                }
+
+                if (jc.tailoringDone == true) {
+                    row += '  <td style="text-align:center; color:green;">TAILORING</td>';
+                }
+                else {
+                    row += '  <td style="text-align:center; color:#d50000;">TAILORING</td>';
+                }
+
+                row += '</tr>';
+                row += '</table>';
+
+                row += '</td></tr>';
+
+                $("#tblJCs").append(row);
+
+                onresize();
+
+            });
+        }
+
+    }).error(function (xhr, status, error) {
+        handleError('jc.generate', xhr, status, error);
+    });
 }
 
 function addPoStyle() {
@@ -800,7 +787,7 @@ function addPoStyle() {
 
                 //console.log($(this).val());
 
-                var total = 0;
+                var total = 0, totalQty = 0;
 
                 var txtStyleQty;
 
@@ -810,7 +797,6 @@ function addPoStyle() {
 
                     if (tdCount == 0) {
                         //style row
-
                         txtStyleQty = $(this).find("input[class='form-control clsPoStyleQty']");
                         total = 0;
                     }
@@ -818,8 +804,15 @@ function addPoStyle() {
                         //size row
                         var txtSizeQty = $(this).find("input[class='form-control clsPoSizeQty']");
                         var sizeQty = $(txtSizeQty).val();
+
                         total += parseInt(sizeQty);
+
                         $(txtStyleQty).val(total);
+
+                        totalQty += parseInt(sizeQty);
+
+                        $("#txtQty").val(totalQty);
+
                     }
                 });
             });

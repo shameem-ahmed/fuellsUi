@@ -1376,6 +1376,21 @@ var fuLib = {
                     }
                 })
             );
+        },
+
+        updateCutting: function (jc) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/update/cutting",
+                    data: JSON.stringify(jc),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
         }
     }
 }
