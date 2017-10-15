@@ -16,7 +16,7 @@
                 <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                <div id="divJCList" class="col-md-3">
                     <table border="0" style="width:100%; color:red;">
                         <tr>
                             <td style="width:25%;">Purchase Order /</td>
@@ -53,13 +53,17 @@
                                 <button id="btnGenerateJC" type="button" class="btn btn-primary">New Item</button>
                             </td>
                         </tr>
-
                     </table>
                 </div>
-                <div class="col-md-9">
+                <div id="divJCMain" class="col-md-9">
                     <div class="row">
                         <div class="col-lg-3">
                             <table class="tableEdit">
+                                <tr>
+                                    <td>
+                                        <a href="#" id="toggleJCList"><h2><span id="spanShowJCList" class="fa fa-dedent"></span></h2></a>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>Job Card # /</td>
                                 </tr>
@@ -154,13 +158,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="divJcSections">
                         <div class="col-lg-2">
                             <div class="panel panel-default">
                                 <div id="divCutting" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
                                     <h3 class="panel-title" style="color:#fff;">Cutting &amp; Fusing</h3>
                                 </div>
                                 <div class="panel-body">
+                                    <svg id="bcCutting"></svg>
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -189,6 +194,8 @@
                                     <h3 class="panel-title" style="color:#fff;">Lining Cutting</h3>
                                 </div>
                                 <div class="panel-body">
+                                    <svg id="bcLining"></svg>
+
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -213,6 +220,8 @@
                                     <h3 class="panel-title" style="color:#fff;">Store</h3>
                                 </div>
                                 <div class="panel-body">
+                                    <svg id="bcStore"></svg>
+
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -239,6 +248,8 @@
                                     <h3 class="panel-title" style="color:#fff;">Tailoring</h3>
                                 </div>
                                 <div class="panel-body">
+                                    <svg id="bcTailoring"></svg>
+
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -246,7 +257,7 @@
                                     </div>
                                     <label>Tailor:</label>
                                     <select id="selTailoringTailor" class="form-control select"></select>
-                                    <label>Lice QC:</label>
+                                    <label>Line QC:</label>
                                     <select id="selTailoringQc" class="form-control select"></select>
                                     <label>Status:</label>
                                     <select id="selTailoringStatus" class="form-control select">
@@ -255,7 +266,7 @@
                                     </select>
 
                                     <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtTailoringeNotes" rows="5"></textarea>
+                                    <textarea class="form-control" id="txtTailoringNotes" rows="5"></textarea>
                                     <span class="help-block">Worker remarks</span>
 
                                 </div>
@@ -271,6 +282,8 @@
                                     <h3 class="panel-title" style="color:#fff;">Inspection</h3>
                                 </div>
                                 <div class="panel-body">
+                                    <svg id="bcInspection"></svg>
+
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -300,6 +313,8 @@
                                     <h3 class="panel-title" style="color:#fff;">Packing</h3>
                                 </div>
                                 <div class="panel-body">
+                                    <svg id="bcPacking"></svg>
+
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -327,5 +342,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="section-to-print">
+        <h1>Job Card</h1>
+        <h3>This is the printable area of the page...</h3>
     </div>
 </div>

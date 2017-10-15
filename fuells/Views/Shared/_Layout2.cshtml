@@ -17,6 +17,32 @@
 
     <link rel="stylesheet" type="text/css" id="theme" href="~/js/plugins/treeview/bootstrap-treeview.min.css" />
 
+    <style type="text/css">
+        
+        @@media print {
+            body * {
+                visibility: hidden;
+                display: none;
+
+            }
+            .section-to-print, .section-to-print * {
+                visibility: visible;
+            }
+            .section-to-print {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+
+        @@media screen {
+            .section-to-print, .section-to-print * {
+                visibility:hidden;
+                display:none;
+            }
+        }
+    </style>
+
     <!-- EOF CSS INCLUDE -->
 </head>
 <body>
@@ -232,6 +258,8 @@
     <script type="text/javascript" src="~/js/plugins/fileinput/fileinput.min.js"></script>   
 
     <script type="text/javascript" src="~/js/plugins/treeview/bootstrap-treeview.min.js"></script>
+
+    <script type="text/javascript" src="~/js/plugins/JsBarcode/JsBarcode.all.min.js"></script>
 
     <!-- END PAGE PLUGINS -->
     <!-- START TEMPLATE -->

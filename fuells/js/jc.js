@@ -2,10 +2,14 @@
 
 var selIdJC = '';
 
+var showJCList = true;
+
 //CALLED FROM _LAYOUT2
 function doJobCard(crPage) {
 
     $("#btnGenerateJC").hide();
+
+    $("#divJcSections").hide();
 
     //fill PO
     fuLib.po.getAll().success(function (data, status, xhr) {
@@ -150,16 +154,79 @@ function doJobCard(crPage) {
     $("#btnInspectionDone").click(click_btnInspectionDone);
     $("#btnPackingNotDone").click(click_btnPackingNotDone);
     $("#btnPackingDone").click(click_btnPackingDone);
+
+    $("#toggleJCList").click(click_toggleJCList);
+
+    
 }
 
-function click_btnCuttingNotDone() {
+function click_toggleJCList() {
 
+    if (showJCList == true)
+        showJCList = false;
+    else
+        showJCList = true;
+
+    if (showJCList == true) {
+        $("#spanShowJCList").removeClass("fa-indent").addClass("fa-dedent");
+        $("#divJCList").show();
+        $("#divJCMain").removeClass("col-md-12").addClass("col-md-9");
+    }
+    else {
+        $("#spanShowJCList").removeClass("fa-dedent").addClass("fa-indent");
+        $("#divJCList").hide();
+        $("#divJCMain").removeClass("col-md-9").addClass("col-md-12");
+    }
+}
+
+
+function click_btnCuttingNotDone() {
     updateCutting(false);
 }
 
 function click_btnCuttingDone() {
-
     updateCutting(true);
+}
+
+
+function click_btnLiningNotDone() {
+    updateLining(false);
+}
+
+function click_btnLiningDone() {
+    updateLining(true);
+}
+
+function click_btnStoreNotDone() {
+    updateStore(false);
+}
+
+function click_btnStoreDone() {
+    updateStore(true);
+}
+
+function click_btnTailoringNotDone() {
+    updateTailoring(false);
+}
+
+function click_btnTailoringDone() {
+    updateTailoring(true);
+}
+
+function click_btnInspectionNotDone() {
+    updateInspection(false);
+}
+
+function click_btnInspectionDone() {
+    updateInspection(true);
+}
+
+function click_btnPackingNotDone() {
+    updatePacking(false);
+}
+
+function click_btnPackingDone() {
+    updatePacking(true);
 }
 
 function updateCutting(done) {
@@ -191,44 +258,144 @@ function updateCutting(done) {
     });
 }
 
-function click_btnLiningNotDone() {
-    alert('click_btnLiningNotDone');
+function updateLining(done) {
+
+    var oJC = {
+        id: selIdJC,
+        liningDone: done,
+        liningDate: $("#txtLiningDate").val(),
+        liningCutter: $('#selLiningCutter').val(),
+        liningRemarks: $('#txtLiningNotes').val()
+    };
+
+    fuLib.jc.updateLining(oJC).success(function (data, status, xhr) {
+
+        noty({ text: 'JC Lining updated successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+        if (done == true) {
+            $("#divLining").css("background-color", "#95b75d");
+        }
+        else {
+            $("#divLining").css("background-color", "red");
+        }
+
+    }).error(function (xhr, status, error) {
+        //jc.updateLining failed
+        handleError('jc.updateLining', xhr, status, error);
+    });
 }
 
-function click_btnLiningDone() {
-    alert('click_btnLiningDone');
+function updateStore(done) {
+
+    var oJC = {
+        id: selIdJC,
+        storeDone: done,
+        storeDate: $("#txtStoreDate").val(),
+        storeIssuedBy: $('#selStoreIssuedBy').val(),
+        storeReceivedBy: $('#selStoreReceivedBy').val(),
+        storeRemarks: $('#txtStoreNotes').val()
+    };
+
+    fuLib.jc.updateStore(oJC).success(function (data, status, xhr) {
+
+        noty({ text: 'JC Store updated successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+        if (done == true) {
+            $("#divStore").css("background-color", "#95b75d");
+        }
+        else {
+            $("#divStore").css("background-color", "red");
+        }
+
+    }).error(function (xhr, status, error) {
+        //jc.updateStore failed
+        handleError('jc.updateStore', xhr, status, error);
+    });
 }
 
-function click_btnStoreNotDone() {
-    alert('click_btnStoreNotDone');
+function updateTailoring(done) {
+
+    var oJC = {
+        id: selIdJC,
+        tailoringDone: done,
+        tailoringDate: $("#txtTailoringDate").val(),
+        tailoringTailor: $('#selTailoringTailor').val(),
+        tailoringQc: $('#selTailoringQc').val(),
+        tailoringStatus: $('#selTailoringStatus').val(),
+        tailoringRemarks: $('#txtTailoringNotes').val()
+    };
+
+    fuLib.jc.updateTailoring(oJC).success(function (data, status, xhr) {
+
+        noty({ text: 'JC Tailoring updated successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+        if (done == true) {
+            $("#divTailoring").css("background-color", "#95b75d");
+        }
+        else {
+            $("#divTailoring").css("background-color", "red");
+        }
+
+    }).error(function (xhr, status, error) {
+        //jc.updateTailoring failed
+        handleError('jc.updateTailoring', xhr, status, error);
+    });
 }
 
-function click_btnStoreDone() {
-    alert('click_btnStoreDone');
+function updateInspection(done) {
+
+    var oJC = {
+        id: selIdJC,
+        inspectionDone: done,
+        inspectionDate: $("#txtInspectionDate").val(),
+        inspectionQc: $('#selInspectionQc').val(),
+        inspectionStatus: $('#selInspectionStatus').val(),
+        inspectionRemarks: $('#txtInspectionNotes').val()
+    };
+
+    fuLib.jc.updateInspection(oJC).success(function (data, status, xhr) {
+
+        noty({ text: 'JC Inspection updated successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
+
+        if (done == true) {
+            $("#divInspection").css("background-color", "#95b75d");
+        }
+        else {
+            $("#divInspection").css("background-color", "red");
+        }
+
+    }).error(function (xhr, status, error) {
+        //jc.updateInspection failed
+        handleError('jc.updateInspection', xhr, status, error);
+    });
 }
 
-function click_btnTailoringNotDone() {
-    alert('click_btnTailoringNotDone');
-}
+function updatePacking(done) {
 
-function click_btnTailoringDone() {
-    alert('click_btnTailoringDone');
-}
+    var oJC = {
+        id: selIdJC,
+        packingDone: done,
+        packingDate: $("#txtPackingDate").val(),
+        packingBy: $('#selPackingPackedBy').val(),
+        packingStatus: $('#selPackingStatus').val(),
+        packingRemarks: $('#txtPackingNotes').val()
+    };
 
-function click_btnInspectionNotDone() {
-    alert('click_btnInspectionNotDone');
-}
+    fuLib.jc.updatePacking(oJC).success(function (data, status, xhr) {
 
-function click_btnInspectionDone() {
-    alert('click_btnInspectionDone');
-}
+        noty({ text: 'JC Packing updated successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
-function click_btnPackingNotDone() {
-    alert('click_btnPackingNotDone');
-}
+        if (done == true) {
+            $("#divPacking").css("background-color", "#95b75d");
+        }
+        else {
+            $("#divPacking").css("background-color", "red");
+        }
 
-function click_btnPackingDone() {
-    alert('click_btnPackingDone');
+    }).error(function (xhr, status, error) {
+        //jc.updatePacking failed
+        handleError('jc.updatePacking', xhr, status, error);
+    });
 }
 
 function change_selPO() {
@@ -341,6 +508,7 @@ function fillJCs(combo, data) {
 
 function loadJC(id, index) {
 
+    $("#divJcSections").show();
     selIdJC = id;
 
     $("#divJC a").removeClass("active");
@@ -356,6 +524,25 @@ function loadJC(id, index) {
         $("#txtDateEnd").val(data[0].dateEnd);
         $("#h3JCStyle").text(data[0].purchaseOrderStyle.style.title);
         $("#h3JCSize").text(data[0].purchaseOrderSize.styleSize.title);
+
+        var bc0 = data[0].jobCardNo;
+
+        var bc1 = bc0.replace(/0/gi, '');
+
+        //$("#bcCutting").JsBarcode(bc1 + ".1");
+        //$("#bcLining").JsBarcode(bc1 + ".2");
+        //$("#bcStore").JsBarcode(bc1 + ".3");
+        //$("#bcTailoring").JsBarcode(bc1 + ".4");
+        //$("#bcInspection").JsBarcode(bc1 + ".5");
+        //$("#bcPacking").JsBarcode(bc1 + ".6");
+
+        JsBarcode("#bcCutting").options({ font: "OCR-B" }).CODE128(bc1 + ".1", { height: 85, fontSize: 16 }).render();
+        JsBarcode("#bcLining").options({ font: "OCR-B" }).CODE128(bc1 + ".2", { height: 85, fontSize: 16 }).render();
+        JsBarcode("#bcStore").options({ font: "OCR-B" }).CODE128(bc1 + ".3", { height: 85, fontSize: 16 }).render();
+        JsBarcode("#bcTailoring").options({ font: "OCR-B" }).CODE128(bc1 + ".4", { height: 85, fontSize: 16 }).render();
+        JsBarcode("#bcInspection").options({ font: "OCR-B" }).CODE128(bc1 + ".5", { height: 85, fontSize: 16 }).render();
+        JsBarcode("#bcPacking").options({ font: "OCR-B" }).CODE128(bc1 + ".6", { height: 85, fontSize: 16 }).render();
+
 
         //cutting
         //

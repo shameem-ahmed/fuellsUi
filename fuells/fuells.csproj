@@ -998,6 +998,16 @@
     <Content Include="js\lo.js" />
     <Content Include="js\plugins\datatables\dataTables.select.min.js" />
     <Content Include="js\lov.js" />
+    <Content Include="js\plugins\JsBarcode\barcodes\JsBarcode.codabar.min.js" />
+    <Content Include="js\plugins\JsBarcode\barcodes\JsBarcode.code128.min.js" />
+    <Content Include="js\plugins\JsBarcode\barcodes\JsBarcode.code39.min.js" />
+    <Content Include="js\plugins\JsBarcode\barcodes\JsBarcode.ean-upc.min.js" />
+    <Content Include="js\plugins\JsBarcode\barcodes\JsBarcode.itf-14.min.js" />
+    <Content Include="js\plugins\JsBarcode\barcodes\JsBarcode.itf.min.js" />
+    <Content Include="js\plugins\JsBarcode\barcodes\JsBarcode.msi.min.js" />
+    <Content Include="js\plugins\JsBarcode\barcodes\JsBarcode.pharmacode.min.js" />
+    <Content Include="js\plugins\JsBarcode\JsBarcode.all.js" />
+    <Content Include="js\plugins\JsBarcode\JsBarcode.all.min.js" />
     <Content Include="js\plugins\treeview\bootstrap-treeview.min.css" />
     <Content Include="js\plugins\treeview\bootstrap-treeview.min.js" />
     <Content Include="js\po.js" />

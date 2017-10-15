@@ -1391,7 +1391,83 @@ var fuLib = {
                     }
                 })
             );
-        }
+        },
+
+        updateLining: function (jc) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/update/lining",
+                    data: JSON.stringify(jc),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        updateStore: function (jc) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/update/store",
+                    data: JSON.stringify(jc),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        updateTailoring: function (jc) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/update/tailoring",
+                    data: JSON.stringify(jc),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        updateInspection: function (jc) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/update/inspection",
+                    data: JSON.stringify(jc),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
+        updatePacking: function (jc) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/update/packing",
+                    data: JSON.stringify(jc),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
     }
 }
 

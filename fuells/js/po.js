@@ -370,7 +370,7 @@ function configPOTable() {
                 tablePO.rows(':eq(0)', { page: 'current' }).select();
                 selIdPO = tablePO.rows(':eq(0)', { page: 'current' }).ids()[0];
 
-                fillPO(selIdPO);
+                poFillPO(selIdPO);
             });
         }
     }).DataTable({
@@ -458,20 +458,21 @@ function tblPO_RowClick() {
         $(this).removeClass('selected');
     }
     else {
+
         tablePO = $('#tblPO').DataTable();
         tablePO.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
 
         selIdPO = $(this).attr("id");
 
-        fillPO(selIdPO);
+        poFillPO(selIdPO);
         
         $("#panelPOView").show();
         $("#panelPOEdit").hide();
     }
 }
 
-function fillPO(poId) {
+function poFillPO(poId) {
 
     fuLib.po.getOne(poId).success(function (data, status, xhr) {
 
@@ -606,6 +607,7 @@ function fillPO(poId) {
 }
 
 function fillJobCards(poId) {
+
     //fill job cards
     fuLib.jc.getAll(poId).success(function (data, status, xhr) {
 
