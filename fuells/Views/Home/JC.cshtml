@@ -58,23 +58,23 @@
                 <div id="divJCMain" class="col-md-9">
                     <div class="row">
                         <div class="col-lg-3">
-                            <table class="tableEdit">
+                            <table class="tableEdit" border="0">
                                 <tr>
                                     <td>
-                                        <a href="#" id="toggleJCList"><h2><span id="spanShowJCList" class="fa fa-dedent"></span></h2></a>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <a href="#" id="toggleJCList"><h2><span id="spanShowJCList" class="fa fa-dedent"></span></h2></a>
+                                                </td>
+                                                <td>
+                                                    Job Card # /<h3 id="h3JCNo">112.1</h3>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Job Card # /</td>
-                                </tr>
-                                <tr>
-                                    <td><h3 id="h3JCNo">112.1</h3></td>
-                                </tr>
-                                <tr>
-                                    <td>Start Date /</td>
-                                </tr>
-                                <tr>
-                                    <td>
+                                    <td>Start Date /
                                         <div class="input-group">
                                             <input type="text" id="txtDateStart" class="form-control datepicker" placeholder="Start Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -82,10 +82,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>End Date /</td>
-                                </tr>
-                                <tr>
-                                    <td>
+                                    <td>End Date /
                                         <div class="input-group">
                                             <input type="text" id="txtDateEnd" class="form-control datepicker" placeholder="End Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -93,18 +90,22 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Style /<span class="pull-right">Size /</span></td>
+                                    <td>Style /<h3 id="h3JCStyle">---</h3></td>
+                                </tr>
+                                <tr>
+                                    <td>Color /<span class="pull-right">Size /</span></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <table style="width:100%;">
                                             <tr>
-                                                <td><h3 id="h3JCStyle">---</h3></td>
+                                                <td><h3 class="pull-right" id="h3JCColor">---</h3></td>
                                                 <td><h3 class="pull-right" id="h3JCSize">---</h3></td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
+                               
                             </table>
                         </div>
                         <div class="col-lg-9">
@@ -159,95 +160,77 @@
                         </div>
                     </div>
                     <div class="row" id="divJcSections">
-                        <div class="col-lg-2">
-                            <div class="panel panel-default">
-                                <div id="divCutting" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
-                                    <h3 class="panel-title" style="color:#fff;">Cutting &amp; Fusing</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <svg id="bcCutting"></svg>
-                                    <label>Date:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                        <input type="text" class="form-control datepicker" id="txtCuttingDate" value="2017-05-22">
-                                    </div>
-                                    <label>Matcher:</label>
-                                    <select id="selCuttingMatcher" class="form-control select"></select>
-                                    <label>Cutter:</label>
-                                    <select id="selCuttingCutter" class="form-control select"></select>
-                                    <label>Fuser:</label>
-                                    <select id="selCuttingFuser" class="form-control select"></select>
-                                    <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtCuttingNotes" rows="5"></textarea>
-                                    <span class="help-block">Worker remarks</span>
 
-                                </div>
-                                <div class="panel-footer">
-                                    <button class="btn btn-danger" id="btnCuttingNotDone">Not Done</button>
-                                    <button class="btn btn-success pull-right" id="btnCuttingDone">Done</button>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-lg-2">
                             <div class="panel panel-default">
-                                <div id="divLining" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
-                                    <h3 class="panel-title" style="color:#fff;">Lining Cutting</h3>
+                                <div id="divPacking" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                                    <h3 class="panel-title" style="color:#fff;">Packing</h3>
                                 </div>
-                                <div class="panel-body">
-                                    <svg id="bcLining"></svg>
+                                <div class="panel-body" style="min-height:550px;">
+                                    <svg id="bcPacking"></svg>
 
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                        <input type="text" class="form-control datepicker" id="txtLiningDate" value="2017-05-22">
+                                        <input type="text" class="form-control datepicker" id="txtPackingDate" value="2017-05-22">
                                     </div>
-                                    <label>Cutter:</label>
-                                    <select id="selLiningCutter" class="form-control select"></select>
+                                    <label>Packed by:</label>
+                                    <select id="selPackingPackedBy" class="form-control select"></select>
+                                    <label>Status:</label>
+                                    <select id="selPackingStatus" class="form-control select">
+                                        <option value="ok">OK</option>
+                                        <option value="alter">Alteration</option>
+                                    </select>
                                     <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtLiningNotes" rows="5"></textarea>
+                                    <textarea class="form-control" id="txtPackingNotes" rows="5"></textarea>
                                     <span class="help-block">Worker remarks</span>
 
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-danger" id="btnLiningNotDone">Not Done</button>
-                                    <button class="btn btn-success pull-right" id="btnLiningDone">Done</button>
+                                    <button class="btn btn-danger" id="btnPackingNotDone">Not Done</button>
+                                    <button class="btn btn-success pull-right" id="btnPackingDone">Done</button>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-2">
                             <div class="panel panel-default">
-                                <div id="divStore" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
-                                    <h3 class="panel-title" style="color:#fff;">Store</h3>
+                                <div id="divInspection" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                                    <h3 class="panel-title" style="color:#fff;">Inspection</h3>
                                 </div>
-                                <div class="panel-body">
-                                    <svg id="bcStore"></svg>
+                                <div class="panel-body" style="min-height:550px;">
+                                    <svg id="bcInspection"></svg>
 
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                        <input type="text" class="form-control datepicker" id="txtStoreDate" value="2017-05-22">
+                                        <input type="text" class="form-control datepicker" id="txtInspectionDate" value="2017-05-22">
                                     </div>
-                                    <label>Issued by:</label>
-                                    <select id="selStoreIssuedBy" class="form-control select"></select>
-                                    <label>Received by:</label>
-                                    <select id="selStoreReceivedBy" class="form-control select"></select>
+                                    <label>QC done by:</label>
+                                    <select id="selInspectionQc" class="form-control select"></select>
+                                    <label>Status:</label>
+                                    <select id="selInspectionStatus" class="form-control select">
+                                        <option value="ok">OK</option>
+                                        <option value="alter">Alteration</option>
+                                    </select>
                                     <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtStoreNotes" rows="5"></textarea>
+                                    <textarea class="form-control" id="txtInspectionNotes" rows="5"></textarea>
                                     <span class="help-block">Worker remarks</span>
 
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-danger" id="btnStoreNotDone">Not Done</button>
-                                    <button class="btn btn-success pull-right" id="btnStoreDone">Done</button>
+                                    <button class="btn btn-danger" id="btnInspectionNotDone">Not Done</button>
+                                    <button class="btn btn-success pull-right" id="btnInspectionDone">Done</button>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-2">
                             <div class="panel panel-default">
                                 <div id="divTailoring" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
                                     <h3 class="panel-title" style="color:#fff;">Tailoring</h3>
                                 </div>
-                                <div class="panel-body">
+                                <div class="panel-body" style="min-height:550px;">
                                     <svg id="bcTailoring"></svg>
 
                                     <label>Date:</label>
@@ -276,68 +259,93 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-2">
                             <div class="panel panel-default">
-                                <div id="divInspection" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
-                                    <h3 class="panel-title" style="color:#fff;">Inspection</h3>
+                                <div id="divStore" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                                    <h3 class="panel-title" style="color:#fff;">Store</h3>
                                 </div>
-                                <div class="panel-body">
-                                    <svg id="bcInspection"></svg>
+                                <div class="panel-body" style="min-height:550px;">
+                                    <svg id="bcStore"></svg>
 
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                        <input type="text" class="form-control datepicker" id="txtInspectionDate" value="2017-05-22">
+                                        <input type="text" class="form-control datepicker" id="txtStoreDate" value="2017-05-22">
                                     </div>
-                                    <label>QC done by:</label>
-                                    <select id="selInspectionQc" class="form-control select"></select>
-                                    <label>Status:</label>
-                                    <select id="selInspectionStatus" class="form-control select">
-                                        <option value="ok">OK</option>
-                                        <option value="alter">Alteration</option>
-                                    </select>
+                                    <label>Issued by:</label>
+                                    <select id="selStoreIssuedBy" class="form-control select"></select>
+                                    <label>Received by:</label>
+                                    <select id="selStoreReceivedBy" class="form-control select"></select>
                                     <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtInspectionNotes" rows="5"></textarea>
+                                    <textarea class="form-control" id="txtStoreNotes" rows="5"></textarea>
                                     <span class="help-block">Worker remarks</span>
 
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-danger" id="btnInspectionNotDone">Not Done</button>
-                                    <button class="btn btn-success pull-right" id="btnInspectionDone">Done</button>
+                                    <button class="btn btn-danger" id="btnStoreNotDone">Not Done</button>
+                                    <button class="btn btn-success pull-right" id="btnStoreDone">Done</button>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-2">
                             <div class="panel panel-default">
-                                <div id="divPacking" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
-                                    <h3 class="panel-title" style="color:#fff;">Packing</h3>
+                                <div id="divLining" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                                    <h3 class="panel-title" style="color:#fff;">Lining Cutting</h3>
                                 </div>
-                                <div class="panel-body">
-                                    <svg id="bcPacking"></svg>
+                                <div class="panel-body" style="min-height:550px;">
+                                    <svg id="bcLining"></svg>
 
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                        <input type="text" class="form-control datepicker" id="txtPackingDate" value="2017-05-22">
+                                        <input type="text" class="form-control datepicker" id="txtLiningDate" value="2017-05-22">
                                     </div>
-                                    <label>Packed by:</label>
-                                    <select id="selPackingPackedBy" class="form-control select"></select>
-                                    <label>Status:</label>
-                                    <select id="selPackingStatus" class="form-control select">
-                                        <option value="ok">OK</option>
-                                        <option value="alter">Alteration</option>
-                                    </select>
+                                    <label>Cutter:</label>
+                                    <select id="selLiningCutter" class="form-control select"></select>
                                     <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtPackingNotes" rows="5"></textarea>
+                                    <textarea class="form-control" id="txtLiningNotes" rows="5"></textarea>
                                     <span class="help-block">Worker remarks</span>
 
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-danger" id="btnPackingNotDone">Not Done</button>
-                                    <button class="btn btn-success pull-right" id="btnPackingDone">Done</button>
+                                    <button class="btn btn-danger" id="btnLiningNotDone">Not Done</button>
+                                    <button class="btn btn-success pull-right" id="btnLiningDone">Done</button>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-2">
+                            <div class="panel panel-default">
+                                <div id="divCutting" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
+                                    <h3 class="panel-title" style="color:#fff;">Cutting &amp; Fusing</h3>
+                                </div>
+                                <div class="panel-body" style="min-height:550px;">
+                                    <svg id="bcCutting"></svg>
+                                    <label>Date:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                        <input type="text" class="form-control datepicker" id="txtCuttingDate" value="2017-05-22">
+                                    </div>
+                                    <label>Matcher:</label>
+                                    <select id="selCuttingMatcher" class="form-control select"></select>
+                                    <label>Cutter:</label>
+                                    <select id="selCuttingCutter" class="form-control select"></select>
+                                    <label>Fuser:</label>
+                                    <select id="selCuttingFuser" class="form-control select"></select>
+                                    <label>Remarks:</label>
+                                    <textarea class="form-control" id="txtCuttingNotes" rows="5"></textarea>
+                                    <span class="help-block">Worker remarks</span>
+
+                                </div>
+                                <div class="panel-footer">
+                                    <button class="btn btn-danger" id="btnCuttingNotDone">Not Done</button>
+                                    <button class="btn btn-success pull-right" id="btnCuttingDone">Done</button>
+                                </div>
+                            </div>
+                        </div>
+                       
                     </div>
                 </div>
             </div>
