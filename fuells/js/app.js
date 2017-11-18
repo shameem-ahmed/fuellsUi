@@ -1364,6 +1364,21 @@ var fuLib = {
             );
         },
 
+        getMulti: function (oJC) {
+            return (
+                $.ajax({
+                    url: apiUrl + "jc/getmulti",
+                    data: JSON.stringify(oJC),
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+            );
+        },
+
         generate: function (id) {
             return (
                 $.ajax({

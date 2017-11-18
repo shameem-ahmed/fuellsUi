@@ -120,7 +120,7 @@ function click_btnPONewSave() {
     var oPO = {
         customer: $("#selCustomer").val(),
         invoiceNo: $("#txtInvoiceNo").val(),
-        qty: parseInt($("#txtQty").val()),
+        qty: parseInt($("#txtQty").text()),
         dateOrder: $("#txtDateOrder").val(),
         dateDelivery: $("#txtDateDelivery").val(),
         dateTarget: $("#txtDateTarget").val(),
@@ -137,21 +137,31 @@ function click_btnPONewSave() {
     var poStyles = [];
     var poStyleSizes = [];
 
+    var s3a = '';
+
     $("#tblPoStyle").find("tr").each(function () {
 
+        debugger;
+
         var s1 = $(this).find("input[class=clsPoStyle]").val();
-        var s1Qty = $(this).find("input[class='form-control clsPoStyleQty']").val();
+        var s1Qty = $(this).find("span[class='clsPoStyleQty']").text();
 
         if (s1 !== undefined) {
-            poStyles.push({ style: s1, qty: parseInt(s1Qty), sizes: [] });
+            poStyles.push({ style:s1, qty:parseInt(s1Qty), sizes:[] });
         }
 
         var s2 = $(this).find("input[class=clsPoStyle2]").val();
-        var s3 = $(this).find("input[class=clsPoSize]").val();
-        var s3Qty = $(this).find("input[class='form-control clsPoSizeQty']").val();
+        var s3 = $(this).find("input[class=clsPoColor]").val();
+
+        if (s3 !== undefined) {
+            s3a = s3;
+        }
+
+        var s4 = $(this).find("input[class=clsPoSize]").val();
+        var s4Qty = $(this).find("input[class='form-control clsPoSizeQty']").val();
 
         if (s2 !== undefined) {
-            poStyleSizes.push({ style: s2, size: s3, qty: parseInt(s3Qty) });
+            poStyleSizes.push({ style:s2, color:s3a, size:s4, qty:parseInt(s4Qty) });
         }
 
     });
@@ -159,7 +169,7 @@ function click_btnPONewSave() {
     poStyles.forEach(function (style, index) {
         poStyleSizes.forEach(function (size, index) {
             if (size.style == style.style) {
-                style.sizes.push({ size: size.size, qty: size.qty });
+                style.sizes.push({ color:size.color, size:size.size, qty:size.qty });
             }
         });
     });
@@ -206,7 +216,7 @@ function click_btnPONewSave() {
 
     oPO.internals = poInternals;
 
-    //console.log(oPO);
+    console.log(oPO);
 
     //check if oPO is empty
     if (oPO.customer == "0" ||
@@ -269,9 +279,7 @@ function click_btnPONewSave() {
         else {
 
             fuLib.po.add(oPO).success(function (data, status, xhr) {
-
                 //console.log(data);
-
                 noty({ text: 'PO added successfully.', layout: 'topRight', type: 'success', timeout: 2000 });
 
                 var table = $("#tblPO").DataTable();
@@ -765,6 +773,142 @@ function addPoStyle() {
     }
 
     fuLib.style.getOne(styleId).success(function (data, status, xhr) {
+
+        console.log(data);
+
+        //add STYLE, COLORS & SIZES
+
+        var colorCount = data.colors.length;
+        var sizeCount = data.sizes.length + 1;
+
+        //add STYLE row & cols
+        var row = '<tr>';
+        row += '<td class="styleRow" rowspan="' + ((colorCount * sizeCount) + 1) + '">' + data.title + '<br><input class="clsPoStyle" type="hidden" value="' + data._id + '" /></td>';
+        row += '<td class="styleRow" rowspan="' + ((colorCount * sizeCount) + 1) + '"><span class="clsPoStyleQty" style="font-size:large;">0</span></td>';
+        row += '</tr>';
+        $("#tblPoStyle").append(row);
+
+        //sizeCount += 1;
+
+        data.colors.forEach(function (color, index) {
+
+            //add COLOR cols
+            row = '<tr>';
+            row += '<td class="colorRow" rowspan="' + sizeCount + '">' + color.title + '<br><input class="clsPoColor" type="hidden" value="' + color._id + '" /></td>';
+            row += '<td class="colorRow" rowspan="' + sizeCount + '"><span class="clsPoColorQty" style="font-size:large;">0</span></td>';
+            row += '</tr>';
+            $("#tblPoStyle").append(row);
+
+            data.sizes.forEach(function (size, index) {
+
+                //add SIZE cols
+                row = '<tr>';
+                row += '<td class="sizeRow">' + size.title + '<input class="clsPoStyle2" type="hidden" value="' + data._id + '" /><input class="clsPoSize" type="hidden" value="' + size._id + '" /></td>';
+                row += '<td class="sizeRow"><input type="number" class="form-control clsPoSizeQty" value="0" /></td>';
+                row += '</tr>';
+
+                $("#tblPoStyle").append(row);
+
+                $(".clsPoSizeQty").off("focusout").focusout(function () {
+
+                    //console.log($(this).val());
+
+                    var totalPOQty = 0, totalStyleQty = 0, totalColorQty = 0, totalSizeQty = 0;
+
+                    var txtStyleQty, txtColorQty;
+
+                    $("#tblPoStyle").find("tr").each(function () {
+
+                        var tdCount = $(this).find("td[class='colorRow']").length;
+
+                        if (tdCount == 0) {
+
+                            var tdCount2 = $(this).find("td[class='styleRow']").length;
+
+                            if (tdCount2 == 0) {
+                                //size row
+                                var txtSizeQty = $(this).find("input[class='form-control clsPoSizeQty']");
+                                var sizeQty = $(txtSizeQty).val();
+
+                                totalStyleQty += parseInt(sizeQty);
+                                totalColorQty += parseInt(sizeQty);
+
+                                $(txtStyleQty).text(totalStyleQty);
+                                $(txtColorQty).text(totalColorQty);
+
+                                totalPOQty += parseInt(sizeQty);
+
+                                $("#txtQty").text(totalPOQty);
+                            }
+                            else {
+                                //style row
+                                txtStyleQty = $(this).find("span[class='clsPoStyleQty']");
+                                totalStyleQty = 0;
+                            }
+                        }
+                        else if (tdCount > 0) {
+                            //color row
+                            txtColorQty = $(this).find("span[class='clsPoColorQty']");
+                            totalColorQty = 0;
+
+                        }
+                    });
+                });
+            });
+        });
+
+        //var row = '<tr><td colspan="6" style="background-color:silver; height:2px;"></td></tr>';
+        //$("#tblPoStyle").append(row);
+
+        //add STYLE and MATERIALS
+        var matCount = data.materials.length + 1;
+
+        row = '<tr>';
+        row += '<td rowspan="' + matCount + '">' + data.title + '<input type="hidden" value="' + data._id + '" /></td>';
+        row += '</tr>';
+
+        $("#tblPoMaterial").append(row);
+
+        data.materials.forEach(function (mat, index) {
+
+            row = '<tr>';
+            row += '<td>' + mat.title + '<input class="clsPoMat" type="hidden" value="' + mat._id + '" /></td>';
+            row += '<td><input type="text" class="form-control clsPoMatNote" placeholder="Notes" /></td>';
+            row += '<td><input type="number" class="form-control clsPoMatQty" value="0" /></td>';
+            row += '</tr>';
+
+            $("#tblPoMaterial").append(row);
+
+            onresize();
+
+        });
+
+    }).error(function (xhr, status, error) {
+        handleError('style.getOne', xhr, status, error);
+    });
+}
+
+function addPoStyle_2() {
+
+    var styleId = $('#selStyle').val();
+
+    if (styleId == '0') {
+        noty({ text: 'Please select a STYLE.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    //check if STYLE is already added
+    var s1 = $('#tblPoStyle').find('input[value="' + styleId + '"]');
+
+    if (s1.length > 0) {
+        noty({ text: 'Style already added.', layout: 'topCenter', type: 'warning', timeout: 2000 });
+        return false;
+    }
+
+    fuLib.style.getOne(styleId).success(function (data, status, xhr) {
+
+        console.log(data);
+
         //add STYLE and SIZES
         var sizeCount = data.sizes.length + 1;
 

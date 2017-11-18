@@ -1,0 +1,83 @@
+.imgSmall {
+    height: 40px;
+    width: 40px;
+}
+
+.selected {
+    font-weight: bold;
+    background-color: #fec558;
+    color: black;
+}
+
+.labelPrimary {
+    text-align: right;
+    color: #101215;
+}
+
+.labelInfo {
+    text-align: right;
+    color: #1caf9a;
+}
+
+.labelInfo2 {
+    color: #1caf9a;
+}
+
+.labelDanger {
+    text-align: right;
+    color: #e04b4a;
+}
+
+.labelDanger2 {
+    color: #e04b4a;
+}
+
+.labelWarning {
+    text-align: right;
+    color: #fe970a;
+}
+
+.labelSuccess {
+    text-align: right;
+    color: #95b75d;
+}
+
+.tableEdit {
+    width:100%;
+
+}
+
+.tableEdit tr td, .tableEdit tbody tr td  {
+    padding: 5px;
+}
+
+.tableEdit thead tr th {
+    padding: 5px;
+    background-color: #95b75d;
+    color: #fff;
+}
+
+.geoCountry {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.geoState {
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+.geoCity {
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+.geoArea {
+    margin-left: 70px;
+    margin-right: 10px;
+}
+
+.geoZip {
+    margin-left: 90px;
+    margin-right: 10px;
+}

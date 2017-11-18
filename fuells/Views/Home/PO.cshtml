@@ -91,16 +91,16 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div id="fgQty" class="form-group has-error">
-                                                <span class="help-block">Type Quantity.</span>
-                                                <input type="number" readonly="readonly" class="form-control" id="txtQty" value="0" placeholder="Quantity" />
+                                            <div id="fgQty" class="form-group">
+                                                <span class="help-block">Quantity</span>
+                                                <span id="txtQty" style="font-size:large;">0</span>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="labelDanger" style="width:34%;">Order date /</td>
-                                        <td class="labelDanger" style="width:33%;">Delivery date /</td>
                                         <td class="labelDanger" style="width:33%;">Target date /</td>
+                                        <td class="labelDanger" style="width:33%;">Delivery date /</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -111,13 +111,13 @@
                                         </td>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" id="txtDateDelivery" class="form-control datepicker" placeholder="Delivery Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
+                                                <input type="text" id="txtDateTarget" class="form-control datepicker" placeholder="Target Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" id="txtDateTarget" class="form-control datepicker" placeholder="Target Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
+                                                <input type="text" id="txtDateDelivery" class="form-control datepicker" placeholder="Delivery Date" value="" data-date="" data-date-format="dd-mm-yyyy" required />
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </td>
@@ -166,7 +166,7 @@
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr class="active">
-                                                        <th colspan="3">
+                                                        <th colspan="5">
                                                             <select id="selStyle" class="form-control select"></select>
                                                         </th>
 
@@ -177,10 +177,12 @@
                                                         </th>
                                                     </tr>
                                                     <tr class="warning">
-                                                        <th style="width:35%; color:#000;">Style</th>
-                                                        <th style="width:15%; color:#000;">Qty</th>
-                                                        <th style="width:35%; color:#000;">Size</th>
-                                                        <th style="width:15%; color:#000;">Qty</th>
+                                                        <th style="width:30%; color:#000;">Style</th>
+                                                        <th style="width:10%; color:#000;">Qty</th>
+                                                        <th style="width:20%; color:#000;">Color</th>
+                                                        <th style="width:10%; color:#000;">Qty</th>
+                                                        <th style="width:20%; color:#000;">Size</th>
+                                                        <th style="width:10%; color:#000;">Qty</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tblPoStyle"></tbody>

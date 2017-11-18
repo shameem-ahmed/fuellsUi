@@ -16,6 +16,9 @@
                 <h2><span class="fa fa-arrow-circle-o-left"></span> @ViewBag.Title</h2>
             </div>
             <div class="row">
+
+                <!-- Select PO and filters and job card list -->
+
                 <div id="divJCList" class="col-md-3">
                     <table border="0" style="width:100%; color:red;">
                         <tr>
@@ -35,17 +38,27 @@
                             </td>
                         </tr>
                         <tr>
+                            <td style="width:25%;">Color /</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select id="selPOColor" class="form-control select"></select>
+                            </td>
+                        </tr>
+                        <tr>
                             <td style="width:25%;">Size /</td>
                         </tr>
                         <tr>
                             <td>
                                 <select id="selPOSize" class="form-control select"></select>
                             </td>
-                          
                         </tr>
                         <tr>
-                            <td style="width:25%;">Job Card /</td>
+                            <td>Job Card /<label id="lblJcSelAll" class="pull-right"><input id="chkJcSelAll" type="checkbox" /> Select All</label></td>
                         </tr>
+                        <tr>
+                            <td>
+                            </td>
                         <tr>
                             <td>
                                 <div class="list-group" id="divJC">
@@ -55,7 +68,12 @@
                         </tr>
                     </table>
                 </div>
+                
+                
                 <div id="divJCMain" class="col-md-9">
+
+                    <!-- JC Header details -->
+
                     <div class="row">
                         <div class="col-lg-3">
                             <table class="tableEdit" border="0">
@@ -105,7 +123,6 @@
                                         </table>
                                     </td>
                                 </tr>
-                               
                             </table>
                         </div>
                         <div class="col-lg-9">
@@ -156,19 +173,39 @@
                                         </tr>
                                     </table>
                                 </div>
+                                <div class="panel-footer">
+
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Print
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#" id="btnPrint">Print this Job Card</a></li>
+                                            <li><a href="#" id="btnPrintSel">Print selected Job Cards</a></li>
+                                            <li><a href="#" id="btnPrintAll">Print all Job Cards</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
+                    
+                    <!-- JC sections -->
+                    
                     <div class="row" id="divJcSections">
-
                         <div class="col-lg-2">
                             <div class="panel panel-default">
                                 <div id="divPacking" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
                                     <h3 class="panel-title" style="color:#fff;">Packing</h3>
                                 </div>
-                                <div class="panel-body" style="min-height:550px;">
+                                <div class="panel-body" style="min-height:480px;">
                                     <svg id="bcPacking"></svg>
 
+                                    <label>Remarks:</label>
+                                    <textarea class="form-control" id="txtPackingNotes" rows="5"></textarea>
+                                    <span class="help-block">Worker remarks</span>
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -181,10 +218,6 @@
                                         <option value="ok">OK</option>
                                         <option value="alter">Alteration</option>
                                     </select>
-                                    <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtPackingNotes" rows="5"></textarea>
-                                    <span class="help-block">Worker remarks</span>
-
                                 </div>
                                 <div class="panel-footer">
                                     <button class="btn btn-danger" id="btnPackingNotDone">Not Done</button>
@@ -198,9 +231,12 @@
                                 <div id="divInspection" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
                                     <h3 class="panel-title" style="color:#fff;">Inspection</h3>
                                 </div>
-                                <div class="panel-body" style="min-height:550px;">
+                                <div class="panel-body" style="min-height:480px;">
                                     <svg id="bcInspection"></svg>
 
+                                    <label>Remarks:</label>
+                                    <textarea class="form-control" id="txtInspectionNotes" rows="5"></textarea>
+                                    <span class="help-block">Worker remarks</span>
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -213,10 +249,6 @@
                                         <option value="ok">OK</option>
                                         <option value="alter">Alteration</option>
                                     </select>
-                                    <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtInspectionNotes" rows="5"></textarea>
-                                    <span class="help-block">Worker remarks</span>
-
                                 </div>
                                 <div class="panel-footer">
                                     <button class="btn btn-danger" id="btnInspectionNotDone">Not Done</button>
@@ -230,9 +262,12 @@
                                 <div id="divTailoring" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
                                     <h3 class="panel-title" style="color:#fff;">Tailoring</h3>
                                 </div>
-                                <div class="panel-body" style="min-height:550px;">
+                                <div class="panel-body" style="min-height:480px;">
                                     <svg id="bcTailoring"></svg>
 
+                                    <label>Remarks:</label>
+                                    <textarea class="form-control" id="txtTailoringNotes" rows="5"></textarea>
+                                    <span class="help-block">Worker remarks</span>
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -247,11 +282,6 @@
                                         <option value="ok">OK</option>
                                         <option value="alter">Alteration</option>
                                     </select>
-
-                                    <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtTailoringNotes" rows="5"></textarea>
-                                    <span class="help-block">Worker remarks</span>
-
                                 </div>
                                 <div class="panel-footer">
                                     <button class="btn btn-danger" id="btnTailoringNotDone">Not Done</button>
@@ -265,9 +295,12 @@
                                 <div id="divStore" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
                                     <h3 class="panel-title" style="color:#fff;">Store</h3>
                                 </div>
-                                <div class="panel-body" style="min-height:550px;">
+                                <div class="panel-body" style="min-height:480px;">
                                     <svg id="bcStore"></svg>
 
+                                    <label>Remarks:</label>
+                                    <textarea class="form-control" id="txtStoreNotes" rows="5"></textarea>
+                                    <span class="help-block">Worker remarks</span>
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -277,10 +310,6 @@
                                     <select id="selStoreIssuedBy" class="form-control select"></select>
                                     <label>Received by:</label>
                                     <select id="selStoreReceivedBy" class="form-control select"></select>
-                                    <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtStoreNotes" rows="5"></textarea>
-                                    <span class="help-block">Worker remarks</span>
-
                                 </div>
                                 <div class="panel-footer">
                                     <button class="btn btn-danger" id="btnStoreNotDone">Not Done</button>
@@ -294,9 +323,12 @@
                                 <div id="divLining" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
                                     <h3 class="panel-title" style="color:#fff;">Lining Cutting</h3>
                                 </div>
-                                <div class="panel-body" style="min-height:550px;">
+                                <div class="panel-body" style="min-height:480px;">
                                     <svg id="bcLining"></svg>
 
+                                    <label>Remarks:</label>
+                                    <textarea class="form-control" id="txtLiningNotes" rows="5"></textarea>
+                                    <span class="help-block">Worker remarks</span>
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -304,10 +336,6 @@
                                     </div>
                                     <label>Cutter:</label>
                                     <select id="selLiningCutter" class="form-control select"></select>
-                                    <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtLiningNotes" rows="5"></textarea>
-                                    <span class="help-block">Worker remarks</span>
-
                                 </div>
                                 <div class="panel-footer">
                                     <button class="btn btn-danger" id="btnLiningNotDone">Not Done</button>
@@ -321,8 +349,12 @@
                                 <div id="divCutting" class="panel-heading ui-draggable-handle" style="background-color:#95b75d;">
                                     <h3 class="panel-title" style="color:#fff;">Cutting &amp; Fusing</h3>
                                 </div>
-                                <div class="panel-body" style="min-height:550px;">
+                                <div class="panel-body" style="min-height:480px;">
                                     <svg id="bcCutting"></svg>
+
+                                    <label>Remarks:</label>
+                                    <textarea class="form-control" id="txtCuttingNotes" rows="5"></textarea>
+                                    <span class="help-block">Worker remarks</span>
                                     <label>Date:</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
@@ -334,9 +366,7 @@
                                     <select id="selCuttingCutter" class="form-control select"></select>
                                     <label>Fuser:</label>
                                     <select id="selCuttingFuser" class="form-control select"></select>
-                                    <label>Remarks:</label>
-                                    <textarea class="form-control" id="txtCuttingNotes" rows="5"></textarea>
-                                    <span class="help-block">Worker remarks</span>
+
 
                                 </div>
                                 <div class="panel-footer">
@@ -347,12 +377,9 @@
                         </div>
                        
                     </div>
+                
                 </div>
             </div>
         </div>
-    </div>
-    <div class="section-to-print">
-        <h1>Job Card</h1>
-        <h3>This is the printable area of the page...</h3>
     </div>
 </div>

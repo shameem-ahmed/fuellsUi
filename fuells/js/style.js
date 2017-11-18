@@ -170,22 +170,22 @@ function doStyle(crPage) {
         };
 
         $("#lstStyleMaterial").find("a").each(function () {
-            var mat1 = $(this).find("p").text();
+            var mat1 = $(this).find("span.itemCode").text();
             oStyle.materials.push(mat1);
         });
 
         $("#lstStyleLeather").find("a").each(function () {
-            var lea1 = $(this).find("p").text();
+            var lea1 = $(this).find("span.itemCode").text();
             oStyle.leathers.push(lea1);
         });
 
         $("#lstStyleColor").find("a").each(function () {
-            var col1 = $(this).find("p").text();
+            var col1 = $(this).find("span.itemCode").text();
             oStyle.colors.push(col1);
         });
 
         $("#lstStyleSize").find("a").each(function () {
-            var siz1 = $(this).find("p").text();
+            var siz1 = $(this).find("span.itemCode").text();
             oStyle.sizes.push(siz1);
         });
 
@@ -833,7 +833,7 @@ function addStyleMaterial() {
     var item = '<a href="#" id="sm' + sMatVal + '" class="list-group-item">';
     item += '<div class="list-group-status status-online"></div>';
     item += '<span class="contacts-title">' + sMaterial + '</span>';
-    item += '<p>' + sMatVal + '</p>';
+    item += '<p>' + sMaterial + '</p><span class="itemCode">' + sMatVal + '</span>';
     item += '<div class="list-group-controls">';
     item += '<button class="btn btn-danger" onclick="deleteStyleMaterial(\'sm' + sMatVal + '\');"><span class="fa fa-trash-o"></span></button>';
     item += '</div></a>';
@@ -869,7 +869,7 @@ function addStyleLeather() {
     var item = '<a href="#" id="sl' + sLthVal + '" class="list-group-item">';
     item += '<div class="list-group-status status-online"></div>';
     item += '<span class="contacts-title">' + sLeather + '</span>';
-    item += '<p>' + sLthVal + '</p>';
+    item += '<p>' + sLeather + '</p><span class="itemCode">' + sLthVal + '</span>';
     item += '<div class="list-group-controls">';
     item += '<button class="btn btn-danger" onclick="deleteStyleLeather(\'sl' + sLthVal + '\');"><span class="fa fa-trash-o"></span></button>';
     item += '</div></a>';
@@ -904,7 +904,7 @@ function addStyleColor() {
     var item = '<a href="#" id="sc' + sClrVal + '" class="list-group-item">';
     item += '<div class="list-group-status status-online"></div>';
     item += '<span class="contacts-title">' + sColor + '</span>';
-    item += '<p>' + sClrVal + '</p>';
+    item += '<p>' + sColor + '</p><span class="itemCode">' + sClrVal + '</span>';
     item += '<div class="list-group-controls">';
     item += '<button class="btn btn-danger" onclick="deleteStyleColor(\'sc' + sClrVal + '\');"><span class="fa fa-trash-o"></span></button>';
     item += '</div></a>';
@@ -939,7 +939,7 @@ function addStyleSize() {
     var item = '<a href="#" id="ss' + sSizVal + '" class="list-group-item">';
     item += '<div class="list-group-status status-online"></div>';
     item += '<span class="contacts-title">' + sSize + '</span>';
-    item += '<p>' + sSizVal + '</p>';
+    item += '<p>' + sSize + '</p><span class="itemCode">' + sSizVal + '</span>';
     item += '<div class="list-group-controls">';
     item += '<button class="btn btn-danger" onclick="deleteStyleSize(\'ss' + sSizVal + '\');"><span class="fa fa-trash-o"></span></button>';
     item += '</div></a>';

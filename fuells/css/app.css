@@ -81,3 +81,41 @@
     margin-left: 90px;
     margin-right: 10px;
 }
+
+@page {
+    size: A4 landscape;
+
+}
+
+table {
+    page-break-inside: avoid;
+}
+
+.pagebreak { 
+    page-break-before: always; 
+} 
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printJC, #printJC * {
+    visibility: visible;
+  }
+  #printJC {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+@media screen {
+    #printJC, #printJC * {
+        visibility:hidden;
+        display:none;
+    }
+}
+
+.itemCode {
+    display:none;
+}
